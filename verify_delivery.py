@@ -21,6 +21,12 @@ with sync_playwright() as p:
         page.locator('.js-plotly-plot').first.wait_for()
         page.locator('#region').select_option('城市')
         page.wait_for_function("() => document.querySelector('.js-plotly-plot').querySelectorAll('.scatterlayer .point').length === 30")
+        if name=='02-react.html':
+            page.get_by_role('button',name='雾紫杏白').click()
+            assert page.locator('html').get_attribute('data-palette')=='lilac'
+            assert page.locator('#region').input_value()=='城市'
+            page.reload()
+            page.wait_for_function("document.documentElement.dataset.palette==='lilac'")
         assert not errors,errors
         reports.append({'file':name,'offline_chart_and_filter':'pass'})
         page.remove_listener('pageerror',on_error)
@@ -42,6 +48,27 @@ with sync_playwright() as p:
     page.add_style_tag(content='header{padding:25px 32px 5px}header h1{font-size:30px}header p{margin-bottom:10px}.routes,.toolbar,.actions,#runtime-hint,footer{display:none!important}main{padding-top:15px}.overview{grid-template-columns:repeat(2,1fr)}.overview .contact-frame{height:380px;overflow:hidden;background:white}.overview img{width:100%;height:auto;display:block}.overview article{min-height:480px}.overview p{margin-top:12px}header,main{max-width:1440px}')
     page.screenshot(path=str(OUT/'四种路线总览.png'),full_page=True)
     reports.append({'file':'四种建站路线对比.html','tabs_compare_mobile_overview':'pass'})
+    # Managed Chromium blocks file: navigation; serve the HTML while blocking assets.
+    page.goto('http://127.0.0.1:8765/deliverables/'+quote('浅色配色对比.html'))
+    assert page.locator('.palette').count()==4
+    page.wait_for_function("() => [...document.images].every(i => i.complete && i.naturalWidth > 0)")
+    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+    page.screenshot(path=str(OUT/'浅色配色总览.png'),full_page=True)
+    link=page.locator('.palette[data-palette=lilac] a').get_attribute('href')
+    assert link=='../react/?palette=lilac'
+    page.get_by_role('button',name='手机',exact=True).click()
+    assert page.locator('.grid.mobile img').count()==4
+    page.set_viewport_size({'width':390,'height':844})
+    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+    page.goto('http://127.0.0.1:8765/deliverables/02-react.html?palette=lilac')
+    page.wait_for_function("document.documentElement.dataset.palette==='lilac'")
+    page.locator('#region').select_option('城市')
+    page.get_by_role('button',name='冰蓝雾灰').click()
+    page.wait_for_function("() => document.querySelector('.js-plotly-plot').querySelectorAll('.scatterlayer .point').length === 30")
+    assert page.locator('html').get_attribute('data-palette')=='blue'
+    page.reload()
+    page.wait_for_function("document.documentElement.dataset.palette==='blue'")
+    reports.append({'file':'浅色配色对比.html','blocked_assets_images_links_desktop_mobile':'pass','standalone_react_palette_filter_reload':'pass','limit':'Managed Chromium blocks file: navigation; self-contained HTML tested over localhost with all extra network assets blocked.'})
     b.close()
 (ROOT/'delivery-verification.json').write_text(json.dumps(reports,ensure_ascii=False,indent=2))
 print(json.dumps(reports,ensure_ascii=False))

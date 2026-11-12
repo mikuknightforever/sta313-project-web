@@ -1,0 +1,22 @@
+[
+  {
+    "id": "sage", "name": "暖白鼠尾草", "description": "暖白底色，灰绿分区，安静而清晰。", "source": "PALETTE-2026-SOFTWHITE",
+    "swatches": ["#f6f5f0", "#dadfd1", "#2f5c53"],
+    "colors": {"paper":"#f6f5f0","surface":"#ffffff","rail":"#ecefe5","soft":"#e4e9dd","ink":"#222826","muted":"#59625e","teal":"#2f5c53","line":"#d1d8ca","control":"#7c8a78","button":"#dadfd1","on-button":"#222826","note":"#f0f2e9","grid":"#e2e6dc"}
+  },
+  {
+    "id": "blue", "name": "冰蓝雾灰", "description": "浅蓝与白色，清爽、理性，适合数据浏览。", "source": "PALETTE-2026-COOLBLUE",
+    "swatches": ["#f4f9fc", "#d7efff", "#194f79"],
+    "colors": {"paper":"#f4f9fc","surface":"#ffffff","rail":"#e5f0f7","soft":"#d7efff","ink":"#142f44","muted":"#4e6476","teal":"#194f79","line":"#c9dbe8","control":"#768fa3","button":"#d7efff","on-button":"#142f44","note":"#e9f3fa","grid":"#dde8f0"}
+  },
+  {
+    "id": "lilac", "name": "雾紫杏白", "description": "浅雾紫搭配杏白，更柔和，也更有个性。", "source": "Original light adaptation of PLUMNOIR; not the library's dark palette",
+    "swatches": ["#faf7f4", "#eae3f0", "#6a507d"],
+    "colors": {"paper":"#faf7f4","surface":"#ffffff","rail":"#f0ebf4","soft":"#eae3f0","ink":"#332b3b","muted":"#6d5c73","teal":"#6a507d","line":"#ddd1df","control":"#99829f","button":"#eae3f0","on-button":"#332b3b","note":"#fbf0e5","grid":"#e9e1e9"}
+  },
+  {
+    "id": "citrus", "name": "奶油黄绿", "description": "奶油白为底，小面积黄绿点亮操作区。", "source": "PALETTE-2026-WASABI",
+    "swatches": ["#f7f7ef", "#e9f056", "#36532d"],
+    "colors": {"paper":"#f7f7ef","surface":"#ffffff","rail":"#f0f1e3","soft":"#eef1cc","ink":"#20271f","muted":"#56604e","teal":"#36532d","line":"#d8ddc1","control":"#7f8b60","button":"#e9f056","on-button":"#20271f","note":"#f3f4dc","grid":"#e6e9d8"}
+  }
+]

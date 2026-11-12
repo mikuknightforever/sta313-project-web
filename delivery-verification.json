@@ -10,5 +10,11 @@
   {
     "file": "四种建站路线对比.html",
     "tabs_compare_mobile_overview": "pass"
+  },
+  {
+    "file": "浅色配色对比.html",
+    "blocked_assets_images_links_desktop_mobile": "pass",
+    "standalone_react_palette_filter_reload": "pass",
+    "limit": "Managed Chromium blocks file: navigation; self-contained HTML tested over localhost with all extra network assets blocked."
   }
 ]

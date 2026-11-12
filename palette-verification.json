@@ -1,0 +1,392 @@
+{
+  "verified_at_utc": "2026-11-12T21:00:06.758603+00:00",
+  "palettes": [
+    {
+      "id": "sage",
+      "desktop_mobile": "pass",
+      "contrast_pairs": [
+        {
+          "pair": "ink/paper",
+          "ratio": 13.75,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/surface",
+          "ratio": 15.01,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/rail",
+          "ratio": 12.89,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/note",
+          "ratio": 13.28,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/soft",
+          "ratio": 12.15,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/paper",
+          "ratio": 5.77,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/surface",
+          "ratio": 6.3,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/rail",
+          "ratio": 5.41,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/note",
+          "ratio": 5.57,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/soft",
+          "ratio": 5.1,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/paper",
+          "ratio": 6.93,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/surface",
+          "ratio": 7.56,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/rail",
+          "ratio": 6.5,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/note",
+          "ratio": 6.69,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/soft",
+          "ratio": 6.12,
+          "minimum": 4.5
+        },
+        {
+          "pair": "on-button/button",
+          "ratio": 11.04,
+          "minimum": 4.5
+        },
+        {
+          "pair": "control/paper",
+          "ratio": 3.34,
+          "minimum": 3
+        },
+        {
+          "pair": "control/surface",
+          "ratio": 3.64,
+          "minimum": 3
+        }
+      ]
+    },
+    {
+      "id": "blue",
+      "desktop_mobile": "pass",
+      "contrast_pairs": [
+        {
+          "pair": "ink/paper",
+          "ratio": 13.03,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/surface",
+          "ratio": 13.82,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/rail",
+          "ratio": 11.93,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/note",
+          "ratio": 12.28,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/soft",
+          "ratio": 11.63,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/paper",
+          "ratio": 5.81,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/surface",
+          "ratio": 6.16,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/rail",
+          "ratio": 5.32,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/note",
+          "ratio": 5.48,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/soft",
+          "ratio": 5.19,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/paper",
+          "ratio": 8.13,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/surface",
+          "ratio": 8.62,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/rail",
+          "ratio": 7.45,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/note",
+          "ratio": 7.66,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/soft",
+          "ratio": 7.26,
+          "minimum": 4.5
+        },
+        {
+          "pair": "on-button/button",
+          "ratio": 11.63,
+          "minimum": 4.5
+        },
+        {
+          "pair": "control/paper",
+          "ratio": 3.18,
+          "minimum": 3
+        },
+        {
+          "pair": "control/surface",
+          "ratio": 3.37,
+          "minimum": 3
+        }
+      ]
+    },
+    {
+      "id": "lilac",
+      "desktop_mobile": "pass",
+      "contrast_pairs": [
+        {
+          "pair": "ink/paper",
+          "ratio": 12.7,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/surface",
+          "ratio": 13.55,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/rail",
+          "ratio": 11.55,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/note",
+          "ratio": 12.07,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/soft",
+          "ratio": 10.81,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/paper",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/surface",
+          "ratio": 6.12,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/rail",
+          "ratio": 5.22,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/note",
+          "ratio": 5.45,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/soft",
+          "ratio": 4.88,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/paper",
+          "ratio": 6.44,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/surface",
+          "ratio": 6.87,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/rail",
+          "ratio": 5.85,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/note",
+          "ratio": 6.12,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/soft",
+          "ratio": 5.48,
+          "minimum": 4.5
+        },
+        {
+          "pair": "on-button/button",
+          "ratio": 10.81,
+          "minimum": 4.5
+        },
+        {
+          "pair": "control/paper",
+          "ratio": 3.25,
+          "minimum": 3
+        },
+        {
+          "pair": "control/surface",
+          "ratio": 3.47,
+          "minimum": 3
+        }
+      ]
+    },
+    {
+      "id": "citrus",
+      "desktop_mobile": "pass",
+      "contrast_pairs": [
+        {
+          "pair": "ink/paper",
+          "ratio": 14.22,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/surface",
+          "ratio": 15.31,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/rail",
+          "ratio": 13.41,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/note",
+          "ratio": 13.7,
+          "minimum": 4.5
+        },
+        {
+          "pair": "ink/soft",
+          "ratio": 13.19,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/paper",
+          "ratio": 6.14,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/surface",
+          "ratio": 6.61,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/rail",
+          "ratio": 5.79,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/note",
+          "ratio": 5.91,
+          "minimum": 4.5
+        },
+        {
+          "pair": "muted/soft",
+          "ratio": 5.69,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/paper",
+          "ratio": 8.02,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/surface",
+          "ratio": 8.63,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/rail",
+          "ratio": 7.56,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/note",
+          "ratio": 7.72,
+          "minimum": 4.5
+        },
+        {
+          "pair": "teal/soft",
+          "ratio": 7.44,
+          "minimum": 4.5
+        },
+        {
+          "pair": "on-button/button",
+          "ratio": 12.44,
+          "minimum": 4.5
+        },
+        {
+          "pair": "control/paper",
+          "ratio": 3.38,
+          "minimum": 3
+        },
+        {
+          "pair": "control/surface",
+          "ratio": 3.64,
+          "minimum": 3
+        }
+      ]
+    }
+  ],
+  "limits": "Flat-color pairs and affected Chromium interactions only; not a full accessibility audit.",
+  "state_preservation_keyboard_reload_fallback": "pass",
+  "browser_errors": []
+}

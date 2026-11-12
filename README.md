@@ -29,11 +29,15 @@ Alternatively, use GitHub's Code → Download ZIP and extract the folder. Access
 
 ## 设计更新 / Visual design update
 
-2026-11-12：依据设计知识库重新设计四套 Demo，分别采用暖纸色杂志专题、深梅色探索工作台、玉石绿研究实验室、冷蓝色数据简报。各路线保留相同的合成数据与统计口径，重新组织字体、配色、导航、筛选与图文关系。布局和视觉风格可以迁移到其他框架，并不代表框架的视觉上限。
+2026-11-12：依据设计知识库重新设计四套 Demo，分别采用暖纸色杂志专题、浅色探索工作台、玉石绿研究实验室、冷蓝色数据简报。各路线保留相同的合成数据与统计口径，重新组织字体、配色、导航、筛选与图文关系。布局和视觉风格可以迁移到其他框架，并不代表框架的视觉上限。
 
-On 2026-11-12, the four demos were redesigned as an editorial feature, a dark exploration workspace, a research lab, and a data brief. They retain the same synthetic data and statistical definitions. See [DESIGN.md](DESIGN.md) for design decisions, references, and validation scope.
+On 2026-11-12, the four demos were redesigned as an editorial feature, a light exploration workspace, a research lab, and a data brief. They retain the same synthetic data and statistical definitions. See [DESIGN.md](DESIGN.md) for design decisions, references, and validation scope.
 
 ## 先看视觉效果
+
+不采用暗色主题。新增 [四套浅色配色对比](deliverables/浅色配色对比.html)：暖白鼠尾草（默认）、冰蓝雾灰、雾紫杏白、奶油黄绿，使用同一 React 页面比较。对比页可离线打开；进入 React 后点击“页面配色”即可切换，保留当前筛选与视图。所选方案记录在页面 URL 中，刷新后保留。
+
+Light palettes share the same React layout. The picker preserves filters and views; the URL retains the chosen palette on reload.
 
 打开 `deliverables/四种建站路线对比.html`。无需安装依赖，可以选择路线、桌面 / 手机截图、两种并排比较或四种总览。比较页里的页面截图不执行数据筛选。
 
@@ -72,6 +76,7 @@ python serve.py --open-browser
 Windows 激活虚拟环境用 `.venv\Scripts\activate`。运行后打开：
 
 - 本地入口：`http://127.0.0.1:8765/local.html`
+- 浅色配色：`http://127.0.0.1:8765/palettes.html`
 - 截图对比：`http://127.0.0.1:8765/`
 - 原生前端：`http://127.0.0.1:8765/native/`
 - React：`http://127.0.0.1:8765/react/`
@@ -100,5 +105,7 @@ React 已附构建产物，查看时不需要重新构建。修改 React 源码�
 `verification.json` 记录 demo 的浏览器验证；`verify.py` 检查区域筛选、重置、主要视图，并生成桌面与手机截图。需要 Playwright 和 Chromium，脚本中的浏览器可执行路径按本机修改。
 
 `test_launcher.py` 覆盖便携 Python 快捷链接、标准库路径丢失、损坏环境备份与重建。可运行 `python3 -m unittest test_launcher -v`。这些回归检查在 Linux 云端环境完成，macOS 本机运行结果仍需实际确认。
+
+`verify_palettes.py` 检查四套配色的桌面 / 手机布局、切换状态、键盘操作与指定颜色对比度，并更新配色截图；随后运行 `package_palettes.py` 更新配色对比页，再运行 `verify_delivery.py` 验证离线页面并生成两张总览图。结果见 `palette-verification.json`。
 
 `build_demos.py` 是初始示例生成器，再次运行会覆盖示例源码。完成构建与截图后，`package_demos.py` 更新离线比较页与两个独立 HTML 文件。

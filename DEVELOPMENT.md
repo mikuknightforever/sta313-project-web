@@ -7,7 +7,7 @@ All four routes remain available for evaluation; no final framework has been sel
 | 路线 / Route | 修改入口 / Source | 更新方式 / Refresh |
 | --- | --- | --- |
 | 原生前端 / Native frontend | `native/index.html`、`native/style.css`、`assets/common.css`、`assets/charts.js` | 保存后刷新浏览器 / Save and refresh |
-| React | `react/app.jsx`、`react/style.css` | 首次 `npm ci`，修改后 `npm run build` 并刷新 / Run `npm ci` initially, then build and refresh |
+| React | `react/app.jsx`、`react/style.css`、`assets/palettes.json` | 首次 `npm ci`，修改后 `npm run build` 并刷新 / Run `npm ci` initially, then build and refresh |
 | Shiny for Python | `shiny/app.py`、`assets/shiny.css`、`analysis.py` | 修改后重启启动器 / Restart the launcher after changes |
 | Streamlit | `streamlit/app.py`、`assets/streamlit.css`、`analysis.py` | 保存并按页面提示重新运行 / Save and rerun when prompted |
 
@@ -23,6 +23,14 @@ Use `requirements.runtime.txt` to run the demos. Prebuilt React output is includ
 
 The comparison pages in `index.html` and `deliverables/` contain saved screenshots. To update them, rebuild, capture screenshots with `verify.py`, then run `package_demos.py`. `build_demos.py` regenerates the original examples and overwrites their source; it is not the normal startup command.
 
-`assets/charts.js` 与 `analysis.py` 保持区域颜色、形状、坐标范围及均值口径一致；React 深色图表使用相同色相的浅色变体。比较柱形图必须以 0 为基线。修改布局后应重新生成截图与离线页面。
+`assets/charts.js` 与 `analysis.py` 保持区域颜色、形状、坐标范围及均值口径一致；React 的图表文字与网格随浅色主题调整，区域颜色与形状固定。比较柱形图必须以 0 为基线。修改布局后应重新生成截图与离线页面。
 
-The browser and Python chart helpers share region identities, marker shapes, axis ranges, and mean definitions. React uses lighter variants on dark surfaces. Comparison bars start at zero. Regenerate screenshots and offline deliverables after layout changes.
+The browser and Python chart helpers share region identities, marker shapes, axis ranges, and mean definitions. React adjusts chart text and grids to the selected light palette while keeping region identities fixed. Comparison bars start at zero. Regenerate screenshots and offline deliverables after layout changes.
+
+## 浅色配色 / Light palettes
+
+用户已排除暗色主题。`assets/palettes.json` 集中保存四套颜色角色；React 默认使用 `sage`，还支持 `blue`、`lilac`、`citrus`。通过页面按钮或 `?palette=blue` 选择，配色切换不重置筛选和标签页。
+
+更新顺序：`npm run build` → `python verify.py` → `python verify_palettes.py` → `python package_demos.py` → `python package_palettes.py` → `python verify_delivery.py`。验证时需先启动本地服务。配色总览由真实截图生成，`palettes.html` 与 `deliverables/浅色配色对比.html` 可离线浏览。
+
+Palette tokens live in `assets/palettes.json`. Run the build, browser captures, packaging, and delivery checks in the order above after palette changes. The standalone React build embeds the same tokens and works without network assets.

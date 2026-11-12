@@ -1,5 +1,5 @@
 {
-  "verified_at_utc": "2026-11-12T20:51:57.594774+00:00",
+  "verified_at_utc": "2026-11-12T21:06:05.045184+00:00",
   "browser": "Chromium / Playwright",
   "viewports": [
     {
@@ -24,7 +24,12 @@
     "react_keyboard_tabs_and_retained_city_filter": "pass",
     "local_entry_four_links_and_images": "pass",
     "standalone_external_assets_blocked": "pass",
-    "comparison_tabs_pairing_mobile_overview": "pass"
+    "comparison_tabs_pairing_mobile_overview": "pass",
+    "light_palettes_switch_filter_views_reload_keyboard": "pass",
+    "light_palette_contrast_pairs": 72,
+    "light_palette_tablet_horizontal_overflow": "none",
+    "shiny_header_light_surface": "pass",
+    "palette_gallery_links_and_images": "pass"
   },
   "data_rows": 90,
   "data_unchanged": true,
@@ -35,19 +40,22 @@
   "source_sha256": {
     "native/index.html": "ae7eb4b1ebe1ed29acb642a9f568ca4678b8a6d660c07e4980e5d0a427c32b9c",
     "native/style.css": "0ee22b7128481e16fc82601de39b9dc9ed74474eb1ba48e9f1b612a29f8c511d",
-    "react/app.jsx": "e397d35fc924055f88eb53006b23a0e5b38437f91ca613855081179752d23ccb",
-    "react/style.css": "6004eec8dd22b5085a7530188124e97957e4f18303e0baec14b1f267021f4a66",
+    "react/app.jsx": "da5fbfb828d619a022736145fa0d3a689c88498325244c1803e8b5840b9c446e",
+    "react/style.css": "73f7108a4fa031e38970ca67fefa258ad33a6a3222f4a9f1e2ef8f50dfead273",
     "shiny/app.py": "d3bc18fabed70a24bf06ef2c74d0379ca9bf018e67eb08e0f372dbe5848ca2bf",
-    "assets/shiny.css": "ecfdef774429593e110fbe9647f5c0aed5ec506d7536bc9c7e9ba985c66f3b37",
+    "assets/shiny.css": "d0b4abd42b8287c7c43dd552b7e40d95d13c7ec2d6442c27d5871e855db1682d",
     "streamlit/app.py": "645f32570d89350b2845346d75bf5b729124771bcb5e86a61ba8c40d8c9e482a",
     "assets/streamlit.css": "3794d907cb906594e46a88d8db3b54776c68e162f7fd547118dc3cd2d67f0323",
-    "assets/charts.js": "cc1b8a2683abb02b16fb7b5633d77d4a9191a02595cc391df8bdee34729bad57",
-    "analysis.py": "899e70a29b94c43d81e737e8a7f7450dff6b096adea9f5f3c4e13ea308fcf333"
+    "assets/charts.js": "6db094b2e4f91beca9c2d8cc7914c31fc09bc0e4957d303fc44064193a99a525",
+    "analysis.py": "899e70a29b94c43d81e737e8a7f7450dff6b096adea9f5f3c4e13ea308fcf333",
+    "assets/palettes.json": "211c04833de5861fda338e7f212c22aa9bddd7037844c59ac5fc002ee80160de",
+    "package_palettes.py": "4b5be5c468fc1a0adf18c51d812d6da5f7c0f5c3d4501e12e52bdb4d96131d17"
   },
   "limits": [
     "Chromium on Linux only; Safari and the user Mac were not tested.",
     "Contrast and accessibility were not comprehensively audited.",
-    "Streamlit full-page captures expand the viewport height because content scrolls inside stMain."
+    "Streamlit full-page captures expand the viewport height because content scrolls inside stMain.",
+    "Managed Chromium blocks file: navigation; standalone HTML was served over localhost with all extra network assets blocked."
   ],
   "active_routes": [
     "native",
@@ -55,5 +63,10 @@
     "shiny",
     "streamlit"
   ],
-  "route_selection_note": "Quarto excluded by the user on 2026-11-12; its earlier verification remains in commit 777ce98."
+  "route_selection_note": "Quarto excluded by the user on 2026-11-12; its earlier verification remains in commit 777ce98.",
+  "supporting_reports": [
+    "verification.json",
+    "delivery-verification.json",
+    "palette-verification.json"
+  ]
 }
