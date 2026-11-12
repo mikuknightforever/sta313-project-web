@@ -35,9 +35,9 @@ On 2026-11-12, the four demos were redesigned as an editorial feature, a light e
 
 ## 先看视觉效果
 
-不采用暗色主题。新增 [四套浅色配色对比](deliverables/浅色配色对比.html)：暖白鼠尾草（默认）、冰蓝雾灰、雾紫杏白、奶油黄绿，使用同一 React 页面比较。对比页可离线打开；进入 React 后点击“页面配色”即可切换，保留当前筛选与视图。所选方案记录在页面 URL 中，刷新后保留。
+仅替换原来四套设计中深紫色的 React 工作台；原生专题、Shiny 实验室、Streamlit 简报保持原设计。另保留 [四套浅色配色对比](deliverables/浅色配色对比.html)：暖白鼠尾草（默认）、冰蓝雾灰、雾紫杏白、奶油黄绿，使用同一 React 页面比较。对比页可离线打开；进入 React 后点击“页面配色”即可切换，保留当前筛选与视图。所选方案记录在页面 URL 中，刷新后保留。
 
-Light palettes share the same React layout. The picker preserves filters and views; the URL retains the chosen palette on reload.
+Only the original dark purple React workspace changes; the other three designs remain intact. Four light alternatives share the same React layout. The picker preserves filters and views; the URL retains the chosen palette on reload.
 
 打开 `deliverables/四种建站路线对比.html`。无需安装依赖，可以选择路线、桌面 / 手机截图、两种并排比较或四种总览。比较页里的页面截图不执行数据筛选。
 

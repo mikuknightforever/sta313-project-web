@@ -14,7 +14,7 @@ Selection update: the user excluded Quarto. Four routes remain; the previous imp
 | --- | --- | --- |
 | Native | 暖纸色、橙色重点、中文衬线标题、90 枚样本圆点、开放版面 / Warm paper, orange emphasis, serif headings, 90 sample dots, open layout | 从问题进入探索 / Enter through the research question |
 | React | 四套浅色配色、持续导航、联动视图 / Four light palettes, persistent navigation, coordinated views | 保留筛选并反复比较 / Compare views of one selection |
-| Shiny | 浅玉石绿刊头与样本区、白色分析台、01–03 步骤 / Jade sample area, white analysis surface, numbered steps | 定义样本、观察关系、解释 / Define, observe, interpret |
+| Shiny | 原深绿刊头、玉石绿样本区、白色分析台、01–03 步骤 / Jade sample area, white analysis surface, numbered steps | 定义样本、观察关系、解释 / Define, observe, interpret |
 | Streamlit | 冷蓝刊头、横向筛选、顺序简报、展开笔记 / Cool blue masthead, inline filters, sequential brief, expandable notes | 快速阅读与操作 / Read and explore a concise brief |
 
 框架不决定上述视觉风格，均可迁移。Shiny 使用 Python 版。
@@ -56,7 +56,7 @@ Browser validation targets Chromium, the affected interactions, and the document
 
 ## 浅色方案更新 / Light palette update
 
-2026-11-12：用户明确不要暗色调。React 改为浅色工作台，Shiny 深绿刊头改为浅玉石绿。保持同一 React 布局与数据，只改变页面颜色角色，便于比较配色本身。默认暖白鼠尾草；这不是已确认的最终选择。
+2026-11-12：用户澄清只替换原来四套设计中最暗的深紫色 React 工作台。原生专题、Shiny 实验室、Streamlit 简报保留原设计；Shiny 页头已恢复原深绿。新做的四套浅色方案作为 React 备选保留。保持同一 React 布局与数据，只改变页面颜色角色，便于比较配色本身。默认暖白鼠尾草；这不是已确认的最终选择。
 
 | 方案 | 背景 / 强调色 | 依据 |
 | --- | --- | --- |
@@ -69,4 +69,4 @@ Browser validation targets Chromium, the affected interactions, and the document
 
 `verify_palettes.py` 检查四套实际页面的 1440 px / 390 px 截图、无横向溢出、配色切换保留筛选与视图、URL 刷新、键盘选择、无效参数回退。对 72 组不透明颜色组合进行对比度计算：正文与次级文字 ≥ 4.5:1，指定控件边界 ≥ 3:1；这不等同于完整无障碍认证。`palette-verification.json` 保存具体数值。
 
-The user rejected dark themes. Sage is the initial light default, with blue, lilac, and citrus alternatives. Lilac is an original adaptation rather than an existing knowledge-base light palette. The comparison changes palette tokens on one layout; it does not imply a framework preference.
+The user clarified that only the original dark purple React workspace should change. Native, Shiny, and Streamlit retain their original designs. The four new light palettes remain as React alternatives, with sage as the initial default. Lilac is an original adaptation rather than an existing knowledge-base light palette. The comparison changes palette tokens on one layout; it does not imply a framework preference.

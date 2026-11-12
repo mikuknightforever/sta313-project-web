@@ -29,7 +29,7 @@ The browser and Python chart helpers share region identities, marker shapes, axi
 
 ## 浅色配色 / Light palettes
 
-用户已排除暗色主题。`assets/palettes.json` 集中保存四套颜色角色；React 默认使用 `sage`，还支持 `blue`、`lilac`、`citrus`。通过页面按钮或 `?palette=blue` 选择，配色切换不重置筛选和标签页。
+用户只要求替换原深紫色 React 工作台，其他三条路线保持原设计；四套新浅色保留为 React 备选。`assets/palettes.json` 集中保存四套颜色角色；React 默认使用 `sage`，还支持 `blue`、`lilac`、`citrus`。通过页面按钮或 `?palette=blue` 选择，配色切换不重置筛选和标签页。
 
 更新顺序：`npm run build` → `python verify.py` → `python verify_palettes.py` → `python package_demos.py` → `python package_palettes.py` → `python verify_delivery.py`。验证时需先启动本地服务。配色总览由真实截图生成，`palettes.html` 与 `deliverables/浅色配色对比.html` 可离线浏览。
 
