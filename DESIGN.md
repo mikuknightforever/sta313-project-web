@@ -70,3 +70,9 @@ Browser validation targets Chromium, the affected interactions, and the document
 `verify_palettes.py` 检查四套实际页面的 1440 px / 390 px 截图、无横向溢出、配色切换保留筛选与视图、URL 刷新、键盘选择、无效参数回退。对 72 组不透明颜色组合进行对比度计算：正文与次级文字 ≥ 4.5:1，指定控件边界 ≥ 3:1；这不等同于完整无障碍认证。`palette-verification.json` 保存具体数值。
 
 The user clarified that only the original dark purple React workspace should change. Native, Shiny, and Streamlit retain their original designs. The four new light palettes remain as React alternatives, with sage as the initial default. Lilac is an original adaptation rather than an existing knowledge-base light palette. The comparison changes palette tokens on one layout; it does not imply a framework preference.
+
+## 八套同时呈现 / Eight-entry presentation
+
+2026-11-12：用户要求原四套和新四套同时呈现，并提高图片清晰度。统一总览按 01–04 原页面、05–08 新配色排列，包含八个展示项；02 与 05 共享当前默认鼠尾草方案，已注明重复关系。继续保留仅替换深紫色 React 的范围，不改动其他三套页面设计。
+
+全部桌面和手机截图由浏览器重新以 2× 像素密度渲染，不对旧图进行插值放大。桌面 PNG 宽 2880 px，手机 PNG 宽 780 px。总览 PNG 宽 3840 px，展示完整页面；HTML 可单独放大、查看原图尺寸和下载 PNG，另支持键盘切换与 Esc 关闭。源图尺寸与文件哈希记录在 `gallery-verification.json`。

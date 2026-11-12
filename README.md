@@ -1,8 +1,8 @@
 # STA313 网页代码 / Website Source
 
-本仓库是 STA313 小组项目的网页代码仓库，当前保留四种建站路线的 Demo，供比较、选型与后续开发。尚未选定最终框架，也未发布最终项目网站。
+本仓库是 STA313 小组项目的网页代码仓库，当前保留四种建站路线的 Demo，另将四套新配色一起呈现为八个展示项，供比较、选型与后续开发。尚未选定最终框架，也未发布最终项目网站。
 
-This repository holds the STA313 project's website source. The current version contains four working demos for comparison and future development; the final framework and project website have not yet been finalized.
+This repository holds the STA313 project's website source. The current version contains four working routes plus four palette alternatives, presented as eight gallery entries; the final framework and project website have not yet been finalized.
 
 - 项目文档与协作 / Project documentation: [sta313-project-docs](https://github.com/mikuknightforever/sta313-project-docs).
 - 教师课程数据 / Instructor's course datasets: [docs 仓库 datasets 目录](https://github.com/mikuknightforever/sta313-project-docs/tree/main/datasets).
@@ -35,6 +35,10 @@ On 2026-11-12, the four demos were redesigned as an editorial feature, a light e
 
 ## 先看视觉效果
 
+优先打开 [八套设计高清对比](deliverables/八套设计高清对比.html)，或直接看 [八套高清总览 PNG](deliverables/八套设计高清总览.png)。01–04 是原来的四套页面，05–08 是新增配色，全部完整展示。点击任意截图可以放大、切换上一套 / 下一套、查看原图尺寸并下载 PNG；支持桌面 / 手机切换。
+
+桌面截图重新以 2× 像素密度渲染，宽 **2880 px**；手机截图宽 **780 px**。总览 PNG 宽 **3840 px**。02 与 05 同为暖白鼠尾草，分别保留在页面组与配色组；当前仍是四条技术路线。
+
 仅替换原来四套设计中深紫色的 React 工作台；原生专题、Shiny 实验室、Streamlit 简报保持原设计。另保留 [四套浅色配色对比](deliverables/浅色配色对比.html)：暖白鼠尾草（默认）、冰蓝雾灰、雾紫杏白、奶油黄绿，使用同一 React 页面比较。对比页可离线打开；进入 React 后点击“页面配色”即可切换，保留当前筛选与视图。所选方案记录在页面 URL 中，刷新后保留。
 
 Only the original dark purple React workspace changes; the other three designs remain intact. Four light alternatives share the same React layout. The picker preserves filters and views; the URL retains the chosen palette on reload.
@@ -54,7 +58,7 @@ Shiny 与 Streamlit 的截图来自真实应用。要操作它们，请按下文
 2. Mac 需要 Python 3.11+，推荐 Python 3.12；没有 Python 时可从 https://www.python.org/downloads/ 安装。
 3. 双击 `Start-Demos.command`。如果系统不能直接打开它，在终端输入 `bash `（末尾一个空格），把该文件拖入终端，按回车。
 4. 首次启动会联网，在本目录 `.demo-venv` 中安装依赖；不改动系统 Python。之后复用该环境。
-5. 等待浏览器自动打开 `http://127.0.0.1:8765/local.html`。点击卡片即可进入四份真实交互 Demo。
+5. 等待浏览器自动打开 `http://127.0.0.1:8765/local.html`。总览展示八套；点击“打开交互页”进入相应 Demo。
 
 保持终端窗口开启，在终端按 Control+C 关闭全部服务。退出浏览器不会关闭服务。本地启动不需要 Node.js 或 R。
 
@@ -77,13 +81,13 @@ Windows 激活虚拟环境用 `.venv\Scripts\activate`。运行后打开：
 
 - 本地入口：`http://127.0.0.1:8765/local.html`
 - 浅色配色：`http://127.0.0.1:8765/palettes.html`
-- 截图对比：`http://127.0.0.1:8765/`
+- 八套高清总览：`http://127.0.0.1:8765/`
 - 原生前端：`http://127.0.0.1:8765/native/`
 - React：`http://127.0.0.1:8765/react/`
 - Shiny：`http://127.0.0.1:8767/`
 - Streamlit：`http://127.0.0.1:8768/`
 
-在总览中点击“打开真实交互 Demo”即可进入对应应用。Ctrl+C 停止所有 Demo 服务。
+在八套总览中点击“打开交互页”即可进入对应应用。Ctrl+C 停止所有 Demo 服务。
 
 React 已附构建产物，查看时不需要重新构建。修改 React 源码后运行 `npm ci`、`npm run build`。
 
@@ -109,3 +113,5 @@ React 已附构建产物，查看时不需要重新构建。修改 React 源码�
 `verify_palettes.py` 检查四套配色的桌面 / 手机布局、切换状态、键盘操作与指定颜色对比度，并更新配色截图；随后运行 `package_palettes.py` 更新配色对比页，再运行 `verify_delivery.py` 验证离线页面并生成两张总览图。结果见 `palette-verification.json`。
 
 `build_demos.py` 是初始示例生成器，再次运行会覆盖示例源码。完成构建与截图后，`package_demos.py` 更新离线比较页与两个独立 HTML 文件。
+
+`package_gallery.py` 生成 `index.html`、`local.html` 与八套离线对比页；`verify_gallery.py` 检查八项顺序、原图分辨率、放大与键盘操作、下载文件一致性、手机布局，并输出高清总览 PNG。记录见 `gallery-verification.json`。

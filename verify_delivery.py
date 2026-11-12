@@ -8,7 +8,7 @@ OUT=ROOT/'deliverables'
 reports=[]
 with sync_playwright() as p:
     b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
-    page=b.new_page(viewport={'width':1440,'height':1050})
+    page=b.new_page(viewport={'width':1440,'height':1050},device_scale_factor=2)
     for name in ['01-native.html','02-react.html']:
         print('Verifying standalone:',name,flush=True)
         errors=[]

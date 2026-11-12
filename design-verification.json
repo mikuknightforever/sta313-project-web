@@ -22,7 +22,6 @@
     "mobile_chart_container_bounds": "pass",
     "shiny_mobile_filters_precede_results": "pass",
     "react_keyboard_tabs_and_retained_city_filter": "pass",
-    "local_entry_four_links_and_images": "pass",
     "standalone_external_assets_blocked": "pass",
     "comparison_tabs_pairing_mobile_overview": "pass",
     "light_palettes_switch_filter_views_reload_keyboard": "pass",
@@ -31,7 +30,9 @@
     "palette_gallery_links_and_images": "pass",
     "shiny_header_original_surface": "pass",
     "native_original_tooltip_preserved": "pass",
-    "react_four_light_alternatives_preserved": "pass"
+    "react_four_light_alternatives_preserved": "pass",
+    "local_entry_eight_links_and_images": "pass",
+    "eight_entry_hd_gallery_zoom_download_keyboard": "pass"
   },
   "data_rows": 90,
   "data_unchanged": true,
@@ -51,7 +52,9 @@
     "assets/charts.js": "2170303d6d8b6cb1a9a081436187026c42a5e26a578d49381042086da5f6331e",
     "analysis.py": "899e70a29b94c43d81e737e8a7f7450dff6b096adea9f5f3c4e13ea308fcf333",
     "assets/palettes.json": "211c04833de5861fda338e7f212c22aa9bddd7037844c59ac5fc002ee80160de",
-    "package_palettes.py": "4b5be5c468fc1a0adf18c51d812d6da5f7c0f5c3d4501e12e52bdb4d96131d17"
+    "package_palettes.py": "4b5be5c468fc1a0adf18c51d812d6da5f7c0f5c3d4501e12e52bdb4d96131d17",
+    "package_gallery.py": "958ca51adceba73bacc7089a636411a527bfab3b686505154bd55c650e4ea404",
+    "verify_gallery.py": "738b2b10cbe04b703ecb922bf79e1af37fc39546449028caf697c159e3b0d106"
   },
   "limits": [
     "Chromium on Linux only; Safari and the user Mac were not tested.",
@@ -69,7 +72,8 @@
   "supporting_reports": [
     "verification.json",
     "delivery-verification.json",
-    "palette-verification.json"
+    "palette-verification.json",
+    "gallery-verification.json"
   ],
   "last_scoped_update": {
     "verified_at_utc": "2026-11-12T21:40:52.901810+00:00",
@@ -81,5 +85,20 @@
       "Standalone demos and both comparison galleries verified",
       "Shiny header and native chart tooltip restored"
     ]
+  },
+  "presentation_update": {
+    "verified_at_utc": "2026-11-12T22:05:44.240932+00:00",
+    "entries": 8,
+    "route_count": 4,
+    "palette_alternatives": 4,
+    "desktop_source_width_px": 2880,
+    "mobile_source_width_px": 780,
+    "overview_px": [
+      3840,
+      9028
+    ],
+    "render_scale": 2,
+    "image_upscaling": false,
+    "report": "gallery-verification.json"
   }
 }

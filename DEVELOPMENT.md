@@ -19,9 +19,9 @@ Use `requirements.runtime.txt` to run the demos. Prebuilt React output is includ
 
 `assets/data.json` and `assets/data.js` contain the current synthetic example data. When adopting real course data, record the version and fields and update both Python and browser-side readers. The original course-data snapshot is in the linked docs repository.
 
-`index.html` 与 `deliverables/` 中的比较页包含已有截图，不会自动反映源码修改。需要更新时，先构建并通过 `verify.py` 生成新截图，再运行 `package_demos.py`。`build_demos.py` 是最初的示例生成器，会覆盖 Demo 源码，不应作为日常启动命令。
+`index.html` 与 `deliverables/` 中的比较页包含已有截图，不会自动反映源码修改。需要更新时，先构建并通过 `verify.py` 生成新截图，依次运行 `package_demos.py`、`package_palettes.py`、`package_gallery.py`。`build_demos.py` 是最初的示例生成器，会覆盖 Demo 源码，不应作为日常启动命令。
 
-The comparison pages in `index.html` and `deliverables/` contain saved screenshots. To update them, rebuild, capture screenshots with `verify.py`, then run `package_demos.py`. `build_demos.py` regenerates the original examples and overwrites their source; it is not the normal startup command.
+The comparison pages in `index.html` and `deliverables/` contain saved screenshots. To update them, rebuild, capture screenshots with `verify.py`, then run `package_demos.py`, `package_palettes.py`, and `package_gallery.py`. `build_demos.py` regenerates the original examples and overwrites their source; it is not the normal startup command.
 
 `assets/charts.js` 与 `analysis.py` 保持区域颜色、形状、坐标范围及均值口径一致；React 的图表文字与网格随浅色主题调整，区域颜色与形状固定。比较柱形图必须以 0 为基线。修改布局后应重新生成截图与离线页面。
 
@@ -31,6 +31,14 @@ The browser and Python chart helpers share region identities, marker shapes, axi
 
 用户只要求替换原深紫色 React 工作台，其他三条路线保持原设计；四套新浅色保留为 React 备选。`assets/palettes.json` 集中保存四套颜色角色；React 默认使用 `sage`，还支持 `blue`、`lilac`、`citrus`。通过页面按钮或 `?palette=blue` 选择，配色切换不重置筛选和标签页。
 
-更新顺序：`npm run build` → `python verify.py` → `python verify_palettes.py` → `python package_demos.py` → `python package_palettes.py` → `python verify_delivery.py`。验证时需先启动本地服务。配色总览由真实截图生成，`palettes.html` 与 `deliverables/浅色配色对比.html` 可离线浏览。
+更新顺序：`npm run build` → `python verify.py` → `python verify_palettes.py` → `python package_demos.py` → `python package_palettes.py` → `python package_gallery.py` → `python verify_delivery.py` → `python verify_gallery.py`。验证时需先启动本地服务。配色总览由真实截图生成，`palettes.html` 与 `deliverables/浅色配色对比.html` 可离线浏览。
 
 Palette tokens live in `assets/palettes.json`. Run the build, browser captures, packaging, and delivery checks in the order above after palette changes. The standalone React build embeds the same tokens and works without network assets.
+
+## 八套高清总览 / Eight-entry HD gallery
+
+`package_gallery.py` 是八套总览与本地入口的生成器：原四套页面 + 四套 React 配色。02 和 05 有意保留相同默认配色，页面会说明；不恢复旧紫色主题、不重新加入 Quarto。
+
+截图从真实应用以 `device_scale_factor=2` 重绘：桌面布局仍为 1440 CSS px，PNG 为 2880 px；手机布局为 390 CSS px，PNG 为 780 px。不要将旧低分辨率截图插值放大。生成器会检查源 PNG 的宽度。总览截图以 1920 CSS px / 2× 输出 3840 px 宽，保留完整页面。
+
+`index.html` 与离线对比页内嵌原图；`local.html` 使用同一界面但引用 `screenshots/` 中的图片。日常修改生成器，避免直接编辑生成后的 HTML。`verify_gallery.py` 验证放大、Esc 关闭并恢复焦点、方向键切换、下载 PNG 与源文件一致、全部八项及移动端布局。

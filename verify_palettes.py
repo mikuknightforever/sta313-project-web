@@ -16,10 +16,10 @@ def contrast(a,b):
     a,b=sorted([luminance(a),luminance(b)])
     return (b+.05)/(a+.05)
 
-report={'verified_at_utc':datetime.now(timezone.utc).isoformat(),'palettes':[],'limits':'Flat-color pairs and affected Chromium interactions only; not a full accessibility audit.'}
+report={'verified_at_utc':datetime.now(timezone.utc).isoformat(),'capture_scale':2,'desktop_image_width_px':2880,'mobile_image_width_px':780,'palettes':[],'limits':'Flat-color pairs and affected Chromium interactions only; not a full accessibility audit.'}
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
-    page=browser.new_page(viewport={'width':1440,'height':1050},device_scale_factor=1)
+    page=browser.new_page(viewport={'width':1440,'height':1050},device_scale_factor=2)
     errors=[]
     page.on('pageerror',lambda e:errors.append(str(e)))
     for palette in PALETTES:

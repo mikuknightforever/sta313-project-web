@@ -1,0 +1,125 @@
+{
+  "verified_at_utc": "2026-11-12T22:03:17.945402+00:00",
+  "entries": [
+    {
+      "id": "native",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2986,
+        "sha256": "65c468d9504bf97a24f0d32d2ee80e9667a1e01cde5abc48c4810f629a236191"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3922,
+        "sha256": "702105fc087e6ea89d15d693488da975dd7e8a06a6cb6afa4c9bab6b1452d834"
+      }
+    },
+    {
+      "id": "react",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2394,
+        "sha256": "0151f58af41b25225bacc731fdd3ceb8d0e5135c5d2288c50abbd8168ebb380e"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3252,
+        "sha256": "93af5085db3445177c717bc6533a6469c2a523c0f8ae6131d9ada879eca91fc7"
+      }
+    },
+    {
+      "id": "shiny",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2406,
+        "sha256": "3b6183d8a131f4f3a5eb014d078cdfbca3fcc12c01ef682e9a436e96235cbfb2"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3020,
+        "sha256": "d3a46dc6c18621f6f461924c557ffe62df3b5fa21a40f4cb03c2e7aa535b3247"
+      }
+    },
+    {
+      "id": "streamlit",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2856,
+        "sha256": "7b5551b6f959c1a65a30beb046c0598b565a5c205c75b0febfb23bfee66b0a9d"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3626,
+        "sha256": "e23e79448c2e6a0ce7d214e68011ccd6462044397c48245935ddac5eb3ae4a06"
+      }
+    },
+    {
+      "id": "palette-sage",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2394,
+        "sha256": "0151f58af41b25225bacc731fdd3ceb8d0e5135c5d2288c50abbd8168ebb380e"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3252,
+        "sha256": "93af5085db3445177c717bc6533a6469c2a523c0f8ae6131d9ada879eca91fc7"
+      }
+    },
+    {
+      "id": "palette-blue",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2394,
+        "sha256": "c85718a3aeb7e0dd631e7c61b5a2c1412cca6f89b0b0ffde22a89e631ef773d1"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3252,
+        "sha256": "6ce1941a3b62551a8047b4ef25140c099b54a4e736eeeca2590dffec244cfb69"
+      }
+    },
+    {
+      "id": "palette-lilac",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2394,
+        "sha256": "5f32d0520bc624e40008402503f688d6d121a705bc58e781fb73b2e3c71636de"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3252,
+        "sha256": "84e783dacd3d1cd1df53556655fc12f819190acda151195dd6ad7b272989db40"
+      }
+    },
+    {
+      "id": "palette-citrus",
+      "desktop": {
+        "width_px": 2880,
+        "height_px": 2394,
+        "sha256": "f8eadeb374a94b8d3958ca4c6e352d3d6249d0d492bb09dff482209159a7f17a"
+      },
+      "mobile": {
+        "width_px": 780,
+        "height_px": 3252,
+        "sha256": "8d11cf02d08b15b9eb79a56daccc73e7db08bcc0176b07e7f08b4924d8cd16d4"
+      }
+    }
+  ],
+  "checks": {
+    "eight_entries_ordered": "pass",
+    "embedded_images_without_external_assets": "pass",
+    "full_resolution_zoom_all_eight": "pass",
+    "keyboard_navigation_escape_focus": "pass",
+    "download_matches_source_png": "pass",
+    "mobile_gallery_and_dialog": "pass",
+    "local_entry_eight_images_and_links": "pass"
+  },
+  "overview_png": {
+    "width_px": 3840,
+    "height_px": 9028,
+    "full_screenshots": true
+  },
+  "browser_errors": [],
+  "limits": "Chromium on Linux; file: navigation is blocked by managed-browser policy. Self-contained HTML was tested over localhost with additional asset requests blocked."
+}

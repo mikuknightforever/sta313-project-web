@@ -1,30 +1,42 @@
 [
   {
-    "route": "streamlit",
-    "http": 200,
-    "filter_and_reset": "pass",
-    "mobile_overflow": false,
-    "browser_errors": []
-  },
-  {
     "route": "native",
     "http": 200,
     "filter_and_reset": "pass",
     "mobile_overflow": false,
-    "browser_errors": []
+    "browser_errors": [],
+    "capture_scale": 2,
+    "desktop_image_width_px": 2880,
+    "mobile_image_width_px": 780
   },
   {
     "route": "react",
     "http": 200,
     "filter_and_reset": "pass",
     "mobile_overflow": false,
-    "browser_errors": []
+    "browser_errors": [],
+    "capture_scale": 2,
+    "desktop_image_width_px": 2880,
+    "mobile_image_width_px": 780
   },
   {
     "route": "shiny",
     "http": 200,
     "filter_and_reset": "pass",
     "mobile_overflow": false,
-    "browser_errors": []
+    "browser_errors": [],
+    "capture_scale": 2,
+    "desktop_image_width_px": 2880,
+    "mobile_image_width_px": 780
+  },
+  {
+    "route": "streamlit",
+    "http": 200,
+    "filter_and_reset": "pass",
+    "mobile_overflow": false,
+    "browser_errors": [],
+    "capture_scale": 2,
+    "desktop_image_width_px": 2880,
+    "mobile_image_width_px": 780
   }
 ]

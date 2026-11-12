@@ -1,5 +1,8 @@
 {
-  "verified_at_utc": "2026-11-12T21:00:06.758603+00:00",
+  "verified_at_utc": "2026-11-12T21:59:57.915741+00:00",
+  "capture_scale": 2,
+  "desktop_image_width_px": 2880,
+  "mobile_image_width_px": 780,
   "palettes": [
     {
       "id": "sage",

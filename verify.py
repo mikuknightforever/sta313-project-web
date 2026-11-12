@@ -22,7 +22,7 @@ reports=json.loads((ROOT/'verification.json').read_text()) if (ROOT/'verificatio
 reports=[r for r in reports if r['route'] in ['native','react','shiny','streamlit']]
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
-    page=browser.new_page(viewport={'width':1440,'height':1050},device_scale_factor=1)
+    page=browser.new_page(viewport={'width':1440,'height':1050},device_scale_factor=2)
     for name,url in [('native','http://127.0.0.1:8765/native/'),('react','http://127.0.0.1:8765/react/'),('shiny','http://127.0.0.1:8767/'),('streamlit','http://127.0.0.1:8768/')]:
         if len(sys.argv)>1 and name not in sys.argv[1:]:continue
         errors=[]
@@ -80,7 +80,7 @@ with sync_playwright() as p:
         capture(page,name,'mobile')
         page.set_viewport_size({'width':1440,'height':1050})
         page.remove_listener('pageerror',on_error)
-        report={'route':name,'http':response.status,'filter_and_reset':'pass','mobile_overflow':overflow,'browser_errors':errors}
+        report={'route':name,'http':response.status,'filter_and_reset':'pass','mobile_overflow':overflow,'browser_errors':errors,'capture_scale':2,'desktop_image_width_px':2880,'mobile_image_width_px':780}
         reports=[r for r in reports if r['route']!=name]+[report]
         (ROOT/'verification.json').write_text(json.dumps(reports,ensure_ascii=False,indent=2))
         print(json.dumps(report,ensure_ascii=False),flush=True)
