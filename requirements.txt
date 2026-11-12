@@ -2,4 +2,3 @@ streamlit
 shiny
 plotly
 pandas
-quarto-cli

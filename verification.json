@@ -26,12 +26,5 @@
     "filter_and_reset": "pass",
     "mobile_overflow": false,
     "browser_errors": []
-  },
-  {
-    "route": "quarto",
-    "http": 200,
-    "filter_and_reset": "pass",
-    "mobile_overflow": false,
-    "browser_errors": []
   }
 ]

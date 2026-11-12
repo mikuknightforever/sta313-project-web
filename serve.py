@@ -1,4 +1,4 @@
-"""Start the five prebuilt demos on this computer's loopback interface."""
+"""Start the four prebuilt demos on this computer's loopback interface."""
 from pathlib import Path
 import argparse
 import signal
@@ -64,7 +64,7 @@ def main():
                 raise RuntimeError(f'启动超时：{", ".join(sorted(pending))}。日志目录：{log_dir}')
             if pending:
                 time.sleep(.25)
-        print(f'\n五种 Demo 已在当前电脑启动：\n{URL}\n\n保持此终端窗口开启；按 Control+C 停止全部服务。\n', flush=True)
+        print(f'\n四种 Demo 已在当前电脑启动：\n{URL}\n\n保持此终端窗口开启；按 Control+C 停止全部服务。\n', flush=True)
         if args.open_browser and not webbrowser.open(URL):
             print('浏览器未自动打开，请复制上面的地址。', flush=True)
         while True:

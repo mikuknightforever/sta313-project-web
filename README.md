@@ -1,15 +1,19 @@
 # STA313 网页代码 / Website Source
 
-本仓库是 STA313 小组项目的网页代码仓库，当前以五种建站路线的 Demo 作为初始版本，供比较、选型与后续开发。尚未选定最终框架，也未发布最终项目网站。
+本仓库是 STA313 小组项目的网页代码仓库，当前保留四种建站路线的 Demo，供比较、选型与后续开发。尚未选定最终框架，也未发布最终项目网站。
 
-This repository holds the STA313 project's website source. The initial version contains five working demos for comparison and future development; the final framework and project website have not yet been finalized.
+This repository holds the STA313 project's website source. The current version contains four working demos for comparison and future development; the final framework and project website have not yet been finalized.
 
 - 项目文档与协作 / Project documentation: [sta313-project-docs](https://github.com/mikuknightforever/sta313-project-docs).
 - 教师课程数据 / Instructor's course datasets: [docs 仓库 datasets 目录](https://github.com/mikuknightforever/sta313-project-docs/tree/main/datasets).
 
-五份真实实现，使用相同的 90 所虚构学校数据与 Plotly 图表。数据是固定随机种子生成的演示素材，不是课程原始数据或真实研究结果。
+四份真实实现，使用相同的 90 所虚构学校数据与 Plotly 图表。数据是固定随机种子生成的演示素材，不是课程原始数据或真实研究结果。
 
-All five demos use the same 90 synthetic schools and Plotly charts. The synthetic example data are separate from the real course datasets linked above.
+All four demos use the same 90 synthetic schools and Plotly charts. The synthetic example data are separate from the real course datasets linked above.
+
+2026-11-12：用户已排除 Quarto。当前候选为原生 HTML/CSS/JavaScript、React、Shiny for Python 与 Streamlit；此前版本保留在 Git 历史提交 `777ce98`。
+
+Quarto was removed from consideration on 2026-11-12. Its previous implementation remains available in Git history at `777ce98`.
 
 ## 获取代码 / Get the Code
 
@@ -25,19 +29,18 @@ Alternatively, use GitHub's Code → Download ZIP and extract the folder. Access
 
 ## 设计更新 / Visual design update
 
-2026-11-12：依据设计知识库重新设计五套 Demo，分别采用暖纸色杂志专题、深梅色探索工作台、玉石绿研究实验室、冷蓝色数据简报与暖白色研究刊物。各路线保留相同的合成数据与统计口径，重新组织字体、配色、导航、筛选与图文关系。布局和视觉风格可以迁移到其他框架，并不代表框架的视觉上限。
+2026-11-12：依据设计知识库重新设计四套 Demo，分别采用暖纸色杂志专题、深梅色探索工作台、玉石绿研究实验室、冷蓝色数据简报。各路线保留相同的合成数据与统计口径，重新组织字体、配色、导航、筛选与图文关系。布局和视觉风格可以迁移到其他框架，并不代表框架的视觉上限。
 
-On 2026-11-12, the five demos were redesigned as an editorial feature, a dark exploration workspace, a research lab, a data brief, and a research publication. They retain the same synthetic data and statistical definitions. See [DESIGN.md](DESIGN.md) for design decisions, references, and validation scope.
+On 2026-11-12, the four demos were redesigned as an editorial feature, a dark exploration workspace, a research lab, and a data brief. They retain the same synthetic data and statistical definitions. See [DESIGN.md](DESIGN.md) for design decisions, references, and validation scope.
 
 ## 先看视觉效果
 
-打开 `deliverables/五种建站路线对比.html`。无需安装依赖，可以选择路线、桌面 / 手机截图、两种并排比较或五种总览。比较页里的页面截图不执行数据筛选。
+打开 `deliverables/四种建站路线对比.html`。无需安装依赖，可以选择路线、桌面 / 手机截图、两种并排比较或四种总览。比较页里的页面截图不执行数据筛选。
 
-下面三份文件可直接用浏览器打开，支持真实数据交互，无需 Python：
+下面两份文件可直接用浏览器打开，支持真实数据交互，无需 Python：
 
 - `deliverables/01-native.html` — 原生 HTML/CSS/JavaScript 专题页。
 - `deliverables/02-react.html` — 真实 React 组件与联动状态。
-- `deliverables/05-quarto.html` — Quarto 生成的报告，嵌入 JavaScript 筛选与 Plotly 图表。
 
 Shiny 与 Streamlit 的截图来自真实应用。要操作它们，请按下文运行；本次未部署网站。
 
@@ -47,9 +50,9 @@ Shiny 与 Streamlit 的截图来自真实应用。要操作它们，请按下文
 2. Mac 需要 Python 3.11+，推荐 Python 3.12；没有 Python 时可从 https://www.python.org/downloads/ 安装。
 3. 双击 `Start-Demos.command`。如果系统不能直接打开它，在终端输入 `bash `（末尾一个空格），把该文件拖入终端，按回车。
 4. 首次启动会联网，在本目录 `.demo-venv` 中安装依赖；不改动系统 Python。之后复用该环境。
-5. 等待浏览器自动打开 `http://127.0.0.1:8765/local.html`。点击卡片即可进入五份真实交互 Demo。
+5. 等待浏览器自动打开 `http://127.0.0.1:8765/local.html`。点击卡片即可进入四份真实交互 Demo。
 
-保持终端窗口开启，在终端按 Control+C 关闭全部服务。退出浏览器不会关闭服务。本地启动不需要 Node.js、R 或单独安装 Quarto。
+保持终端窗口开启，在终端按 Control+C 关闭全部服务。退出浏览器不会关闭服务。本地启动不需要 Node.js 或 R。
 
 启动前会检查 8765、8767、8768 三个端口；占用时会报错，不会关闭其他程序。详细日志在 `.local-logs`。
 
@@ -74,11 +77,10 @@ Windows 激活虚拟环境用 `.venv\Scripts\activate`。运行后打开：
 - React：`http://127.0.0.1:8765/react/`
 - Shiny：`http://127.0.0.1:8767/`
 - Streamlit：`http://127.0.0.1:8768/`
-- Quarto：`http://127.0.0.1:8765/quarto/_site/`
 
 在总览中点击“打开真实交互 Demo”即可进入对应应用。Ctrl+C 停止所有 Demo 服务。
 
-React 与 Quarto 已附构建产物，查看时不需要重新构建。修改 React 源码后用 `npm install`、`npm run build`；修改 Quarto 源码后用 `quarto render quarto`。
+React 已附构建产物，查看时不需要重新构建。修改 React 源码后运行 `npm ci`、`npm run build`。
 
 ## 文件对应
 
@@ -88,11 +90,10 @@ React 与 Quarto 已附构建产物，查看时不需要重新构建。修改 Re
 | React | `react/app.jsx`、`react/style.css` | 多视图工作台 |
 | Shiny for Python | `shiny/app.py`、`assets/shiny.css` | 响应式筛选与分析输出 |
 | Streamlit | `streamlit/app.py`、`assets/streamlit.css` | Python 数据应用 |
-| Quarto | `quarto/index.qmd`、`quarto/_quarto.yml` | 背景、交互图表、解释、方法 |
 
-共享数据在 `assets/data.json`，浏览器图表函数在 `assets/charts.js`，Python 分析函数在 `analysis.py`。Shiny 采用 Python 版，未使用 R。Quarto 的交互来自嵌入的 JavaScript。
+共享数据在 `assets/data.json`，浏览器图表函数在 `assets/charts.js`，Python 分析函数在 `analysis.py`。Shiny 采用 Python 版，未使用 R。
 
-本例的卡片、侧栏、留白和字号是设计选择，不是各框架的固定外观；不能仅凭这五张页面认定某个框架必然更美观。
+本例的卡片、侧栏、留白和字号是设计选择，不是各框架的固定外观；不能仅凭这四张页面认定某个框架必然更美观。
 
 ## 验证与重新生成
 
@@ -100,4 +101,4 @@ React 与 Quarto 已附构建产物，查看时不需要重新构建。修改 Re
 
 `test_launcher.py` 覆盖便携 Python 快捷链接、标准库路径丢失、损坏环境备份与重建。可运行 `python3 -m unittest test_launcher -v`。这些回归检查在 Linux 云端环境完成，macOS 本机运行结果仍需实际确认。
 
-`build_demos.py` 是初始示例生成器，再次运行会覆盖示例源码。完成构建与截图后，`package_demos.py` 更新离线比较页与三个独立 HTML 文件。
+`build_demos.py` 是初始示例生成器，再次运行会覆盖示例源码。完成构建与截图后，`package_demos.py` 更新离线比较页与两个独立 HTML 文件。

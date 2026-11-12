@@ -19,10 +19,11 @@ def capture(page, name, mode):
     page.set_viewport_size(original)
 
 reports=json.loads((ROOT/'verification.json').read_text()) if (ROOT/'verification.json').exists() else []
+reports=[r for r in reports if r['route'] in ['native','react','shiny','streamlit']]
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
     page=browser.new_page(viewport={'width':1440,'height':1050},device_scale_factor=1)
-    for name,url in [('native','http://127.0.0.1:8765/native/'),('react','http://127.0.0.1:8765/react/'),('shiny','http://127.0.0.1:8767/'),('streamlit','http://127.0.0.1:8768/'),('quarto','http://127.0.0.1:8765/quarto/_site/')]:
+    for name,url in [('native','http://127.0.0.1:8765/native/'),('react','http://127.0.0.1:8765/react/'),('shiny','http://127.0.0.1:8767/'),('streamlit','http://127.0.0.1:8768/')]:
         if len(sys.argv)>1 and name not in sys.argv[1:]:continue
         errors=[]
         def on_error(error):errors.append(str(error))
@@ -31,7 +32,7 @@ with sync_playwright() as p:
         page.locator('.js-plotly-plot').first.wait_for(timeout=45000)
         page.wait_for_timeout(1200)
         capture(page,name,'desktop')
-        if name in ['native','react','quarto']:
+        if name in ['native','react']:
             page.locator('#region').select_option('城市')
             expected='#n' if name!='react' else '.stat-value'
             page.wait_for_function("() => document.querySelector('"+expected+"').textContent.trim() === '30'")
@@ -40,7 +41,7 @@ with sync_playwright() as p:
             page.locator('#minimum').dispatch_event('input')
             page.wait_for_timeout(200)
             assert int(page.locator(expected).first.inner_text())<30
-            page.get_by_role('button',name='重置筛选' if name!='quarto' else '重置',exact=True).click()
+            page.get_by_role('button',name='重置筛选',exact=True).click()
             page.wait_for_function("() => document.querySelector('"+expected+"').textContent.trim() === '90'")
             if name=='react':
                 page.get_by_role('tab',name='区域比较').click()
@@ -71,7 +72,7 @@ with sync_playwright() as p:
         page.wait_for_timeout(500)
         overflow=page.evaluate('document.documentElement.scrollWidth > innerWidth + 1')
         assert not overflow, f'{name}: mobile horizontal overflow'
-        if name in ['native','react','quarto']:
+        if name in ['native','react']:
             assert page.locator('.chart').evaluate('(el)=>el.getBoundingClientRect().bottom >= el.querySelector(".svg-container").getBoundingClientRect().bottom - 1'), f'{name}: chart overflows its container'
         if name == 'shiny':
             assert page.locator('.sidebar').bounding_box()['y'] < page.locator('.main').bounding_box()['y'], 'Mobile filters must precede results'

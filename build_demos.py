@@ -2,7 +2,7 @@ from pathlib import Path
 import json, random, shutil
 
 ROOT = Path(__file__).parent
-for folder in ['assets', 'native', 'react', 'shiny', 'streamlit/.streamlit', 'quarto', 'screenshots', 'deliverables']:
+for folder in ['assets', 'native', 'react', 'shiny', 'streamlit/.streamlit', 'screenshots', 'deliverables']:
     (ROOT/folder).mkdir(parents=True, exist_ok=True)
 rng = random.Random(313)
 rows=[]
@@ -154,67 +154,4 @@ with st.expander('如何解读这张图？',expanded=True):
 st.caption('合成数据 · 金额单位：千加元 · 均值按学校等权计算。')
 ''',encoding='utf-8')
 
-(ROOT/'quarto/_quarto.yml').write_text('''project:
-  type: website
-  output-dir: _site
-website:
-  search: false
-  title: "◈ 教育机会"
-  navbar:
-    background: "#ffffff"
-    left:
-      - href: index.qmd
-        text: 研究报告
-      - href: "#explore"
-        text: 交互探索
-format:
-  html:
-    lang: zh
-    theme: default
-    toc: true
-    toc-title: 本页内容
-    css: styles.css
-    embed-resources: true
-''',encoding='utf-8')
-(ROOT/'quarto/styles.css').write_text('''body{font-family:Arial,"Noto Sans CJK SC",sans-serif;color:#172e32;background:#fbfcfa}.navbar{border-bottom:1px solid #dce7e2}.navbar-brand{color:#075b5e;font-weight:700}h1.title{font-size:38px;line-height:1.4;color:#172e32}h2{font-size:24px;color:#075b5e}p{line-height:1.85}a{color:#075b5e}.quarto-title .quarto-categories .quarto-category{color:#075b5e;border-color:#dce7e2}.callout{border-radius:8px}#quarto-margin-sidebar{font-size:13px}.demo-controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:#edf5f1;border-radius:9px;padding:15px;font-size:13px}.demo-controls select{padding:6px;border:1px solid #bfd3ca;border-radius:6px}.demo-controls input{accent-color:#075b5e}.metric-strip{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid #dce7e2;font-size:14px}.metric-strip strong{color:#075b5e;font-size:22px}.chart{width:100%;min-height:385px}''',encoding='utf-8')
-quarto='''---
-title: "成长的起点，会影响学习的机会吗？"
-subtitle: "家庭收入与学校阅读表现的一次可视化探索"
-author: "STA313 · 网站路线演示"
----
-
-## 研究问题
-
-学校所在社区的家庭收入，与学生的阅读表现有什么关系？本页使用 **90 所虚构学校**的合成数据，演示如何将研究背景、交互图表和解释放在同一篇报告中。
-
-::: {.callout-note title="先了解数据"}
-每行代表一所学校，包含所在区域、家庭年收入中位数、阅读达标率与学生人数。数据仅用于网站演示，不代表安省学校的真实情况。
-:::
-
-## 交互探索 {#explore}
-
-选择学校所在区域，或调整最低人数门槛。悬停在点上查看单所学校。
-
-```{=html}
-<div class="demo-controls"><label for="region">学校区域 <select id="region"><option>全部</option><option>城市</option><option>郊区</option><option>乡镇</option></select></label><label for="minimum">最低人数 <span id="min-label">0</span> <input id="minimum" type="range" min="0" max="1000" step="100" value="0"></label><button id="reset">重置</button></div>
-<div class="metric-strip"><span>当前学校 <strong id="n"></strong></span><span>平均达标率 <strong id="mean"></strong>%</span><span>平均收入中位数 <strong id="income"></strong>k</span></div>
-<div id="chart" class="chart"></div>
-<script src="../assets/plotly.min.js"></script><script src="../assets/data.js"></script><script src="../assets/charts.js"></script><script>
-function update(){let r=filterRows(document.getElementById('region').value,+document.getElementById('minimum').value),m=metrics(r);for(let k of ['n','mean','income'])document.getElementById(k).textContent=m[k];document.getElementById('min-label').textContent=document.getElementById('minimum').value;drawChart('chart',r)}document.getElementById('region').onchange=update;document.getElementById('minimum').oninput=update;document.getElementById('reset').onclick=()=>{document.getElementById('region').value='全部';document.getElementById('minimum').value=0;update()};update();
-</script>
-```
-
-## 观察与解释
-
-这组模拟数据预设了收入与阅读表现的正向关联，但收入相近的学校仍可能有不同表现。通过筛选，可以区分整体趋势与群体内部的变化。
-
-**关联不等于因果。** 学校层面的聚合指标不能直接推断个体学生的经历，也不能排除其他因素。
-
-## 方法与局限
-
-- 数据采用固定随机种子生成，五个 demo 使用相同的 90 行数据。
-- 均值按学校等权计算，不按学生人数加权。
-- 图表使用 Plotly，筛选使用嵌入的 JavaScript；Quarto 负责报告、导航和排版。
-'''
-(ROOT/'quarto/index.qmd').write_text(quarto,encoding='utf-8')
-print('Created five demo sources and shared synthetic dataset.')
+print('Created four demo sources and shared synthetic dataset.')
