@@ -3,6 +3,21 @@ import json, sys
 from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).parent
+
+def capture(page, name, mode):
+    # Streamlit scrolls inside stMain; expand only the capture height to show the page.
+    original = dict(page.viewport_size)
+    if name == 'streamlit':
+        height = page.locator('[data-testid=stMain]').evaluate('(el)=>el.scrollHeight')
+        page.set_viewport_size({'width':original['width'],'height':max(original['height'],height+60)})
+        page.wait_for_timeout(300)
+        page.locator('[data-testid=stMain]').evaluate('(el)=>el.scrollTop=0')
+    page.evaluate('window.scrollTo({top:0,behavior:"instant"})')
+    page.wait_for_timeout(300)
+    suffix = '-mobile' if mode == 'mobile' else ''
+    page.screenshot(path=str(ROOT/'screenshots'/f'{name}{suffix}.png'),full_page=True)
+    page.set_viewport_size(original)
+
 reports=json.loads((ROOT/'verification.json').read_text()) if (ROOT/'verification.json').exists() else []
 with sync_playwright() as p:
     browser=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
@@ -15,7 +30,7 @@ with sync_playwright() as p:
         response=page.goto(url,wait_until='networkidle')
         page.locator('.js-plotly-plot').first.wait_for(timeout=45000)
         page.wait_for_timeout(1200)
-        page.screenshot(path=str(ROOT/'screenshots'/f'{name}.png'),full_page=True)
+        capture(page,name,'desktop')
         if name in ['native','react','quarto']:
             page.locator('#region').select_option('城市')
             expected='#n' if name!='react' else '.stat-value'
@@ -55,7 +70,13 @@ with sync_playwright() as p:
         page.set_viewport_size({'width':390,'height':844})
         page.wait_for_timeout(500)
         overflow=page.evaluate('document.documentElement.scrollWidth > innerWidth + 1')
-        page.screenshot(path=str(ROOT/'screenshots'/f'{name}-mobile.png'),full_page=True)
+        assert not overflow, f'{name}: mobile horizontal overflow'
+        if name in ['native','react','quarto']:
+            assert page.locator('.chart').evaluate('(el)=>el.getBoundingClientRect().bottom >= el.querySelector(".svg-container").getBoundingClientRect().bottom - 1'), f'{name}: chart overflows its container'
+        if name == 'shiny':
+            assert page.locator('.sidebar').bounding_box()['y'] < page.locator('.main').bounding_box()['y'], 'Mobile filters must precede results'
+        assert not errors, errors
+        capture(page,name,'mobile')
         page.set_viewport_size({'width':1440,'height':1050})
         page.remove_listener('pageerror',on_error)
         report={'route':name,'http':response.status,'filter_and_reset':'pass','mobile_overflow':overflow,'browser_errors':errors}

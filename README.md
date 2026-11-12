@@ -23,6 +23,12 @@ bash Start-Demos.command
 
 Alternatively, use GitHub's Code → Download ZIP and extract the folder. Access to a private repository requires the appropriate GitHub permissions.
 
+## 设计更新 / Visual design update
+
+2026-11-12：依据设计知识库重新设计五套 Demo，分别采用暖纸色杂志专题、深梅色探索工作台、玉石绿研究实验室、冷蓝色数据简报与暖白色研究刊物。各路线保留相同的合成数据与统计口径，重新组织字体、配色、导航、筛选与图文关系。布局和视觉风格可以迁移到其他框架，并不代表框架的视觉上限。
+
+On 2026-11-12, the five demos were redesigned as an editorial feature, a dark exploration workspace, a research lab, a data brief, and a research publication. They retain the same synthetic data and statistical definitions. See [DESIGN.md](DESIGN.md) for design decisions, references, and validation scope.
+
 ## 先看视觉效果
 
 打开 `deliverables/五种建站路线对比.html`。无需安装依赖，可以选择路线、桌面 / 手机截图、两种并排比较或五种总览。比较页里的页面截图不执行数据筛选。
@@ -78,10 +84,10 @@ React 与 Quarto 已附构建产物，查看时不需要重新构建。修改 Re
 
 | 路线 | 主要源码 | 本例页面组织 |
 | --- | --- | --- |
-| 原生前端 | `native/index.html` | 叙事开场、图表、解释 |
+| 原生前端 | `native/index.html`、`native/style.css` | 叙事开场、图表、解释 |
 | React | `react/app.jsx`、`react/style.css` | 多视图工作台 |
-| Shiny for Python | `shiny/app.py` | 响应式筛选与分析输出 |
-| Streamlit | `streamlit/app.py` | Python 数据应用 |
+| Shiny for Python | `shiny/app.py`、`assets/shiny.css` | 响应式筛选与分析输出 |
+| Streamlit | `streamlit/app.py`、`assets/streamlit.css` | Python 数据应用 |
 | Quarto | `quarto/index.qmd`、`quarto/_quarto.yml` | 背景、交互图表、解释、方法 |
 
 共享数据在 `assets/data.json`，浏览器图表函数在 `assets/charts.js`，Python 分析函数在 `analysis.py`。Shiny 采用 Python 版，未使用 R。Quarto 的交互来自嵌入的 JavaScript。

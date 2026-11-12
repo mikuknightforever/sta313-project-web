@@ -1,0 +1,54 @@
+{
+  "verified_at_utc": "2026-11-12T20:43:42.408060+00:00",
+  "browser": "Chromium / Playwright",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1050
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    }
+  ],
+  "checks": {
+    "five_live_routes_filter_reset_views": "pass",
+    "mobile_horizontal_overflow": "none",
+    "tablet_horizontal_overflow": "none",
+    "mobile_chart_container_bounds": "pass",
+    "shiny_mobile_filters_precede_results": "pass",
+    "react_keyboard_tabs_and_retained_city_filter": "pass",
+    "local_entry_five_links_and_images": "pass",
+    "standalone_external_assets_blocked": "pass",
+    "comparison_tabs_pairing_mobile_overview": "pass"
+  },
+  "data_rows": 90,
+  "data_unchanged": true,
+  "bar_y_axis": [
+    0,
+    100
+  ],
+  "source_sha256": {
+    "native/index.html": "ae7eb4b1ebe1ed29acb642a9f568ca4678b8a6d660c07e4980e5d0a427c32b9c",
+    "native/style.css": "0ee22b7128481e16fc82601de39b9dc9ed74474eb1ba48e9f1b612a29f8c511d",
+    "react/app.jsx": "e397d35fc924055f88eb53006b23a0e5b38437f91ca613855081179752d23ccb",
+    "react/style.css": "6004eec8dd22b5085a7530188124e97957e4f18303e0baec14b1f267021f4a66",
+    "shiny/app.py": "d3bc18fabed70a24bf06ef2c74d0379ca9bf018e67eb08e0f372dbe5848ca2bf",
+    "assets/shiny.css": "ecfdef774429593e110fbe9647f5c0aed5ec506d7536bc9c7e9ba985c66f3b37",
+    "streamlit/app.py": "645f32570d89350b2845346d75bf5b729124771bcb5e86a61ba8c40d8c9e482a",
+    "assets/streamlit.css": "3794d907cb906594e46a88d8db3b54776c68e162f7fd547118dc3cd2d67f0323",
+    "quarto/index.qmd": "88f30f045d80fc9fc3acf85975413ba4870248806e52eb68731a95d3f79ea8d3",
+    "quarto/styles.css": "4fd97615435b9800f7297073ec0bfe4c1984503b8f20ce29b31edc40065a1f8a",
+    "assets/charts.js": "cc1b8a2683abb02b16fb7b5633d77d4a9191a02595cc391df8bdee34729bad57",
+    "analysis.py": "899e70a29b94c43d81e737e8a7f7450dff6b096adea9f5f3c4e13ea308fcf333"
+  },
+  "limits": [
+    "Chromium on Linux only; Safari and the user Mac were not tested.",
+    "Contrast and accessibility were not comprehensively audited.",
+    "Streamlit full-page captures expand the viewport height because content scrolls inside stMain."
+  ]
+}

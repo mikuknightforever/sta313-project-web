@@ -37,8 +37,9 @@ with sync_playwright() as p:
     page.get_by_role('button',name='五种总览',exact=True).click()
     assert page.locator('#overview article').count()==5
     page.wait_for_function("() => [...document.querySelectorAll('#overview img')].every(i => i.complete && i.naturalWidth > 0)")
-    # Screenshot-only contact sheet of the real pages for the chat handoff.
-    page.add_style_tag(content='header{padding:25px 32px 5px}header h1{font-size:30px}header p{margin-bottom:10px}.routes,.toolbar,.actions,#runtime-hint,footer{display:none!important}main{padding-top:15px}.overview{grid-template-columns:repeat(3,1fr)}.overview img{height:345px;object-fit:contain;object-position:top;background:white}.overview article{min-height:445px}.overview p{margin-top:12px}header,main{max-width:1440px}')
+    # Screenshot-only contact sheet; preserve image width and crop only vertical overflow.
+    page.evaluate('''() => document.querySelectorAll('#overview img').forEach(img => {const frame=document.createElement('div');frame.className='contact-frame';img.replaceWith(frame);frame.append(img)})''')
+    page.add_style_tag(content='header{padding:25px 32px 5px}header h1{font-size:30px}header p{margin-bottom:10px}.routes,.toolbar,.actions,#runtime-hint,footer{display:none!important}main{padding-top:15px}.overview{grid-template-columns:repeat(3,1fr)}.overview .contact-frame{height:380px;overflow:hidden;background:white}.overview img{width:100%;height:auto;display:block}.overview article{min-height:480px}.overview p{margin-top:12px}header,main{max-width:1440px}')
     page.screenshot(path=str(OUT/'五种路线总览.png'),full_page=True)
     reports.append({'file':'五种建站路线对比.html','tabs_compare_mobile_overview':'pass'})
     b.close()

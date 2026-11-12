@@ -6,10 +6,10 @@ All five routes remain available for evaluation; no final framework has been sel
 
 | 路线 / Route | 修改入口 / Source | 更新方式 / Refresh |
 | --- | --- | --- |
-| 原生前端 / Native frontend | `native/index.html`、`assets/common.css`、`assets/charts.js` | 保存后刷新浏览器 / Save and refresh |
+| 原生前端 / Native frontend | `native/index.html`、`native/style.css`、`assets/common.css`、`assets/charts.js` | 保存后刷新浏览器 / Save and refresh |
 | React | `react/app.jsx`、`react/style.css` | 首次 `npm ci`，修改后 `npm run build` 并刷新 / Run `npm ci` initially, then build and refresh |
-| Shiny for Python | `shiny/app.py`、`analysis.py` | 修改后重启启动器 / Restart the launcher after changes |
-| Streamlit | `streamlit/app.py`、`analysis.py` | 保存并按页面提示重新运行 / Save and rerun when prompted |
+| Shiny for Python | `shiny/app.py`、`assets/shiny.css`、`analysis.py` | 修改后重启启动器 / Restart the launcher after changes |
+| Streamlit | `streamlit/app.py`、`assets/streamlit.css`、`analysis.py` | 保存并按页面提示重新运行 / Save and rerun when prompted |
 | Quarto | `quarto/index.qmd`、`quarto/styles.css`、`quarto/_quarto.yml` | 安装 Quarto CLI 后运行 `quarto render quarto` / Install Quarto CLI, then render |
 
 `requirements.runtime.txt` 用于运行现有 Demo；React 和 Quarto 构建结果已保留，首次查看不需要安装对应构建工具。完整 Python 构建依赖可通过 `requirements.txt` 安装。
@@ -23,3 +23,7 @@ Use `requirements.runtime.txt` to run the demos. Prebuilt React and Quarto outpu
 `index.html` 与 `deliverables/` 中的比较页包含已有截图，不会自动反映源码修改。需要更新时，先构建并通过 `verify.py` 生成新截图，再运行 `package_demos.py`。`build_demos.py` 是最初的示例生成器，会覆盖 Demo 源码，不应作为日常启动命令。
 
 The comparison pages in `index.html` and `deliverables/` contain saved screenshots. To update them, rebuild, capture screenshots with `verify.py`, then run `package_demos.py`. `build_demos.py` regenerates the original examples and overwrites their source; it is not the normal startup command.
+
+本次 Quarto 产物使用 CLI 1.7.32 生成。`assets/charts.js` 与 `analysis.py` 保持区域颜色、形状、坐标范围及均值口径一致；React 深色图表使用相同色相的浅色变体。比较柱形图必须以 0 为基线。修改布局后应重新生成截图与离线页面。
+
+The current Quarto output was rendered with CLI 1.7.32. The browser and Python chart helpers share region identities, marker shapes, axis ranges, and mean definitions. React uses lighter variants on dark surfaces. Comparison bars start at zero. Regenerate screenshots and offline deliverables after layout changes.

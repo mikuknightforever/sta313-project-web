@@ -3,12 +3,13 @@ project:
   output-dir: _site
 website:
   search: false
-  title: "◈ 教育机会"
+  title: "研究手记 / FIELD REPORT"
   navbar:
-    background: "#ffffff"
+    background: "#351e28"
+    foreground: "#fff6ed"
     left:
       - href: index.qmd
-        text: 研究报告
+        text: 本期研究
       - href: "#explore"
         text: 交互探索
 format:
@@ -16,6 +17,7 @@ format:
     lang: zh
     theme: default
     toc: true
-    toc-title: 本页内容
+    toc-title: 阅读路径
+    number-sections: true
     css: styles.css
     embed-resources: true
