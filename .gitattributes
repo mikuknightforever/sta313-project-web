@@ -1,0 +1,5 @@
+assets/plotly.min.js linguist-vendored
+react/app.js linguist-generated
+quarto/_site/** linguist-generated
+deliverables/** linguist-generated
+index.html linguist-generated

@@ -1,0 +1,9 @@
+{
+  "failure_reproduced": "Copied relocatable Python through a shortcut falls back to /install and cannot import encodings",
+  "regressions": {
+    "repair_backups_and_recreates_environment": "pass",
+    "healthy_environment_reuse": "pass",
+    "shortcut_resolution_and_pythonhome_isolation": "pass"
+  },
+  "platform": "Linux with relocatable CPython 3.12; not yet verified on the user Mac"
+}

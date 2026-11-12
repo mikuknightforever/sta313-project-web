@@ -1,0 +1,16 @@
+.venv/
+.demo-venv/
+.demo-venv.backup-*/
+.local-logs/
+node_modules/
+__pycache__/
+.quarto/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+.python-version
+*.zip
+screenshots/*-debug.png

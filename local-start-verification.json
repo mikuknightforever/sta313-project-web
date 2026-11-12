@@ -1,0 +1,11 @@
+{
+  "native": 200,
+  "react": 200,
+  "shiny": 200,
+  "streamlit": 200,
+  "quarto": 200,
+  "duplicate_start": "rejected without affecting running demos",
+  "shutdown": "all three ports released",
+  "tested_platform": "Linux cloud runtime; not macOS",
+  "mac_launcher": "bash syntax checked; not executed on the user device"
+}

@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: _site
+website:
+  search: false
+  title: "◈ 教育机会"
+  navbar:
+    background: "#ffffff"
+    left:
+      - href: index.qmd
+        text: 研究报告
+      - href: "#explore"
+        text: 交互探索
+format:
+  html:
+    lang: zh
+    theme: default
+    toc: true
+    toc-title: 本页内容
+    css: styles.css
+    embed-resources: true
