@@ -11,6 +11,7 @@ ROOT = Path(__file__).parent.resolve()
 OUT = ROOT / 'deliverables'
 BASE = 'http://127.0.0.1:8765/'
 IDS = ['native', 'react', 'shiny', 'streamlit', 'palette-sage', 'palette-blue', 'palette-lilac', 'palette-citrus']
+FOCUS_IDS = ['native', 'palette-blue', 'palette-lilac']
 report = {'verified_at_utc': datetime.now(timezone.utc).isoformat(), 'entries': [], 'checks': {}}
 
 with sync_playwright() as p:
@@ -68,13 +69,41 @@ with sync_playwright() as p:
                             'full_resolution_zoom_all_eight':'pass', 'keyboard_navigation_escape_focus':'pass',
                             'download_matches_source_png':'pass', 'mobile_gallery_and_dialog':'pass'})
 
-    # The full-size contact sheet keeps each complete screenshot without cropping.
+    # The priority page must navigate within exactly the three chosen designs.
+    page.goto(BASE + 'deliverables/' + quote('重点三套配色对比.html'))
+    assert [item.get_attribute('data-id') for item in page.locator('.design').all()] == FOCUS_IDS
+    page.locator('.preview').first.click()
+    page.keyboard.press('ArrowLeft')
+    assert page.locator('#viewer-count').inner_text() == '3 / 3'
+    assert '雾紫杏白' in page.locator('#viewer-title').inner_text()
+    page.keyboard.press('ArrowRight')
+    assert '暖纸色杂志专题' in page.locator('#viewer-title').inner_text()
+    page.keyboard.press('Escape')
+    page.get_by_role('button', name='全部八套', exact=True).click()
+    page.reload()
+    assert page.locator('.design').count() == 8
+    assert page.locator('#all').get_attribute('aria-pressed') == 'true'
+    page.get_by_role('button', name='重点三套', exact=True).click()
+    page.get_by_role('button', name='手机', exact=True).click()
+    page.wait_for_function('() => [...document.querySelectorAll(".preview img")].every(i => i.complete && i.naturalWidth === 780)')
+    assert page.locator('.design').count() == 3
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth+1')
+    report['checks']['priority_three_filter_navigation_reload_mobile'] = 'pass'
+
+    # Keep separate complete contact sheets for the selected three and all eight.
     page.set_viewport_size({'width':1920,'height':1200})
     page.goto(BASE + 'index.html')
     page.wait_for_function('() => [...document.querySelectorAll(".preview img")].every(i => i.complete && i.naturalWidth === 2880)')
     assert page.locator('.design[data-id=palette-lilac] .open').get_attribute('href') == 'react/?palette=lilac'
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth+1')
-    page.add_style_tag(content='.switch,.actions{display:none!important}.hero p:last-child{margin-top:5px}.preview{cursor:default}footer{padding-bottom:24px}')
+    assert [item.get_attribute('data-id') for item in page.locator('.design').all()] == FOCUS_IDS
+    page.screenshot(path=str(OUT/'重点三套配色总览.png'), full_page=True)
+    width, height = struct.unpack('>II', (OUT/'重点三套配色总览.png').read_bytes()[16:24])
+    report['focus_png'] = {'width_px':width, 'height_px':height, 'selected_ids':FOCUS_IDS}
+    page.get_by_role('button', name='全部八套', exact=True).click()
+    page.wait_for_function('() => [...document.querySelectorAll(".preview img")].every(i => i.complete && i.naturalWidth === 2880)')
+    assert page.locator('.design').count() == 8
+    page.add_style_tag(content='.switch,.scope-switch,.actions{display:none!important}.hero p:last-child{margin-top:5px}.preview{cursor:default}footer{padding-bottom:24px}')
     page.screenshot(path=str(OUT/'八套设计高清总览.png'), full_page=True)
     data = (OUT/'八套设计高清总览.png').read_bytes()
     width, height = struct.unpack('>II', data[16:24])
@@ -86,10 +115,13 @@ with sync_playwright() as p:
     page.set_viewport_size({'width':1440,'height':1050})
     page.goto(BASE + 'local.html', wait_until='networkidle')
     page.wait_for_function('() => [...document.querySelectorAll(".preview img")].every(i => i.complete && i.naturalWidth === 2880)')
-    assert page.locator('.design').count() == 8
+    assert [item.get_attribute('data-id') for item in page.locator('.design').all()] == FOCUS_IDS
     page.screenshot(path=str(ROOT/'screenshots/local.png'), full_page=True)
+    page.get_by_role('button', name='全部八套', exact=True).click()
+    assert page.locator('.design').count() == 8
     assert not errors, errors
     report['checks']['local_entry_eight_images_and_links'] = 'pass'
+    report['checks']['local_entry_defaults_to_selected_three'] = 'pass'
     report['browser_errors'] = errors
     report['limits'] = 'Chromium on Linux; file: navigation is blocked by managed-browser policy. Self-contained HTML was tested over localhost with additional asset requests blocked.'
     browser.close()

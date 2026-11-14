@@ -42,3 +42,5 @@ Palette tokens live in `assets/palettes.json`. Run the build, browser captures, 
 截图从真实应用以 `device_scale_factor=2` 重绘：桌面布局仍为 1440 CSS px，PNG 为 2880 px；手机布局为 390 CSS px，PNG 为 780 px。不要将旧低分辨率截图插值放大。生成器会检查源 PNG 的宽度。总览截图以 1920 CSS px / 2× 输出 3840 px 宽，保留完整页面。
 
 `index.html` 与离线对比页内嵌原图；`local.html` 使用同一界面但引用 `screenshots/` 中的图片。日常修改生成器，避免直接编辑生成后的 HTML。`verify_gallery.py` 验证放大、Esc 关闭并恢复焦点、方向键切换、下载 PNG 与源文件一致、全部八项及移动端布局。
+
+`assets/design-focus.json` 保存用户当前优先配色（01 暖纸色杂志专题、06 冰蓝雾灰、07 雾紫杏白）。修改后运行 `python package_gallery.py` 和 `python verify_gallery.py`，即可更新默认三套入口、全部八套归档和两张总览图，无需重新截取未改动的 Demo。`?view=focus` / `?view=all` 可直接选择展示范围。

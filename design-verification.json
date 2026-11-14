@@ -32,7 +32,9 @@
     "native_original_tooltip_preserved": "pass",
     "react_four_light_alternatives_preserved": "pass",
     "local_entry_eight_links_and_images": "pass",
-    "eight_entry_hd_gallery_zoom_download_keyboard": "pass"
+    "eight_entry_hd_gallery_zoom_download_keyboard": "pass",
+    "priority_three_filter_navigation_reload_mobile": "pass",
+    "local_entry_defaults_to_selected_three": "pass"
   },
   "data_rows": 90,
   "data_unchanged": true,
@@ -53,8 +55,9 @@
     "analysis.py": "899e70a29b94c43d81e737e8a7f7450dff6b096adea9f5f3c4e13ea308fcf333",
     "assets/palettes.json": "211c04833de5861fda338e7f212c22aa9bddd7037844c59ac5fc002ee80160de",
     "package_palettes.py": "4b5be5c468fc1a0adf18c51d812d6da5f7c0f5c3d4501e12e52bdb4d96131d17",
-    "package_gallery.py": "958ca51adceba73bacc7089a636411a527bfab3b686505154bd55c650e4ea404",
-    "verify_gallery.py": "738b2b10cbe04b703ecb922bf79e1af37fc39546449028caf697c159e3b0d106"
+    "package_gallery.py": "1ae23af19763444160be256a820fb31d0fa8cb5e16db4f1d7879ee3878670237",
+    "verify_gallery.py": "4b4b46a2050151a4d9c77b0b80ad29e6c030c8d16fdc69f31c1559d2aba0dff4",
+    "assets/design-focus.json": "63c22cd121b0d1d97b9970d31b9a848d50744a11300c2eb0fbe481c06833b85d"
   },
   "limits": [
     "Chromium on Linux only; Safari and the user Mac were not tested.",
@@ -95,10 +98,20 @@
     "mobile_source_width_px": 780,
     "overview_px": [
       3840,
-      9028
+      9040
     ],
     "render_scale": 2,
     "image_upscaling": false,
+    "report": "gallery-verification.json"
+  },
+  "priority_update": {
+    "verified_at_utc": "2026-11-14T23:37:37.390844+00:00",
+    "selected_ids": [
+      "native",
+      "palette-blue",
+      "palette-lilac"
+    ],
+    "all_eight_retained": true,
     "report": "gallery-verification.json"
   }
 }

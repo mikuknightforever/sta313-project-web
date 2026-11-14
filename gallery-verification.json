@@ -1,5 +1,5 @@
 {
-  "verified_at_utc": "2026-11-12T22:03:17.945402+00:00",
+  "verified_at_utc": "2026-11-14T23:37:09.748364+00:00",
   "entries": [
     {
       "id": "native",
@@ -113,11 +113,22 @@
     "keyboard_navigation_escape_focus": "pass",
     "download_matches_source_png": "pass",
     "mobile_gallery_and_dialog": "pass",
-    "local_entry_eight_images_and_links": "pass"
+    "priority_three_filter_navigation_reload_mobile": "pass",
+    "local_entry_eight_images_and_links": "pass",
+    "local_entry_defaults_to_selected_three": "pass"
+  },
+  "focus_png": {
+    "width_px": 3840,
+    "height_px": 2494,
+    "selected_ids": [
+      "native",
+      "palette-blue",
+      "palette-lilac"
+    ]
   },
   "overview_png": {
     "width_px": 3840,
-    "height_px": 9028,
+    "height_px": 9040,
     "full_screenshots": true
   },
   "browser_errors": [],
