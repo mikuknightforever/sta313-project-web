@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f0e0cb">
+  <meta name="description" content="从斜上方走进泰迪熊的客厅，拉开一张手绘森林地图。">
+  <title>泰迪熊的地图 · The Woodland Trail</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="assets/map-art.js"></script>
+  <script defer src="renderer.js"></script>
+  <script defer src="scene.js"></script>
+  <script defer src="story.js"></script>
+</head>
+<body>
+  <main class="journey" id="journey">
+    <div class="stage" id="stage" data-chapter="room">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <img class="map-view" id="map-view" alt="手绘森林地图，红色虚线从林间小屋沿河通往山谷中的标记。" hidden>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <a class="wordmark" href="#journey" aria-label="森林小径，回到开场">
+          <span class="wordmark-icon" aria-hidden="true">✧</span> THE WOODLAND TRAIL
+        </a>
+        <button type="button" class="restart" id="restart" aria-label="回到开场">
+          <span class="restart-icon" aria-hidden="true">↺</span><span>回到开场</span>
+        </button>
+      </header>
+
+      <section class="intro" aria-labelledby="title">
+        <h1 id="title">泰迪熊的地图</h1>
+        <button class="enter" id="enter" type="button">走进客厅 <span aria-hidden="true">↓</span></button>
+      </section>
+
+      <footer class="navigation">
+        <span class="chapter" id="chapter">客厅</span>
+        <div class="track" aria-hidden="true"><span></span></div>
+        <span class="scroll-hint" id="scroll-hint">下滑继续 <span aria-hidden="true">↓</span></span>
+        <span class="map-label">森林地图</span>
+      </footer>
+
+      <noscript><p class="notice">请启用 JavaScript 播放下滚动画。</p></noscript>
+    </div>
+  </main>
+</body>
+</html>
