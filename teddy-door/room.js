@@ -58,10 +58,13 @@ function makeRoomAssets(renderer) {
     architecture.push({shape:"quad", material:13, color:[1,1,1],
       model:transform(3.40,windowY,windowZ,windowW,windowH,1,0,-Math.PI/2),texture:art.window,
       castShadow:false,receiveShadow:false});
+    addWindowCurtain(renderer, part);
 
     place("rug",[0,.006,-1.28],[4.8/1.57,1,3/.92]);
     place("sofa",[0,.024,-2.28],4.15/.98);
     part("sofaThrow",0xffffff,[0,0,0],[1,1,1],[],{texture:finishes.blanket,windowLight:true});
+    part("linenPillow",0xffffff,[-1.22,1.23,-2.57],[.94,.43,.32],[-.25,.09,.12],
+      {texture:finishes.ticking,windowLight:true});
     part("linenPillow",0xf4c788,[1.18,1.34,-2.57],[.76,.65,.28],[-.22,-.07,-.13],{windowLight:true});
     const contact = (position,size) => architecture.push(object("quad",0xffffff,"shadow",position,
       [...size,1],[-Math.PI/2],{texture:finishes.shade,castShadow:false,receiveShadow:false}));
@@ -75,6 +78,13 @@ function makeRoomAssets(renderer) {
     place("lamp",[-2.70,tableHeight+.006,-2.05],.83/assets.models.lamp.bounds.size[1]);
     place("plant",[2.55,tableHeight+.006,-2.02],.84/assets.models.plant.bounds.size[1]);
     place("books",[2.88,tableHeight+.006,-1.79],1.55,[0,-.12]);
+
+    const teaX = -.48, teaZ = -.12, teaHeight = .48;
+    const rugTop = .006 + assets.models.rug.bounds.size[1];
+    const [width, height, depth] = assets.models.coffeeTable.bounds.size;
+    place("coffeeTable", [teaX,rugTop,teaZ], [1.65/width,teaHeight/height,.90/depth]);
+    contact([teaX,rugTop+.002,teaZ], [.89,.62]);
+    addTeaThings(renderer, part, teaX, rugTop+teaHeight, teaZ);
 
     picture([-1.71,2.72,-4.04],1.1968,.94656);
     picture([1.72,2.72,-4.04],.96,.68);
@@ -97,6 +107,7 @@ function makeRoomAssets(renderer) {
         if(name==="frame"||name==="window")mat.color.setHex(0xe1c3a3);
         if(name==="rug")mat.color.setHex(mat.name==="carpetDarker"?0xf5e3cf:0xb1c8d0);
         if(name==="plant"&&mat.name==="wood")mat.color.setHex(0xc68e72);
+        if(name==="coffeeTable")mat.color.setHex(0xb88c69);
       }
       if(["frame","window"].includes(name))node.receiveShadow=false;
     });

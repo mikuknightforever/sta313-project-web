@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "scope": "Eight unique Kenney Furniture Kit models used by the final toon living room. Scene instances, original architectural geometry and the separately licensed bear are excluded from unique model totals.",
+  "scope": "Nine unique Kenney Furniture Kit models used by the final toon living room. Scene instances, original architectural geometry and the separately licensed bear are excluded from unique model totals.",
   "license_texts": {
     "CC0-1.0": "LICENSES/CC0-1.0.txt"
   },
@@ -8,12 +8,12 @@
     "furniture": "LICENSES/Kenney-Furniture-Kit-License.txt"
   },
   "totals": {
-    "unique_models": 8,
-    "triangles": 774,
-    "bytes": 75200,
+    "unique_models": 9,
+    "triangles": 854,
+    "bytes": 81644,
     "texture_images": 0,
-    "scene_model_instances": 10,
-    "scene_model_triangles": 938
+    "scene_model_instances": 11,
+    "scene_model_triangles": 1018
   },
   "assets": [
     {
@@ -95,6 +95,46 @@
         ]
       },
       "preparation_changes": "Node translation only; no decimation, remeshing, shape edits or texture substitution."
+    },
+    {
+      "id": "coffeeTable",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/coffee-table.glb",
+      "bytes": 6444,
+      "sha256": "f8daea9124a542a00b7bdacfddac82dc468573d43e44d7b54dd6316e9695754b",
+      "triangles": 80,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scaled to an oval foreground table approximately 1.65 wide, 0.90 deep and 0.48 high in scene units. Uses the room wood palette.",
+      "source_name": "tableRound",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/tableRound.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          0,
+          -0.269999981,
+          -0.8
+        ],
+        "max": [
+          0.6928203,
+          0.09673398,
+          0
+        ],
+        "dimensions": [
+          0.6928203,
+          0.366733961,
+          0.8
+        ]
+      },
+      "preparation_changes": "Downloaded GLB is unmodified.",
+      "original_file": {
+        "name": "tableRound.glb",
+        "bytes": 6444,
+        "sha256": "f8daea9124a542a00b7bdacfddac82dc468573d43e44d7b54dd6316e9695754b"
+      }
     },
     {
       "id": "lamp",
@@ -407,7 +447,9 @@
   "original_scene_content": [
     "Two walls and individual floor-board geometry",
     "A woodland valley and sky drawn once on canvas for the window",
-    "An original botanical illustration on the right wall"
+    "An original botanical illustration on the right wall",
+    "A gathered curtain and curtain rod at the window",
+    "A ceramic mug with tea and an open botanical field notebook on the foreground table"
   ],
   "dependencies": {
     "Three.js": {

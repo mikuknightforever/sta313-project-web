@@ -1,17 +1,18 @@
 # Toon room assets: sources, licenses and adaptations
 
-The final room uses eight **Kenney Furniture Kit** models under **CC0 1.0 Universal**. Their native low-poly geometry and solid-color materials support the page's toon style. Room surfaces use no downloaded image textures. Window scenery and the botanical print on the right wall are original canvas illustrations.
+The final room uses nine **Kenney Furniture Kit** models under **CC0 1.0 Universal**. Their native low-poly geometry and solid-color materials support the page's toon style. Room surfaces use no downloaded image textures. Window scenery and the botanical print on the right wall are original canvas illustrations.
 
 The living-room bear is separately licensed: **Teddy bears by hectopod, CC BY 4.0**. Both licenses permit commercial use; the bear requires attribution, a source link, the license link and an indication of modifications. The page's “素材署名” disclosure retains that credit.
 
 ## Models used
 
-Counts describe each unique GLB once, before scene duplication. All eight contain zero texture images. The unique models total **774 triangles and 75,200 bytes**. The room uses ten instances of these models, totaling **938 triangles**. These counts exclude the bear, architectural geometry and procedural family characters.
+Counts describe each unique GLB once, before scene duplication. The nine GLBs contain zero texture images and total **854 triangles and 81,644 bytes**. The room places eleven instances, totaling **1,018 triangles**. These figures count the imported furniture meshes. The bear, room shell, original props and family characters have separate geometry.
 
 | Page file | Kenney source model | Triangles | Bytes | Preparation |
 | --- | --- | ---: | ---: | --- |
 | `models/sofa.glb` | `loungeSofa` | 128 | 9,916 | Node translation centers the existing model; mesh unchanged. |
 | `models/table.glb` | `tableCoffeeSquare` | 124 | 8,564 | Node translation centers the existing model; mesh unchanged. |
+| `models/coffee-table.glb` | `tableRound` | 80 | 6,444 | Original GLB. Scaled at runtime to an oval foreground table, approximately 1.65 wide, 0.90 deep and 0.48 high in scene units. |
 | `models/lamp.glb` | `lampRoundTable` | 76 | 6,604 | Original GLB unchanged. |
 | `models/plant.glb` | `pottedPlant` | 60 | 7,576 | Original GLB unchanged. |
 | `models/rug.glb` | `rugRounded` | 204 | 10,876 | Original GLB unchanged. |
@@ -41,12 +42,12 @@ The window retains its original outer dimensions of **0.3745832 × 0.664115**. I
 
 ## Bear and original scene content
 
-**[Teddy bears](https://sketchfab.com/3d-models/teddy-bears-e84b12b4ac20402aaf4d40f2219cd0e2) by [hectopod](https://sketchfab.com/hectopod)** is licensed under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**. The page selects the brown character, adjusts its scale and map-holding pose, and straightens its existing head joint by approximately 29.78°. The web export omits the knitted-fabric normal texture; runtime rendering uses a lighter brown palette, toon shading and a small eye highlight. Source mesh geometry and skin weights remain the basis of the adaptation. Detailed provenance and the original notice are retained in [../teddy-bear/SOURCE.md](../teddy-bear/SOURCE.md) and [../teddy-bear/LICENSE.txt](../teddy-bear/LICENSE.txt).
+**[Teddy bears](https://sketchfab.com/3d-models/teddy-bears-e84b12b4ac20402aaf4d40f2219cd0e2) by [hectopod](https://sketchfab.com/hectopod)** is licensed under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**. The page selects the brown character, adjusts its scale and map-holding pose, and straightens its existing head joint by approximately 29.78°. The web export omits the knitted-fabric normal texture; runtime rendering uses a lighter brown palette, two-tone cel shading, a contour that follows the moving arms and a small eye highlight. Source mesh geometry and skin weights remain the basis of the adaptation. Detailed provenance and the original notice are retained in [../teddy-bear/SOURCE.md](../teddy-bear/SOURCE.md) and [../teddy-bear/LICENSE.txt](../teddy-bear/LICENSE.txt).
 
-The room shell, illustrated floor boards, armrest throw and linen cushion were made for this page. The window overlooks a woodland valley with a layered sky, distant slopes, and pine trees. The botanical print on the right wall depicts a leafy branch and berries. Both are original canvas illustrations. The family-portrait characters remain the page's separate procedural models. The existing placeholder map is outside these model licenses.
+The room shell, illustrated floor boards, armrest throw and linen cushion were made for this page. The foreground table holds an original ceramic mug and an open field notebook with a drawn botanical specimen. A gathered curtain and its rod frame the window. The window overlooks a woodland valley with a layered sky, distant slopes, and pine trees. The botanical print on the right wall depicts a leafy branch and berries. Both are original canvas illustrations. The family-portrait characters remain the page's separate procedural models. The existing placeholder map is outside these model licenses.
 
 ## Rendering and distribution
 
-Three.js loads the GLBs and replaces their materials with the room's shared toon palette and four-band lighting. Flat shading preserves the low-poly furniture facets. Scene lights and shadow maps create the floor/object shadows. Downloaded bear geometry uses its adapted pose system; the family characters retain their procedural geometry.
+Three.js loads the furniture GLBs and applies the room's shared palette and four-band lighting. Flat shading preserves the furniture facets. Subtle lines emphasize the sofa, side tables and lamp. The bear has its own two-tone lighting and warm contour. Scene lights and shadow maps create the floor/object shadows. Downloaded bear geometry uses its adapted pose system; the family characters retain their procedural geometry.
 
 Retain the visible bear credit and [COPYRIGHT-NOTICES.md](COPYRIGHT-NOTICES.md) when sharing the prototype. Kenney does not require attribution under CC0; source records and the original notice remain included for provenance. Three.js uses its separate [MIT notice](../vendor/THREE-LICENSE.txt). These model licenses do not relicense the complete webpage, code, map or other dependencies.

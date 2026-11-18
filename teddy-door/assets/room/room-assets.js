@@ -4,6 +4,7 @@ window.roomAssetSources = {
   "models": {
     "sofa": "assets/room/models/sofa.glb",
     "table": "assets/room/models/table.glb",
+    "coffeeTable": "assets/room/models/coffee-table.glb",
     "lamp": "assets/room/models/lamp.glb",
     "plant": "assets/room/models/plant.glb",
     "rug": "assets/room/models/rug.glb",

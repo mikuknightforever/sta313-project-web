@@ -89,6 +89,16 @@ function makeRoomFinishes(renderer) {
     }
   }
 
+  const ticking = canvas(128, 48);
+  ticking.fillStyle = "#e5d9b9";
+  ticking.fillRect(0, 0, 128, 48);
+  for (const end of [14, 99]) {
+    ticking.fillStyle = "#86a19a";
+    ticking.fillRect(end, 0, 7, 48);
+    ticking.fillStyle = "#a7b9a4";
+    ticking.fillRect(end + 10, 0, 3, 48);
+  }
+
   const shade = canvas(96, 96);
   const penumbra = shade.createRadialGradient(48, 48, 0, 48, 48, 47);
   penumbra.addColorStop(0, "rgba(56,44,52,.38)");
@@ -97,7 +107,8 @@ function makeRoomFinishes(renderer) {
   shade.fillStyle = penumbra;
   shade.fillRect(0, 0, 96, 96);
   return { floor: renderer.texture(floor.canvas), wall: renderer.texture(wall.canvas),
-    blanket: renderer.texture(knit.canvas), shade: renderer.texture(shade.canvas) };
+    blanket: renderer.texture(knit.canvas), ticking: renderer.texture(ticking.canvas),
+    shade: renderer.texture(shade.canvas) };
 }
 
 // A light blanket follows the chamfer of the Kenney sofa's left arm. The strip
