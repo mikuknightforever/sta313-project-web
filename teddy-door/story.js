@@ -15,8 +15,17 @@ const paperDialog = document.querySelector("#paper-dialog");
 const paperSurface = document.querySelector("#paper-surface");
 const paperBack = document.querySelector("#paper-back");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const livingRoomEnd = .70;
+const portraitAnchor = livingRoomEnd * storyTimeline.portraitAnchor;
+const journey = document.querySelector("#journey");
+const windowControls = document.querySelector("#window-controls");
+const panes = [...windowControls.querySelectorAll("button")];
+const chartSection = document.querySelector("#season-chart");
+const fallingMark = document.querySelector("#falling-mark");
+const chart = makeSeasonChart(chartSection, backToWindow);
 const art = window.storyArt || {};
-const interaction = { parents: 0, child: 0, selected: null, zoom: 0 };
+const interaction = { parents: 0, child: 0, selected: null, zoom: 0,
+  windowApproach: 0, windowTime: 0, activeSeason: -1 };
 let scene;
 let animation = 0;
 let current = progress();
@@ -29,6 +38,11 @@ let restoredOverflow = "";
 let portraitScroll = 0;
 let focusRestore = 0;
 let hoverLeave = 0;
+let windowTick = 0;
+let selectedPane = 0;
+let focusWindowAfterJump = false;
+let markFlight;
+let chartFade;
 
 function cancelHoverLeave() {
   clearTimeout(hoverLeave);
@@ -36,7 +50,7 @@ function cancelHoverLeave() {
 }
 
 function portraitAvailable(value) {
-  return value >= storyTimeline.portraitStart && value <= storyTimeline.portraitExit;
+  return value >= livingRoomEnd * storyTimeline.portraitStart && value <= livingRoomEnd * storyTimeline.portraitExit;
 }
 
 if (art.map) {
@@ -62,21 +76,22 @@ function positionButton(button, rectangle) {
 
 function update(timestamp) {
   animation = 0;
+  if (!chartSection.hidden) return;
   // Account for slow frames without stretching a short gesture into seconds.
   // A new gesture starts with a nominal frame, rather than consuming idle time.
   const elapsed = previousFrame ? Math.min(250, timestamp - previousFrame) : 16.67;
   previousFrame = timestamp;
   const rate = reducedMotion.matches ? 1 : 1 - Math.exp(-elapsed / 100);
   if (focusRestore > 0) {
-    portraitScroll = (document.documentElement.scrollHeight - innerHeight) * storyTimeline.portraitAnchor;
+    portraitScroll = (document.documentElement.scrollHeight - innerHeight) * portraitAnchor;
     window.scrollTo({ top: portraitScroll, behavior: "instant" });
-    current = storyTimeline.portraitAnchor;
+    current = portraitAnchor;
     focusRestore--;
   }
   if (interaction.selected && window.scrollY !== portraitScroll) {
     window.scrollTo({ top: portraitScroll, behavior: "instant" });
   }
-  const target = interaction.selected ? storyTimeline.portraitAnchor : progress();
+  const target = interaction.selected ? portraitAnchor : progress();
   current = tween(current, target, rate);
   if (!portraitAvailable(current) && !interaction.selected) {
     cancelHoverLeave();
@@ -92,10 +107,16 @@ function update(timestamp) {
   interaction.zoom = tween(interaction.zoom, readyToZoom ? zoomTarget : 0, zoomRate);
 
   const width = Math.max(1, stage.clientWidth), height = Math.max(1, stage.clientHeight);
-  const visual = scene ? scene.render(current, width, height, reducedMotion.matches, interaction) : null;
-  const sequence = clamp(current / storyTimeline.sequenceEnd);
+  const roomProgress = clamp(current / livingRoomEnd);
+  interaction.windowApproach = clamp((current - livingRoomEnd) / (1 - livingRoomEnd));
+  interaction.windowTime = timestamp / 1000;
+  const visual = scene ? scene.render(roomProgress, width, height, reducedMotion.matches, interaction) : null;
+  const sequence = clamp(roomProgress / storyTimeline.sequenceEnd);
   const mapProgress = visual?.mapProgress ?? clamp(sequence / .39);
-  const chapter = current > storyTimeline.portraitExit ? (current >= .999 ? "room-end" : "portrait-return")
+  const windowReady = Boolean(visual?.windowPanes?.length) && visual.windowReveal === 1
+    && (reducedMotion.matches || interaction.windowApproach >= .91);
+  const chapter = windowReady ? "window" : interaction.windowApproach > .01 ? "window-approach"
+    : roomProgress > storyTimeline.portraitExit ? (roomProgress >= .999 ? "room-end" : "portrait-return")
     : sequence < .39 ? (mapProgress < .43 ? "room" : "unfold")
     : sequence < .46 ? "map" : sequence < .68 ? "return" : sequence < .96 ? "portrait-approach" : "portrait";
   const portraitReady = Boolean(scene) && portraitAvailable(current) && !interaction.selected;
@@ -115,10 +136,18 @@ function update(timestamp) {
   chapterLabel.textContent = {
     room: "客厅", unfold: "展开地图", map: "森林地图",
     return: "回到客厅", "portrait-approach": "全家福", portrait: "全家福",
-    "portrait-return": "回到客厅", "room-end": "客厅",
+    "portrait-return": "回到客厅", "room-end": "客厅", "window-approach": "望向窗外", window: "四季窗 · 2020",
   }[chapter];
-  scrollHint.firstChild.data = chapter === "map" ? "下滑回到客厅 "
-    : chapter === "unfold" ? "继续展开 " : chapter === "room-end" ? "已回到客厅 " : "下滑继续 ";
+  scrollHint.firstChild.data = windowReady ? "选择窗格查看季度数据" : chapter === "map" ? "下滑回到客厅 "
+    : chapter === "unfold" ? "继续展开 " : chapter === "room-end" ? "下滑看向窗外 " : "下滑继续 ";
+  windowControls.hidden = !windowReady;
+  if (windowReady) {
+    panes.forEach((button, i) => positionButton(button, visual.windowPanes[i]));
+    if (focusWindowAfterJump) {
+      focusWindowAfterJump = false;
+      panes[0].focus({ preventScroll: true });
+    }
+  } else interaction.activeSeason = -1;
   intro.inert = sequence > .067;
   mapView.hidden = !mapReady || mapReveal === 0;
   portraitControls.hidden = !portraitReady;
@@ -140,7 +169,7 @@ function update(timestamp) {
     paperDialog.hidden = true;
     document.body.style.overflow = restoredOverflow;
     window.scrollTo({ top: portraitScroll, behavior: "instant" });
-    current = storyTimeline.portraitAnchor;
+    current = portraitAnchor;
     portraitControls.hidden = false;
     (lastSelected === "parents" ? parentTarget : childTarget).focus({ preventScroll: true });
     hovered = null;
@@ -153,10 +182,17 @@ function update(timestamp) {
     || interaction.zoom !== (readyToZoom ? zoomTarget : 0)
     || Boolean(interaction.selected && !closing && lift < .98);
   if (unsettled) requestDraw();
-  else previousFrame = 0;
+  else {
+    previousFrame = 0;
+    if (windowReady && !reducedMotion.matches && !document.hidden) {
+      windowTick = setTimeout(requestDraw, 84);
+    }
+  }
 }
 
 function requestDraw() {
+  clearTimeout(windowTick);
+  if (!chartSection.hidden || document.hidden) return;
   if (!animation) animation = requestAnimationFrame(update);
 }
 
@@ -191,7 +227,7 @@ function returnToPortrait() {
   requestDraw();
 }
 
-function goTo(fraction) {
+function goTo(fraction, instant = false) {
   cancelHoverLeave();
   if (interaction.selected) {
     interaction.selected = null;
@@ -203,7 +239,7 @@ function goTo(fraction) {
   }
   hovered = null;
   const range = document.documentElement.scrollHeight - innerHeight;
-  window.scrollTo({ top: range * fraction, behavior: reducedMotion.matches ? "instant" : "smooth" });
+  window.scrollTo({ top: range * fraction, behavior: instant || reducedMotion.matches ? "instant" : "smooth" });
   requestDraw();
 }
 
@@ -234,7 +270,7 @@ for (const [button, who] of [[parentTarget, "parents"], [childTarget, "child"]])
     interaction.selected = who;
     zoomTarget = 1;
     closing = false;
-    portraitScroll = (document.documentElement.scrollHeight - innerHeight) * storyTimeline.portraitAnchor;
+    portraitScroll = (document.documentElement.scrollHeight - innerHeight) * portraitAnchor;
     window.scrollTo({ top: portraitScroll, behavior: "instant" });
     restoredOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -255,7 +291,71 @@ paperDialog.addEventListener("keydown", event => {
   }
 });
 
-enter.addEventListener("click", () => goTo((scene?.roomStop ?? .39) * .39 * storyTimeline.sequenceEnd));
+function finishFlight() {
+  markFlight?.cancel();
+  chartFade?.cancel();
+  markFlight = chartFade = null;
+  fallingMark.hidden = true;
+}
+
+function backToWindow() {
+  finishFlight();
+  journey.inert = false;
+  current = 1;
+  goTo(1, true);
+  requestAnimationFrame(() => panes[selectedPane].focus({ preventScroll: true }));
+}
+
+function openQuarter(index) {
+  if (!chartSection.hidden || windowControls.hidden) return;
+  const source = panes[index].getBoundingClientRect();
+  selectedPane = index;
+  interaction.activeSeason = index;
+  clearTimeout(windowTick);
+  chart.show(index);
+  journey.inert = true;
+  const landing = chartSection.querySelector("[data-season-landing]");
+  if (reducedMotion.matches || !landing) return;
+  const plottedPoint = chartSection.querySelector('[data-series-point="ow"]')?.getBoundingClientRect();
+  const point = plottedPoint && plottedPoint.top >= 0 && plottedPoint.bottom <= innerHeight
+    ? plottedPoint : landing.getBoundingClientRect();
+  const endX = point.left + point.width / 2, endY = point.top + point.height / 2;
+  const x = source.left + source.width * .55, y = source.top + source.height * .38;
+  fallingMark.src = window.seasonMarks[index];
+  fallingMark.hidden = false;
+  const transformAt = (px, py, angle, size) =>
+    `translate(${px}px, ${py}px) translate(-50%, -50%) rotate(${angle}deg) scale(${size})`;
+  markFlight = fallingMark.animate([
+    {transform: transformAt(x,y,-12,1),opacity:1},
+    {transform: transformAt(x+(endX-x)*.55+26,y+(endY-y)*.37,38,.95),opacity:1,offset:.48},
+    {transform: transformAt(endX,endY,8,.48),opacity:.90,offset:.91},
+    {transform: transformAt(endX,endY,8,.32),opacity:0}
+  ], {duration:780,easing:"ease-in-out"});
+  chartFade = chartSection.animate([{opacity:0},{opacity:0,offset:.18},{opacity:1}], {duration:620});
+  markFlight.onfinish = finishFlight;
+}
+
+panes.forEach((button, index) => {
+  const highlight = () => { interaction.activeSeason = index; requestDraw(); };
+  const clear = () => { interaction.activeSeason = -1; requestDraw(); };
+  button.addEventListener("pointerenter", highlight);
+  button.addEventListener("pointerleave", clear);
+  button.addEventListener("focus", highlight);
+  button.addEventListener("blur", clear);
+  button.addEventListener("click", () => openQuarter(index));
+});
+
+document.querySelector("#to-window").addEventListener("click", event => {
+  focusWindowAfterJump = event.detail === 0;
+  if (reducedMotion.matches) {
+    goTo(1, true);
+    return;
+  }
+  current = livingRoomEnd;
+  goTo(livingRoomEnd, true);
+  requestAnimationFrame(() => goTo(1));
+});
+enter.addEventListener("click", () => goTo(livingRoomEnd * (scene?.roomStop ?? .39) * .39 * storyTimeline.sequenceEnd));
 restart.addEventListener("click", () => goTo(0));
 document.querySelector(".wordmark").addEventListener("click", event => {
   event.preventDefault();
@@ -263,10 +363,11 @@ document.querySelector(".wordmark").addEventListener("click", event => {
 });
 window.addEventListener("scroll", requestDraw, { passive: true });
 window.addEventListener("resize", () => {
-  if (interaction.selected) portraitScroll = (document.documentElement.scrollHeight - innerHeight) * storyTimeline.portraitAnchor;
+  if (interaction.selected) portraitScroll = (document.documentElement.scrollHeight - innerHeight) * portraitAnchor;
   requestDraw();
 });
-reducedMotion.addEventListener("change", requestDraw);
+document.addEventListener("visibilitychange", requestDraw);
+reducedMotion.addEventListener("change", () => { finishFlight(); requestDraw(); });
 canvas.addEventListener("webglcontextlost", event => {
   event.preventDefault();
   scene = null;

@@ -11,17 +11,17 @@ function makeRoomFinishes(renderer) {
 
   const floor = canvas(768, 640);
   const boardWidth = 64;
-  const boardColors = ["#edd6bf", "#ebcdb7", "#e5c4b5", "#efdbc2"];
+  const boardColors = ["#cabbb0", "#c9b7ad", "#c2b3af", "#d1c2b5"];
   for (let i = 0; i < 12; i++) {
     const x = i * boardWidth;
     floor.fillStyle = boardColors[i % boardColors.length];
     floor.fillRect(x, 0, boardWidth, 640);
-    floor.fillStyle = "#9c755537";
+    floor.fillStyle = "#796b7433";
     floor.fillRect(x, 0, 1.6, 640);
     for (let joint = 60 + (i * 93) % 200; joint < 640; joint += 245) {
       floor.fillRect(x, joint, boardWidth, 1.5);
     }
-    floor.strokeStyle = "#aa825329";
+    floor.strokeStyle = "#88747b26";
     floor.lineWidth = 1.6;
     for (let j = 0; j < 3; j++) {
       const y = (i * 87 + j * 215) % 640;
@@ -35,14 +35,14 @@ function makeRoomFinishes(renderer) {
 
   const wall = canvas(512, 256);
   const wash = wall.createLinearGradient(0, 255, 450, 14);
-  wash.addColorStop(0, "#d6ced5");
-  wash.addColorStop(.62, "#f4e8df");
-  wash.addColorStop(1, "#fff1df");
+  wash.addColorStop(0, "#b7b7c8");
+  wash.addColorStop(.62, "#ccc8d1");
+  wash.addColorStop(1, "#ded0ca");
   wall.fillStyle = wash;
   wall.fillRect(0, 0, 512, 256);
   // A faint canopy silhouette breaks the empty wash near the sunlit window.
   wall.save();
-  wall.fillStyle = "rgba(121,136,163,.10)";
+  wall.fillStyle = "rgba(102,115,147,.08)";
   for (const [x, y, angle, length] of [[491,7,-.55,19],[510,21,-.60,20],[476,15,-.58,17],
     [465,24,-.66,14],[485,31,-.36,15],[506,46,-.32,21],[496,61,-.42,15],[473,53,-.42,14],
     [453,32,-.60,13],[451,43,-.58,10],[441,51,-.60,8],[508,83,-.4,14]]) {
@@ -54,30 +54,30 @@ function makeRoomFinishes(renderer) {
   }
   wall.restore();
   // Painted lower wall panels keep the back corner legible behind the furniture.
-  wall.fillStyle = "#c3d2d9";
+  wall.fillStyle = "#a6b4c2";
   wall.fillRect(0, 181, 512, 75);
-  wall.fillStyle = "#92a6b4";
+  wall.fillStyle = "#7c90a6";
   wall.fillRect(0, 184, 512, 1.4);
   for (let x = 10; x < 512; x += 48) {
-    wall.strokeStyle = "#8597a399";
+    wall.strokeStyle = "#71849b80";
     wall.strokeRect(x, 191, 37, 55);
-    wall.strokeStyle = "#e2e5d780";
+    wall.strokeStyle = "#cdd0d16b";
     wall.strokeRect(x + 1, 192, 37, 55);
   }
 
   const knit = canvas(180, 288);
-  knit.fillStyle = "#e89281";
+  knit.fillStyle = "#c48e88";
   knit.fillRect(0, 0, 180, 288);
   for (const x of [9, 164]) {
-    knit.fillStyle = "#efd0a8";
+    knit.fillStyle = "#dbc1ab";
     knit.fillRect(x, 0, 6, 288);
     knit.fillRect(x + 8, 0, 2, 288);
   }
   for (const y of [12, 26, 254, 268]) {
-    knit.fillStyle = "#f8d9ad";
+    knit.fillStyle = "#e3cbb2";
     knit.fillRect(0, y, 180, 4);
   }
-  knit.strokeStyle = "#fad3b4";
+  knit.strokeStyle = "#e4c7b7";
   knit.lineWidth = 2;
   for (let row = 0; row < 5; row++) {
     for (let col = 0; col < 3; col++) {
@@ -90,7 +90,7 @@ function makeRoomFinishes(renderer) {
   }
 
   const ticking = canvas(128, 48);
-  ticking.fillStyle = "#e5d9b9";
+  ticking.fillStyle = "#d0c8b9";
   ticking.fillRect(0, 0, 128, 48);
   for (const end of [14, 99]) {
     ticking.fillStyle = "#86a19a";

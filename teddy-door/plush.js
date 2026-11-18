@@ -10,9 +10,46 @@ function makePlush(renderer) {
     const bytes = Uint8Array.from(atob(encoded), character => character.charCodeAt(0));
     return new Float32Array(bytes.buffer);
   };
-  const parts = asset.parts.map((part, index) => {
-    const name = "downloadedTeddy" + index;
-    renderer.mesh(name, decode(part.vertices), 10);
+  // The source cloth has separate stitched pieces. Group its existing faces
+  // once, so the head and ears can turn at the neck while the paws hold still.
+  function splitHeadCloth(vertices) {
+    const triangleStride = 30, count = vertices.length / triangleStride;
+    const parent = Uint32Array.from({ length: count }, (_, index) => index);
+    const shared = new Map();
+    const rootOf = index => {
+      while (parent[index] !== index) {
+        parent[index] = parent[parent[index]];
+        index = parent[index];
+      }
+      return index;
+    };
+    for (let triangle = 0; triangle < count; triangle++) {
+      for (let corner = 0; corner < 3; corner++) {
+        const i = triangle * triangleStride + corner * 10;
+        const key = vertices[i] + "," + vertices[i + 1] + "," + vertices[i + 2];
+        if (shared.has(key)) parent[rootOf(triangle)] = rootOf(shared.get(key));
+        else shared.set(key, triangle);
+      }
+    }
+    const lowest = new Float32Array(count).fill(Infinity);
+    for (let triangle = 0; triangle < count; triangle++) {
+      const root = rootOf(triangle), i = triangle * triangleStride;
+      lowest[root] = Math.min(lowest[root], vertices[i + 1], vertices[i + 11], vertices[i + 21]);
+    }
+    const neckY = Math.min(...asset.shoulders.map(position => position[1])) - .025;
+    const headFaces = [], bodyFaces = [];
+    for (let triangle = 0; triangle < count; triangle++) {
+      const group = lowest[rootOf(triangle)] > neckY ? headFaces : bodyFaces;
+      const i = triangle * triangleStride;
+      group.push(...vertices.subarray(i, i + triangleStride));
+    }
+    return [{ vertices: new Float32Array(bodyFaces), head: false },
+      { vertices: new Float32Array(headFaces), head: true }];
+  }
+
+  const parts = asset.parts.flatMap((part, index) => {
+    const vertices = decode(part.vertices);
+    const groups = part.name === "Object_7" ? splitHeadCloth(vertices) : [{ vertices, head: true }];
     const importedMaterial = { ...part.material, normalTexture: null };
     if (part.name === "Object_7") importedMaterial.inkWidth = 1.7;
     if (part.name === "Object_7_muzzle") importedMaterial.inkWidth = .85;
@@ -20,8 +57,12 @@ function makePlush(renderer) {
     if (part.name === "Object_7") importedMaterial.baseColorFactor = [.36, .205, .12, 1];
     if (part.name === "Object_7_muzzle") importedMaterial.baseColorFactor = [.70, .48, .29, 1];
     if (part.name === "Object_10") importedMaterial.eyeGloss = true;
-    return { shape: name, model: transform(0, 0, 0), color: [1, 1, 1],
-      material: 18, importedMaterial };
+    return groups.map((group, subIndex) => {
+      const name = "downloadedTeddy" + index + (subIndex ? "Head" : "");
+      renderer.mesh(name, group.vertices, 10);
+      return { shape: name, head: group.head, model: transform(0, 0, 0), color: [1, 1, 1],
+        material: 18, importedMaterial };
+    });
   });
   // The toon web export omits the fabric texture; the archived GLB retains it.
   const ready = !asset.normalMap ? Promise.resolve() : new Promise((resolve, reject) => {
@@ -61,13 +102,16 @@ function makePlush(renderer) {
     return asset.shoulders.map((shoulder, index) => armMatrix(shoulder, asset.wrists[index], grips[index]));
   }
   let lastGrips = asset.wrists;
-  function render(root, grips = asset.wrists, clay = false) {
+  const neck = asset.shoulders[0].map((value, axis) => (value + asset.shoulders[1][axis]) / 2);
+  function render(root, grips = asset.wrists, clay = false, headYaw = 0) {
     lastGrips = grips;
     const skin = rig(grips);
+    const headRoot = headYaw ? multiply(root, multiply(transform(...neck, 1, 1, 1, 0, headYaw),
+      transform(-neck[0], -neck[1], -neck[2]))) : root;
     for (const part of parts) {
       renderer.draw({ ...part, skin,
         material: clay ? 17 : 18,
-        color: clay ? hex(0xb9b7b2) : part.color }, root);
+        color: clay ? hex(0xb9b7b2) : part.color }, part.head ? headRoot : root);
     }
   }
   return { render, rig, ready, geometry: asset, parts,

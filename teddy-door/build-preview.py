@@ -151,6 +151,9 @@ class Builder:
             return (base64.b64decode(content) if ';base64' in header else unquote_to_bytes(content)).decode('utf-8')
         path = self.local_path(url, self.root)
         source = path.read_text(encoding='utf-8-sig')
+        if path.name == 'season-chart.js':
+            record = './season-chart-sources.json'
+            source = source.replace(f'href="{record}"', f'href="{self.asset_uri(record, path.parent)}"')
         if path.name == 'room-assets.js':
             if 'roomAssetSources' not in source:
                 raise BuildError(f'The room asset registry is missing from {path}')

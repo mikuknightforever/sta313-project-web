@@ -12,8 +12,8 @@
     "triangles": 854,
     "bytes": 81644,
     "texture_images": 0,
-    "scene_model_instances": 11,
-    "scene_model_triangles": 1018
+    "scene_model_instances": 10,
+    "scene_model_triangles": 978
   },
   "assets": [
     {
@@ -446,8 +446,8 @@
   },
   "original_scene_content": [
     "Two walls and individual floor-board geometry",
-    "A woodland valley and sky drawn once on canvas for the window",
-    "An original botanical illustration on the right wall",
+    "The dusk valley, seasonal tree paintings and winter bear-shaped snow figure in the right-wall window",
+    "The summer parasol tree leaf used in the window-to-chart transition",
     "A gathered curtain and curtain rod at the window",
     "A ceramic mug with tea and an open botanical field notebook on the foreground table"
   ],
@@ -455,6 +455,12 @@
     "Three.js": {
       "license": "MIT",
       "notice": "../vendor/THREE-LICENSE.txt"
+    },
+    "Twemoji": {
+      "scope": "Cherry petal, maple leaf and snowflake marks used in the window-to-chart transition",
+      "license": "CC-BY-4.0",
+      "source_record": "../seasons/CREDITS.md",
+      "notice": "../seasons/LICENSE-Twemoji.txt"
     }
   }
 }

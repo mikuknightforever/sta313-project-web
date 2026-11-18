@@ -135,7 +135,7 @@ function bufferGeometry(data, stride = 8) {
 
 window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: true, powerPreference: 'high-performance' });
-  renderer.setClearColor(0xf0e8dc, 1);
+  renderer.setClearColor(0xcdbfbb, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1;
@@ -174,7 +174,7 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
   gradient.generateMipmaps = false;
   gradient.needsUpdate = true;
 
-  // Trace the key direction back to the two panes in the right wall. The same
+  // Trace the key direction back to the four panes in the right wall. The same
   // patch crosses the floor, rug and upholstery as the camera moves.
   const windowSlope = { value: new THREE.Vector2() };
   function updateWindowDirection() {
@@ -198,18 +198,19 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
         #if NUM_DIR_LIGHTS > 0
           float distanceToWindow = max(0.0, 3.30 - vRoomPosition.x);
           vec2 pane = vRoomPosition.yz + distanceToWindow * windowSlope - vec2(2.05, -1.45);
-          float softness = 0.035 + 0.065 * distanceToWindow;
-          // Signed distance from the opening, followed by the centre sash.
-          vec2 inset = vec2(1.02, 1.05) - abs(pane);
+          float softness = 0.055 + 0.070 * distanceToWindow;
+          // Match the real horizontal sash and the slim vertical mullion.
+          vec2 inset = vec2(1.075, 1.09) - abs(pane);
           float opening = smoothstep(-softness, softness, min(inset.x, inset.y));
-          float sash = mix(0.45, 1.0, smoothstep(0.025, 0.07 + softness, abs(pane.x)));
+          float sash = mix(0.48, 1.0, smoothstep(0.0414, 0.0414 + softness, abs(pane.x)));
+          sash *= mix(0.52, 1.0, smoothstep(0.026, 0.026 + softness, abs(pane.y)));
           float surface = max(0.0, dot(normal, directionalLights[0].direction));
-          outgoingLight += diffuseColor.rgb * vec3(0.50, 0.32, 0.15) * opening * sash * surface;
+          outgoingLight += diffuseColor.rgb * vec3(0.25, 0.16, 0.11) * opening * sash * surface;
         #endif
         #include <opaque_fragment>
       `);
     };
-    material.customProgramCacheKey = () => 'room-window-light-v1';
+    material.customProgramCacheKey = () => 'room-window-light-four-panes-dusk';
   }
 
   const geometries = new Map([
@@ -241,6 +242,9 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
 
   function transformedTexture(source, region, repeat, linear = false) {
     if (!source) return null;
+    // Animated canvas maps must retain the texture whose version the painter
+    // updates. A needless clone keeps its own version and can freeze a reveal.
+    if (!region && !repeat && !linear) return source;
     const key = source.uuid + ':' + JSON.stringify(region || repeat || []) + ':' + linear;
     if (!textureCopies.has(key)) {
       const copy = source.clone();
@@ -475,6 +479,11 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
     if (options.exposure !== undefined) renderer.toneMappingExposure = options.exposure;
     if (options.environmentIntensity !== undefined) scene.environmentIntensity = options.environmentIntensity;
     if (options.keyIntensity !== undefined) key.intensity = options.keyIntensity;
+    if (options.keyColor !== undefined) key.color.setHex(options.keyColor);
+    if (options.hemisphereColor !== undefined) hemisphere.color.setHex(options.hemisphereColor);
+    if (options.groundColor !== undefined) hemisphere.groundColor.setHex(options.groundColor);
+    if (options.fillColor !== undefined) fill.color.setHex(options.fillColor);
+    if (options.lampColor !== undefined) lampGlow.color.setHex(options.lampColor);
     if (options.keyPosition) key.position.fromArray(options.keyPosition);
     if (options.lampPosition) lampGlow.position.fromArray(options.lampPosition);
     if (options.lampIntensity !== undefined) lampGlow.intensity = options.lampIntensity;

@@ -1,0 +1,77 @@
+{
+  "title": "Q1 seasonal entry — Ontario caseloads and unemployment",
+  "generated_date_utc": "2026-11-18",
+  "project_repository": "https://github.com/mikuknightforever/sta313-project-docs",
+  "project_revision": "d0f1214c9025bbe809983af41eaea66c7f3d6eee",
+  "observations": 36,
+  "window": "2017 Q1–2025 Q4",
+  "embedded_columns": [
+    "year",
+    "quarter",
+    "ow_cases",
+    "odsp_cases",
+    "ontario_quarterly_mean_unemployment_pct"
+  ],
+  "transformations": {
+    "cases": "Copy cases at month 3, 6, 9, 12 without aggregation, interpolation or rounding. Cases are assistance units, not beneficiaries or new applications.",
+    "unemployment": "Arithmetic mean of the three seasonally adjusted monthly Ontario unemployment rates within each calendar quarter. Age 15 years and over, all genders, Statistics Canada Table 14-10-0287-01.",
+    "year_on_year_cases": "100 * (current / value four quarters earlier - 1).",
+    "year_on_year_unemployment": "Current quarterly mean minus mean four quarters earlier, in percentage points.",
+    "display": "Cases rounded to nearest whole unit; rates and changes to one decimal. Calculations retain the source precision.",
+    "season_entry": "Spring/summer/autumn/winter are navigation labels for 2020 Q1/Q2/Q3/Q4. Calendar quarters are Jan–Mar, Apr–Jun, Jul–Sep, Oct–Dec; they are not meteorological seasons."
+  },
+  "sources": [
+    {
+      "file": "datasets/ONT-SA/selected/ont-sa-characteristic-ow-ont.csv",
+      "url": "https://github.com/mikuknightforever/sta313-project-docs/blob/d0f1214c9025bbe809983af41eaea66c7f3d6eee/datasets/ONT-SA/selected/ont-sa-characteristic-ow-ont.csv",
+      "sha256": "cc3b10897eae905acc3b4fb2083f9ecb103ae03754a48cf94fbffbdb779fbda2"
+    },
+    {
+      "file": "datasets/ONT-SA/selected/ont-sa-characteristic-odsp-ont.csv",
+      "url": "https://github.com/mikuknightforever/sta313-project-docs/blob/d0f1214c9025bbe809983af41eaea66c7f3d6eee/datasets/ONT-SA/selected/ont-sa-characteristic-odsp-ont.csv",
+      "sha256": "4378bdc5324fa5c1d479179427fe0ce4162a7bc90bfc9cff532afd5cd634bdbd"
+    },
+    {
+      "file": "datasets/ONT-SA/selected/1410028701_databaseLoadingData.csv",
+      "url": "https://github.com/mikuknightforever/sta313-project-docs/blob/d0f1214c9025bbe809983af41eaea66c7f3d6eee/datasets/ONT-SA/selected/1410028701_databaseLoadingData.csv",
+      "sha256": "700a7503fec2deec6dc9781bfe1e29f6cc62e57612d589441554634a4f6f1b55"
+    }
+  ],
+  "original_catalogs": [
+    "https://data.ontario.ca/dataset/ontario-social-assistance-case-characteristics-by-census-metropolitan-area",
+    "https://github.com/mjmoon/sta313-project-datasets/tree/064cf60c13e7ddfbd20c5cbfd1ec220bec200d92",
+    "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410028701"
+  ],
+  "definitions": "Cases are one single person or family assistance unit; date day 01 is a file label, not an exact measurement day. The original Ontario dictionary notes First Nations estimates. Fractional OW counts are preserved as provided; this chart does not infer their full origin.",
+  "scope": "Descriptive economic-pressure and caseload view within Q1. It does not establish causal policy effects or whether support is adequate.",
+  "qa_2020": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "ow": 244870.583333333,
+      "odsp": 381192.0,
+      "unemployment": 6.433333333333334
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "ow": 235207.833333333,
+      "odsp": 380006.0,
+      "unemployment": 12.966666666666667
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "ow": 212835.583333333,
+      "odsp": 379954.0,
+      "unemployment": 10.466666666666667
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "ow": 200833.583333333,
+      "odsp": 377393.0,
+      "unemployment": 9.433333333333334
+    }
+  ]
+}

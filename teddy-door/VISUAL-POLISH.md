@@ -1,12 +1,17 @@
 # 动漫客厅与纸张交互
 
-基于 `version-2` 的本地视觉迭代。家具、摆件、画框和窗框使用 **Kenney 的现成低面数模型**；客厅主熊继续使用 hectopod 的下载模型。场景统一为纯色、柔和分段光照与实际阴影，地图保留项目原占位图。
+`prototype/dusk-season-window` 分支基于 `version-2` 制作黄昏客厅与四季窗。家具、摆件、画框和窗框使用 **Kenney 的现成低面数模型**；客厅主熊继续使用 hectopod 的下载模型。场景统一为纯色、柔和分段光照与实际阴影，地图保留项目原占位图。
+
+## 从四季窗进入图表
+
+在客厅点击「看四季窗」，或沿地图和全家福继续下滑。镜头靠近右墙时，窗外同一棵树呈现春夏秋冬。选择一格即可查看 2020 年对应季度的 Ontario Works（OW）、Ontario Disability Support Program（ODSP）在册案件和失业率。案件取 3、6、9、12 月的观测值，失业率取当季三个月失业率的平均值。可在图表中查看 2017–2025 年其余季度，用「返回四季」回到窗边。
 
 ## 场景和渲染
 
 - `renderer.js` 保留共用矩阵、几何与绘制接口，入口委托给 `physical-renderer-source.js`。文件名延续原接口，目前实现是 **toon renderer**。Three.js GLTFLoader 载入家具，转换为 `MeshToonMaterial`，采用四档光照梯度。沙发、方边桌和台灯保留较淡的结构线。熊采用两档明暗和随手臂动作移动的暖色轮廓线，眼睛保留高光。
 - `room.js` 组织客厅摆放；`assets/room/room-assets.js` 注册九个 GLB。房间材质在运行时统一配色，没有下载的颜色、法线或粗糙度图片。真实投影与柔和的接触阴影帮助表现坐姿。窗光沿主光方向穿过窗框，在家具、地板及后墙形成亮面，主熊朝窗一侧带有轮廓光。
-- `room-art.js` 在加载时绘制窗外山林和墙上的植物版画。`room-finishes.js` 绘制木地板、墙裙、毯面和接触阴影。扶手毯使用 56 个三角面，靠垫使用 120 个。
+- `season-window-art.js` 绘制黄昏山谷、四季树枝与冬季雪熊。窗格转场使用 `season-marks.js` 中的四个图形。夏季梧桐叶为原创，樱花瓣、枫叶与雪花改编自采用 CC BY 4.0 的 Twemoji 图形。[转场图形来源与许可](assets/seasons/CREDITS.md)
+- `room-finishes.js` 绘制木地板、墙裙、毯面和接触阴影。扶手毯使用 56 个三角面，靠垫使用 120 个。
 - 前景茶几采用 Kenney 的 `tableRound`，运行时缩放至宽约 1.65、深 0.90、高 0.48。桌上陶杯和摊开的植物手记由 `room-tea.js` 绘制，收拢的窗帘和窗帘杆由 `room-curtain.js` 绘制。
 - 沙发左侧的条纹腰枕复用亚麻靠垫网格，细条纹在加载时绘制。
 - `npm run build:teddy-renderer` 从源码生成 `assets/vendor/physical-renderer.js` 自包含 bundle；Three.js 的 MIT 声明保留在 `assets/vendor/THREE-LICENSE.txt`。
@@ -25,7 +30,7 @@
 | `window.glb` | `wallWindowSlide` 的两扇木框 | 80 |
 | `books.glb` | `books` | 62 |
 
-九个 GLB 合计 **854 三角面、81,644 字节、零图片纹理**。场景摆放了 **11 个实例，共 1,018 三角面**。统计范围为下载的家具和摆件模型。
+九个 GLB 合计 **854 三角面、81,644 字节、零图片纹理**。场景摆放了 **10 个实例，共 978 三角面**。统计范围为下载的家具和摆件模型。
 
 沙发和方形边桌通过节点平移居中。画框、窗框从下载模型保留原木框，移除玻璃和周围墙体。画框中央开放、没有背板；内开口为 **0.2761463 × 0.565678**，按照片比例调整 X/Y 缩放。各开口的 21 × 31 网格射线检查均无木框遮挡。完整来源、固定下载提交、原始与网页文件 SHA-256、世界坐标尺寸和修改记录见 [assets/room/SOURCES.md](assets/room/SOURCES.md) 与 [source-records.json](assets/room/source-records.json)。
 

@@ -35,6 +35,46 @@ function stick(a, b, width, depth, shape, color, material) {
   return object(shape, color, material, interpolate(a, b, .5), [width, length, depth], [rx, 0, rz]);
 }
 
+// Paint a passing sprig into four small transparent maps. Each folds with its
+// own paper panel, so the shadow stays on the map as the paws loosen their grip.
+function makeLeafShadows(renderer, count) {
+  const size = 64, height = 160;
+  const panels = Array.from({ length: count }, () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = height;
+    return { context: canvas.getContext("2d"), texture: renderer.texture(canvas) };
+  });
+  let lastPhase = -1;
+  return {
+    textures: panels.map(panel => panel.texture),
+    paint(phase) {
+      if (phase === lastPhase) return;
+      lastPhase = phase;
+      const opacity = smooth(0, .18, phase) * (1 - smooth(.72, 1, phase));
+      for (const [index, panel] of panels.entries()) {
+        const ctx = panel.context;
+        ctx.clearRect(0, 0, size, height);
+        ctx.save();
+        ctx.translate(mix(60, 198, phase) - index * size, mix(116, 68, phase));
+        ctx.rotate(mix(-.42, -.14, phase));
+        ctx.globalAlpha = opacity * .69;
+        ctx.fillStyle = ctx.strokeStyle = "#484858";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(-31, 15); ctx.quadraticCurveTo(0, 6, 32, -21); ctx.stroke();
+        for (const [x, y, rotation, length] of [[-18, 11, -1.2, 20], [-7, 6, .28, 23],
+          [4, 0, -1.14, 24], [14, -7, .17, 20], [23, -14, -.78, 23]]) {
+          ctx.save(); ctx.translate(x, y); ctx.rotate(rotation);
+          ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(length * .47, -11, length, 0);
+          ctx.quadraticCurveTo(length * .50, 9, 0, 0); ctx.fill(); ctx.restore();
+        }
+        ctx.restore();
+        panel.texture.needsUpdate = true;
+      }
+    },
+  };
+}
+
 function makeScene(renderer) {
   const room = makeRoomAssets(renderer);
   const portraitX = -1.71, portraitY = 2.72;
@@ -60,6 +100,8 @@ function makeScene(renderer) {
   const pages = Array.from({ length: pageCount }, (_, i) => object("quad", 0xffffff, "map", [0, 0, 0],
     [1, 1, 1], [], { region: [i / pageCount, 0, 1 / pageCount, 1] }));
 
+  const leafShadows = makeLeafShadows(renderer, pageCount);
+
   function load(source, ready) {
     if (!source) return;
     const image = new Image();
@@ -77,6 +119,14 @@ function makeScene(renderer) {
   }
 
   function render(progress, width, height, reduced, interaction) {
+    const windowApproach = clamp(interaction.windowApproach || 0);
+    // Reduced motion presents three composed views without travelling between them.
+    const chapter = reduced && windowApproach > 0
+      ? (windowApproach < .20 ? .12 : windowApproach < .48 ? .30 : 1) : windowApproach;
+    const glance = smooth(.14, .41, chapter);
+    const pan = smooth(.31, .62, chapter);
+    const travel = smooth(.46, .91, chapter);
+    const windowReveal = smooth(.44, .90, chapter);
     const sequence = clamp(progress / storyTimeline.sequenceEnd);
     const returnToRoom = smooth(.46, .67, sequence);
     const portraitReturn = smooth(storyTimeline.portraitExit, 1, progress);
@@ -88,9 +138,9 @@ function makeScene(renderer) {
     const wide = smooth(.58, 1.65, aspect);
     const approach = smooth(0, roomStop, p);
     const close = smooth(.47, .77, p);
-    const unfold = smooth(.43, .73, p);
+    const unfold = Math.max(smooth(.43, .73, p), .74 * smooth(0, .13, chapter));
     const face = smooth(.74, .99, p);
-    const mapY = bearBaseY + bearScale * mix(1.30, 1.55, unfold);
+    const mapY = bearBaseY + bearScale * (mix(1.30, 1.55, unfold) - .11 * glance);
     const mapZ = zBear + sofaAdvance + bearScale * mix(.62, .70, unfold);
 
     const pitch = .20;
@@ -159,9 +209,42 @@ function makeScene(renderer) {
       for (const key of Object.keys(paperCamera)) camera[key] = mix(camera[key], paperCamera[key], interaction.zoom);
     }
 
+    if (chapter > 0) {
+      // A short push toward the map lets the leaf pass before the bear looks up.
+      const cue = smooth(0, .16, chapter);
+      camera.x = mix(camera.x, -.82, cue);
+      camera.y = mix(camera.y, 1.91, cue);
+      camera.z = mix(camera.z, 1.29, cue);
+      camera.targetX = mix(camera.targetX, .01, cue);
+      camera.targetY = mix(camera.targetY, 1.59, cue);
+      camera.targetZ = mix(camera.targetZ, -1.70, cue);
+      camera.tan = mix(camera.tan, Math.max(.41, .42 / aspect), cue);
+
+      // Aim squarely at the right-hand wall. The lens fits the outer frame with
+      // breathing space for the chapter controls in either screen orientation.
+      const focalDistance = 1.10;
+      const windowTan = Math.max(2.35 / (2 * (focalDistance - .13) * aspect * .85),
+        2.30 / (2 * (focalDistance - .13) * .72));
+      // Pan across the room with the portrait lens while the bear is still in
+      // view. Once the window leads the shot, follow it down the clear aisle.
+      camera.targetX = mix(camera.targetX, 3.30, pan);
+      camera.targetY = mix(camera.targetY, 2.05, pan);
+      camera.targetZ = mix(camera.targetZ, -1.45, pan);
+      const arc = Math.sin(Math.PI * travel);
+      camera.x = mix(camera.x, 3.30 - focalDistance, travel);
+      camera.y = mix(camera.y, 2.05, travel) + .10 * arc;
+      camera.z = mix(camera.z, -1.45, travel) + .23 * arc;
+      const distanceToWindow = Math.hypot(3.30 - camera.x, 2.05 - camera.y, -1.45 - camera.z);
+      camera.tan = mix(camera.tan, windowTan * focalDistance / distanceToWindow, smooth(.57, .84, chapter));
+    }
+
     renderer.resize(width, height);
     renderer.frame(camera);
-    room.render();
+    room.render(undefined, windowReveal, interaction.windowTime || 0, reduced, interaction.activeSeason ?? -1);
+    const shadowPanels = [];
+    const leafPhase = clamp((chapter - .025) / .30);
+    const showLeaf = leafPhase > 0 && leafPhase < 1;
+    if (showLeaf) leafShadows.paint(leafPhase);
     const grips = [];
     // Every panel shares an edge with its neighbor. Alternating hinge
     // directions form a concertina that straightens as the paws pull apart.
@@ -174,6 +257,12 @@ function makeScene(renderer) {
       const nextZ = edgeZ - pageW * Math.sin(angle);
       const pose = multiply(mapRoot, transform((edgeX + nextX) / 2, 0, (edgeZ + nextZ) / 2, 1, 1, 1, 0, angle));
       renderer.draw(page, multiply(pose, transform(0, 0, 0, pageW + .0005, mapH, 1)));
+      if (showLeaf) {
+        shadowPanels.push(object("quad", 0xffffff, "shadow", [0, 0, 0], [1, 1, 1], [], {
+          model: multiply(pose, transform(0, 0, .0008, pageW, mapH, 1)),
+          texture: leafShadows.textures[i], castShadow: false, receiveShadow: false,
+        }));
+      }
       edgeX = nextX;
       edgeZ = nextZ;
 
@@ -183,26 +272,32 @@ function makeScene(renderer) {
       const grip = point(pose, side * (pageW / 2 + .04), pawY, -.006);
       grips[i === 0 ? 0 : 1] = grip.map((value, axis) => (value - bearPose[12 + axis]) / bearScale);
     }
-    seatedBear.render(bearPose, grips);
+    seatedBear.render(bearPose, grips, false, glance * .83);
     const portraitBoard = [4.40, 3.48];
     family.render(portraitPose, interaction, roomWidth, portraitBoard);
+    for (const panel of shadowPanels) renderer.draw(panel);
     renderer.finish();
 
     const viewProjection = multiply(perspective(camera.tan, aspect), viewAt(camera));
     const projection = multiply(viewProjection, portraitPose);
-    function screenBounds(x, y, w, h, z) {
+    function screenBounds(x, y, w, h, z, matrix = projection) {
       const corners = [-1, 1].flatMap(sideX => [-1, 1].map(sideY => {
         const px = x + sideX * w / 2, py = y + sideY * h / 2;
-        const depth = projection[3] * px + projection[7] * py + projection[11] * z + projection[15];
+        const depth = matrix[3] * px + matrix[7] * py + matrix[11] * z + matrix[15];
         return [
-          (.5 + (projection[0] * px + projection[4] * py + projection[8] * z + projection[12]) / depth / 2) * width,
-          (.5 - (projection[1] * px + projection[5] * py + projection[9] * z + projection[13]) / depth / 2) * height,
+          (.5 + (matrix[0] * px + matrix[4] * py + matrix[8] * z + matrix[12]) / depth / 2) * width,
+          (.5 - (matrix[1] * px + matrix[5] * py + matrix[9] * z + matrix[13]) / depth / 2) * height,
         ];
       }));
       const left = Math.min(...corners.map(c => c[0])), top = Math.min(...corners.map(c => c[1]));
       return [left, top, Math.max(...corners.map(c => c[0])) - left, Math.max(...corners.map(c => c[1])) - top];
     }
     return {
+      windowReveal,
+      windowPanes: chapter > .01 ? (room.windowPanes || []).map(pane => {
+        const pose = transform(pane.x, pane.y, pane.z, 1, 1, 1, 0, -Math.PI / 2);
+        return screenBounds(0, 0, pane.width, pane.height, 0, multiply(viewProjection, pose));
+      }) : [],
       mapProgress: p,
       portraitMove,
       parents: screenBounds(0, .61, 3.36, 2.18, .70),

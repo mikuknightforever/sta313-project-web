@@ -1,8 +1,8 @@
 :root {
   color-scheme: light;
-  --ink: #492c20;
+  --ink: #43323b;
   --gold: #a65b37;
-  --page: #f0e0cb;
+  --page: #d1beb2;
   --gutter: clamp(22px, 4.5vw, 76px);
   font-family: "Instrument Sans", system-ui, sans-serif;
 }
@@ -49,8 +49,8 @@ canvas {
 .vignette {
   pointer-events: none;
   background:
-    linear-gradient(to bottom, #f0e0cbf0, #f0e0cb85 8%, transparent 24%),
-    linear-gradient(to top, #edd5bfed, #edd5bf65 8%, transparent 21%);
+    linear-gradient(to bottom, #dac9bfef, #d5c4bc68 8%, transparent 24%),
+    linear-gradient(to top, #cdbbb5e8, #d0bcb64f 8%, transparent 21%);
 }
 .stage[data-chapter="map"] .vignette {
   background:
@@ -112,7 +112,7 @@ h1 {
   letter-spacing: .095em;
   margin: 0;
   line-height: 1.23;
-  text-shadow: 0 1px 12px #faecdfff;
+  text-shadow: 0 1px 12px #e0d2c999;
 }
 .enter {
   display: inline-flex;
@@ -181,7 +181,7 @@ h1 {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
 
-.journey { height: 540vh; height: 540svh; }
+.journey { height: 729vh; height: 729svh; }
 [hidden] { display: none !important; }
 .sr-only {
   position: absolute;
@@ -338,4 +338,45 @@ h1 {
 
 @media (min-width: 800px) and (min-height: 540px) {
   .intro { top: clamp(86px, 11vh, 132px); }
+}
+
+.to-window {
+  margin-inline-start: 12px;
+  padding: 10px 8px;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid #70574e85;
+  background: transparent;
+  cursor: pointer;
+  font-size: .85rem;
+}
+.to-window span { margin-inline-start: .4em; }
+.window-controls { position: absolute; inset: 0; pointer-events: none; }
+.window-controls button {
+  position: absolute;
+  pointer-events: auto;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: #f6eae0;
+  cursor: pointer;
+  text-align: left;
+}
+.window-controls button span {
+  position: absolute;
+  inset: auto auto 9% 9%;
+  background: #302c38c9;
+  border: 1px solid #ecddd24d;
+  border-radius: 2px;
+  padding: .2em .65em;
+  font: 500 clamp(12px,1.07vw,16px)/1.55 "Songti SC", "Noto Serif CJK SC", serif;
+  letter-spacing: .08em;
+}
+.window-controls button:hover span, .window-controls button:focus-visible span { background: #493940; }
+.window-controls button:focus-visible { outline: 2px solid #f1dfca; outline-offset: -4px; }
+.stage[data-chapter="window"] .vignette { opacity: .65; }
+.stage[data-chapter="window"] .scroll-hint span { display: none; }
+#falling-mark {
+  position: fixed; left: 0; top: 0; width: 37px; height: 37px;
+  pointer-events: none; z-index: 1000; filter: drop-shadow(0 2px 2px #342d333d);
 }

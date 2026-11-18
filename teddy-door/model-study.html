@@ -15,7 +15,7 @@ select:focus-visible{outline:3px solid #967348;outline-offset:3px}canvas{display
 <script defer src="plush.js"></script>
 <script defer src="family.js"></script>
 <script defer src="assets/room/room-assets.js"></script>
-  <script defer src="room-art.js"></script>
+  <script defer src="season-window-art.js"></script>
   <script defer src="room-finishes.js"></script>
   <script defer src="room-curtain.js"></script>
   <script defer src="room-tea.js"></script>
@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   const eye=eyes[view.value];
   renderer.frame({x:eye[0],y:eye[1],z:eye[2],targetX:0,targetY:1.8,targetZ:.18,tan:.29,aspect:width/height});
   renderer.draw(object('quad',0x9b8b78,'shadow',[0,.70,.18],[2.6,1.7,1],[-Math.PI/2]));
-  plush.render(transform(0,0,0),plush.lastGrips,mode.value==='clay',mode.value!=='clay');
+  plush.render(transform(0,0,0),plush.lastGrips,mode.value==='clay');
   renderer.finish();
   document.body.dataset.ready='true';
  }
