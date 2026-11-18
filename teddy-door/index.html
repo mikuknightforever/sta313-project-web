@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f0e0cb">
-  <meta name="description" content="从斜上方走进泰迪熊的客厅，拉开一张手绘森林地图。">
+  <meta name="description" content="走进泰迪熊的客厅，展开森林地图，再看看全家福里熊熊举着的白纸。">
   <title>泰迪熊的地图 · The Woodland Trail</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="assets/map-art.js"></script>
   <script defer src="renderer.js"></script>
+  <script defer src="family.js"></script>
   <script defer src="scene.js"></script>
   <script defer src="story.js"></script>
 </head>
@@ -31,6 +32,25 @@
       <section class="intro" aria-labelledby="title">
         <h1 id="title">泰迪熊的地图</h1>
         <button class="enter" id="enter" type="button">走进客厅 <span aria-hidden="true">↓</span></button>
+      </section>
+
+      <div class="portrait-controls" id="portrait-controls" hidden>
+        <button class="family-target parents-target" id="parents-target" type="button"
+          aria-label="爸爸熊和妈妈熊，举起大白纸，点击进入">
+          <span class="sr-only">爸爸熊和妈妈熊的大白纸</span>
+        </button>
+        <button class="family-target child-target" id="child-target" type="button"
+          aria-label="小孩熊，向前举起小白纸，点击进入">
+          <span class="sr-only">小孩熊的小白纸</span>
+        </button>
+        <p class="portrait-hint">悬浮在熊熊上举起白纸，点击靠近</p>
+      </div>
+
+      <section class="paper-dialog" id="paper-dialog" role="dialog" aria-modal="true"
+        aria-label="空白纸面" hidden>
+        <button class="paper-surface" id="paper-surface" type="button"
+          aria-label="点击白纸返回全家福"></button>
+        <button id="paper-back" class="paper-back" type="button">↶ 返回全家福</button>
       </section>
 
       <footer class="navigation">
