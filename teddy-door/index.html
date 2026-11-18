@@ -4,12 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f0e0cb">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Ctext y=%2232%22 font-size=%2232%22%3E✧%3C/text%3E%3C/svg%3E">
   <meta name="description" content="走进泰迪熊的客厅，展开森林地图，再看看全家福里熊熊举着的白纸。">
   <title>泰迪熊的地图 · The Woodland Trail</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="assets/map-art.js"></script>
   <script defer src="renderer.js"></script>
+  <script defer src="assets/vendor/physical-renderer.js"></script>
+  <script defer src="assets/teddy-bear/teddy-model.js"></script>
+  <script defer src="plush.js"></script>
   <script defer src="family.js"></script>
+  <script defer src="assets/room/room-assets.js"></script>
+  <script defer src="room-art.js"></script>
+  <script defer src="room-finishes.js"></script>
+  <script defer src="room.js"></script>
   <script defer src="scene.js"></script>
   <script defer src="story.js"></script>
 </head>
@@ -17,6 +25,7 @@
   <main class="journey" id="journey">
     <div class="stage" id="stage" data-chapter="room">
       <canvas id="scene" aria-hidden="true"></canvas>
+      <p class="scene-status" id="scene-status" role="status">正在布置客厅…</p>
       <img class="map-view" id="map-view" alt="手绘森林地图，红色虚线从林间小屋沿河通往山谷中的标记。" hidden>
       <div class="vignette" aria-hidden="true"></div>
 
@@ -55,6 +64,17 @@
 
       <footer class="navigation">
         <span class="chapter" id="chapter">客厅</span>
+        <details class="model-credit">
+          <summary>素材署名</summary>
+          <div class="model-credit-content">
+            <p>八种家具与摆件模型来自 Kenney，采用 CC0；客厅熊采用 CC BY 4.0。均允许商业使用。</p>
+            <ul>
+              <li><strong>客厅熊：</strong><a href="https://sketchfab.com/3d-models/teddy-bears-e84b12b4ac20402aaf4d40f2219cd0e2" target="_blank" rel="noopener noreferrer">Teddy bears</a> — <a href="https://sketchfab.com/hectopod" target="_blank" rel="noopener noreferrer">hectopod</a>，<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>。选用棕熊，适配尺寸与持图姿态、扶正原头部骨骼；网页版本去除布纹法线，调整配色与卡通光照。</li>
+              <li><strong>沙发、桌子、台灯、盆栽、地毯、画框、窗框与书：</strong><a href="https://kenney.nl/assets/furniture-kit" target="_blank" rel="noopener noreferrer">Furniture Kit</a> — <a href="https://kenney.nl/" target="_blank" rel="noopener noreferrer">Kenney</a>，<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">CC0</a>。使用原低面数模型，调整摆放与纯色配色；画框与窗框从原窗模型保留木框，移除墙体和玻璃。</li>
+            </ul>
+            <p>墙面、地板条、窗外远山和右侧小画为本页制作。CC0 允许商业使用、修改与分发；分享熊模型或包含它的网页时，请保留作者、来源、CC BY 许可及改动说明。</p>
+          </div>
+        </details>
         <div class="track" aria-hidden="true"><span></span></div>
         <span class="scroll-hint" id="scroll-hint">下滑继续 <span aria-hidden="true">↓</span></span>
         <span class="map-label">森林地图</span>

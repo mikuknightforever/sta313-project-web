@@ -1,0 +1,418 @@
+{
+  "schema_version": 2,
+  "scope": "Eight unique Kenney Furniture Kit models used by the final toon living room. Scene instances, original architectural geometry and the separately licensed bear are excluded from unique model totals.",
+  "license_texts": {
+    "CC0-1.0": "LICENSES/CC0-1.0.txt"
+  },
+  "source_notices": {
+    "furniture": "LICENSES/Kenney-Furniture-Kit-License.txt"
+  },
+  "totals": {
+    "unique_models": 8,
+    "triangles": 774,
+    "bytes": 75200,
+    "texture_images": 0,
+    "scene_model_instances": 10,
+    "scene_model_triangles": 938
+  },
+  "assets": [
+    {
+      "id": "sofa",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/sofa.glb",
+      "bytes": 9916,
+      "sha256": "2139f65e57e6e735374081837130353c0caba91381d3b4c5d95eafa1b2c01ca3",
+      "triangles": 128,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "source_name": "loungeSofa",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/loungeSofa.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "original_file": {
+        "name": "loungeSofa.glb",
+        "bytes": 9644,
+        "sha256": "1886b811c0d3ad0d8525a4fd43adf4112c497c8e0ed906f06877ca3517f4c7dd"
+      },
+      "bounds": {
+        "min": [
+          -0.4899999797344208,
+          0.0,
+          -0.20500001311302185
+        ],
+        "max": [
+          0.4899999797344208,
+          0.46000000834465027,
+          0.20500001311302185
+        ],
+        "dimensions": [
+          0.9799999594688416,
+          0.46000000834465027,
+          0.4100000262260437
+        ]
+      },
+      "preparation_changes": "Node translation only; no decimation, remeshing, shape edits or texture substitution."
+    },
+    {
+      "id": "table",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/table.glb",
+      "bytes": 8564,
+      "sha256": "115594f04784fdef4e45641d41ec5cd0521b1280735c18677db75eed7814bf95",
+      "triangles": 124,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "source_name": "tableCoffeeSquare",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/tableCoffeeSquare.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "original_file": {
+        "name": "tableCoffeeSquare.glb",
+        "bytes": 8276,
+        "sha256": "bcc81d8919a3af9141c9c93b4520106dd0a90a7144346cd87928014018aac816"
+      },
+      "bounds": {
+        "min": [
+          -0.2000000048428774,
+          0.0,
+          -0.20000000670552254
+        ],
+        "max": [
+          0.2000000048428774,
+          0.2300000041723255,
+          0.20000000670552254
+        ],
+        "dimensions": [
+          0.4000000059604645,
+          0.23000000417232513,
+          0.4000000059604645
+        ]
+      },
+      "preparation_changes": "Node translation only; no decimation, remeshing, shape edits or texture substitution."
+    },
+    {
+      "id": "lamp",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/lamp.glb",
+      "bytes": 6604,
+      "sha256": "75bb644caaa3da003b4fcad7a931722dd61cd2858aab70cf660021d5061fa1b2",
+      "triangles": 76,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "source_name": "lampRoundTable",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/lampRoundTable.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          -0.0160197,
+          0.0,
+          -0.14778
+        ],
+        "max": [
+          0.1360197,
+          0.31425,
+          0.02778
+        ],
+        "dimensions": [
+          0.1520394,
+          0.31425,
+          0.17556
+        ]
+      },
+      "preparation_changes": "Downloaded GLB is unmodified.",
+      "original_file": {
+        "name": "lampRoundTable.glb",
+        "bytes": 6604,
+        "sha256": "75bb644caaa3da003b4fcad7a931722dd61cd2858aab70cf660021d5061fa1b2"
+      }
+    },
+    {
+      "id": "plant",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/plant.glb",
+      "bytes": 7576,
+      "sha256": "5b760eda2766f75fda36b2c5df652a1662f82981ef64cd8fa7fe7bcd386b3a15",
+      "triangles": 60,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "source_name": "pottedPlant",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/pottedPlant.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          -0.1060296,
+          0.0,
+          -0.120731
+        ],
+        "max": [
+          0.1060296,
+          0.6540168,
+          0.120731
+        ],
+        "dimensions": [
+          0.2120593,
+          0.6540168,
+          0.2414619
+        ]
+      },
+      "preparation_changes": "Downloaded GLB is unmodified.",
+      "original_file": {
+        "name": "pottedPlant.glb",
+        "bytes": 7576,
+        "sha256": "5b760eda2766f75fda36b2c5df652a1662f82981ef64cd8fa7fe7bcd386b3a15"
+      }
+    },
+    {
+      "id": "rug",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/rug.glb",
+      "bytes": 10876,
+      "sha256": "2ef5cc634bb1060a1a5774cfcaf6e11c235791c99d6b59da5fdbc09edfb95a68",
+      "triangles": 204,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "source_name": "rugRounded",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/rugRounded.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          -0.92
+        ],
+        "max": [
+          1.5699999,
+          0.01,
+          0.0
+        ],
+        "dimensions": [
+          1.5699999,
+          0.01,
+          0.92
+        ]
+      },
+      "preparation_changes": "Downloaded GLB is unmodified.",
+      "original_file": {
+        "name": "rugRounded.glb",
+        "bytes": 10876,
+        "sha256": "2ef5cc634bb1060a1a5774cfcaf6e11c235791c99d6b59da5fdbc09edfb95a68"
+      }
+    },
+    {
+      "id": "frame",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/frame.glb",
+      "bytes": 10532,
+      "sha256": "5b4525506f59c4b1e8c81eb6dd3d0ada29eddd5335e8f3da1866db4693e6f3b8",
+      "triangles": 40,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared wooden frame palette.",
+      "source_name": "wallWindow",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/wallWindow.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          -0.1500731,
+          -0.294839,
+          -0.012275
+        ],
+        "max": [
+          0.1500731,
+          0.294839,
+          0.012275
+        ],
+        "dimensions": [
+          0.3001463,
+          0.589678,
+          0.02455
+        ]
+      },
+      "preparation_changes": "Extracted the source wood frame, removed wall and glass, centered the node, and narrowed the rails to 0.012 around the fixed inner opening.",
+      "original_file": {
+        "name": "wallWindow.glb",
+        "bytes": 10744,
+        "sha256": "166a10fddb8a78d942bc2791186913f7015dfee8501d20efd7a7b8f196fc5c3e"
+      },
+      "apertures": [
+        {
+          "min": [
+            -0.1380731,
+            -0.282839,
+            0.0
+          ],
+          "max": [
+            0.1380731,
+            0.282839,
+            0.0
+          ],
+          "dimensions": [
+            0.2761463,
+            0.565678,
+            0.0
+          ]
+        }
+      ],
+      "aperture_validation": "651 Z-axis rays through each updated opening, inset 0.00001 from its inner edges, passed through the opening."
+    },
+    {
+      "id": "window",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/window.glb",
+      "bytes": 14268,
+      "sha256": "3d7507495b1eaa14b790516635f7e856ba189a7b0f3ebdbc5e2a9873ba995416",
+      "triangles": 80,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared wooden frame palette.",
+      "source_name": "wallWindowSlide",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/wallWindowSlide.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          0.3127084,
+          0.3927084,
+          -0.04955
+        ],
+        "max": [
+          0.6872916,
+          1.0568234,
+          -0.00045
+        ],
+        "dimensions": [
+          0.3745832,
+          0.664115,
+          0.0491
+        ]
+      },
+      "preparation_changes": "Extracted the two source wood sashes, removed wall and glass, and narrowed each rail to 0.012 by enlarging the openings inside the fixed outer edges.",
+      "original_file": {
+        "name": "wallWindowSlide.glb",
+        "bytes": 14564,
+        "sha256": "33e51d7ee74f13de318e419b0ebfb31fe7f6e9fd37050f13aa9347641b49376a"
+      },
+      "apertures": [
+        {
+          "min": [
+            0.3247084,
+            0.4047084,
+            -0.037275
+          ],
+          "max": [
+            0.6752916,
+            0.7127659,
+            -0.037275
+          ],
+          "dimensions": [
+            0.3505832,
+            0.3080575,
+            0.0
+          ]
+        },
+        {
+          "min": [
+            0.3247084,
+            0.7367659,
+            -0.012725
+          ],
+          "max": [
+            0.6752916,
+            1.0448234,
+            -0.012725
+          ],
+          "dimensions": [
+            0.3505832,
+            0.3080575,
+            0.0
+          ]
+        }
+      ],
+      "aperture_validation": "651 Z-axis rays through each updated opening, inset 0.00001 from its inner edges, passed through the opening."
+    },
+    {
+      "id": "books",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/books.glb",
+      "bytes": 6864,
+      "sha256": "b8dc56e5d29f6fc1f4727fccb1b9642627fee9942c48060a00034e98df02701c",
+      "triangles": 62,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; bounds include original node transforms",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "source_name": "books",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/books.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          -0.0945
+        ],
+        "max": [
+          0.1504476,
+          0.1039023,
+          0.0
+        ],
+        "dimensions": [
+          0.1504476,
+          0.1039023,
+          0.0945
+        ]
+      },
+      "preparation_changes": "Downloaded GLB is unmodified.",
+      "original_file": {
+        "name": "books.glb",
+        "bytes": 6864,
+        "sha256": "b8dc56e5d29f6fc1f4727fccb1b9642627fee9942c48060a00034e98df02701c"
+      }
+    }
+  ],
+  "bear": {
+    "title": "Teddy bears",
+    "author": "hectopod",
+    "license": "CC-BY-4.0",
+    "source_url": "https://sketchfab.com/3d-models/teddy-bears-e84b12b4ac20402aaf4d40f2219cd0e2",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "source_record": "../teddy-bear/SOURCE.md",
+    "original_notice": "../teddy-bear/LICENSE.txt",
+    "changes": "Brown character selected and scaled; original head joint straightened about 29.78 degrees; map-holding pose adapted. Web export omits downloaded fabric normal map; runtime uses a lighter brown color, toon shading and an eye highlight. Source mesh geometry and skin weights remain the basis."
+  },
+  "original_scene_content": [
+    "Two walls and individual floor-board geometry",
+    "A woodland valley and sky drawn once on canvas for the window",
+    "An original botanical illustration on the right wall"
+  ],
+  "dependencies": {
+    "Three.js": {
+      "license": "MIT",
+      "notice": "../vendor/THREE-LICENSE.txt"
+    }
+  }
+}

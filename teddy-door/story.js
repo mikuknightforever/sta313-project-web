@@ -62,7 +62,9 @@ function positionButton(button, rectangle) {
 
 function update(timestamp) {
   animation = 0;
-  const elapsed = Math.min(50, timestamp - previousFrame || 16.67);
+  // Account for slow frames without stretching a short gesture into seconds.
+  // A new gesture starts with a nominal frame, rather than consuming idle time.
+  const elapsed = previousFrame ? Math.min(250, timestamp - previousFrame) : 16.67;
   previousFrame = timestamp;
   const rate = reducedMotion.matches ? 1 : 1 - Math.exp(-elapsed / 100);
   if (focusRestore > 0) {
@@ -82,11 +84,12 @@ function update(timestamp) {
   }
   const active = interaction.selected || hovered;
   const parentRate = reducedMotion.matches ? 1 : 1 - Math.exp(-elapsed / 170);
+  const zoomRate = reducedMotion.matches ? 1 : 1 - Math.exp(-elapsed / 175);
   interaction.parents = tween(interaction.parents, active === "parents" ? 1 : 0, parentRate);
   interaction.child = tween(interaction.child, active === "child" ? 1 : 0, rate);
   const lift = interaction.selected ? interaction[interaction.selected] : 0;
   const readyToZoom = closing || lift >= .98;
-  interaction.zoom = tween(interaction.zoom, readyToZoom ? zoomTarget : 0, rate * .58);
+  interaction.zoom = tween(interaction.zoom, readyToZoom ? zoomTarget : 0, zoomRate);
 
   const width = Math.max(1, stage.clientWidth), height = Math.max(1, stage.clientHeight);
   const visual = scene ? scene.render(current, width, height, reducedMotion.matches, interaction) : null;
@@ -96,10 +99,14 @@ function update(timestamp) {
     : sequence < .39 ? (mapProgress < .43 ? "room" : "unfold")
     : sequence < .46 ? "map" : sequence < .68 ? "return" : sequence < .96 ? "portrait-approach" : "portrait";
   const portraitReady = Boolean(scene) && portraitAvailable(current) && !interaction.selected;
+  // Finish on the complete artwork, clear of the bear's head and paws.
+  const mapReveal = scene
+    ? smooth(.365, .39, sequence) * (1 - smooth(.46, .50, sequence))
+    : smooth(.24, .38, sequence) * (1 - smooth(.46, .62, sequence));
 
   stage.style.setProperty("--progress", current);
   stage.style.setProperty("--intro", 1 - smooth(.006, .067, sequence));
-  stage.style.setProperty("--map", scene ? 0 : smooth(.24, .38, sequence) * (1 - smooth(.46, .62, sequence)));
+  stage.style.setProperty("--map", mapReady ? mapReveal : 0);
   stage.style.setProperty("--paper-zoom", interaction.zoom);
   stage.dataset.chapter = chapter;
   stage.dataset.paperState = !interaction.selected ? "closed" : closing ? "closing"
@@ -113,7 +120,7 @@ function update(timestamp) {
   scrollHint.firstChild.data = chapter === "map" ? "下滑回到客厅 "
     : chapter === "unfold" ? "继续展开 " : chapter === "room-end" ? "已回到客厅 " : "下滑继续 ";
   intro.inert = sequence > .067;
-  mapView.hidden = !mapReady || (scene ? sequence < .37 || sequence > .47 : false);
+  mapView.hidden = !mapReady || mapReveal === 0;
   portraitControls.hidden = !portraitReady;
   if (portraitReady) {
     positionButton(parentTarget, visual.parents);
@@ -146,6 +153,7 @@ function update(timestamp) {
     || interaction.zoom !== (readyToZoom ? zoomTarget : 0)
     || Boolean(interaction.selected && !closing && lift < .98);
   if (unsettled) requestDraw();
+  else previousFrame = 0;
 }
 
 function requestDraw() {
@@ -158,9 +166,19 @@ function connectScene() {
     if (renderer) {
       scene = makeScene(renderer);
       scene.loadArt(art, requestDraw);
-      stage.classList.add("has-scene");
+      const activeScene = scene;
+      scene.ready.then(() => {
+        if (scene !== activeScene) return;
+        stage.classList.add("has-scene");
+        document.querySelector("#scene-status").hidden = true;
+        requestDraw();
+      }).catch(error => {
+        document.querySelector("#scene-status").textContent = "客厅暂时无法加载，请刷新重试。";
+        console.error("Room assets could not be loaded.", error);
+      });
     }
   } catch (error) {
+    document.querySelector("#scene-status").textContent = "此浏览器暂时无法显示 3D 客厅，请启用 WebGL 后刷新。";
     console.error("The 3D scene is unavailable.", error);
   }
   requestDraw();

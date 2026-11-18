@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>下载模型 · 客厅适配</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3eee5;color:#44392e;font:15px/1.6 system-ui,sans-serif}
+main{max-width:1200px;margin:auto;padding:24px}h1{font-size:25px;font-weight:550;margin:0 0 6px}p{color:#776b5f;margin:0 0 20px}
+.controls{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px}label{display:grid;gap:5px;font-size:13px}
+select{font:inherit;color:inherit;background:#fffaf2;border:1px solid #c6bbaa;border-radius:6px;padding:8px 12px;min-width:130px}
+select:focus-visible{outline:3px solid #967348;outline-offset:3px}canvas{display:block;width:100%;height:min(76vh,780px);min-height:400px;border:1px solid #d9ccba;border-radius:12px}
+@media(max-width:600px){main{padding:16px}.controls{gap:10px}select{min-width:104px}canvas{height:65vh;min-height:360px}}
+</style>
+<script defer src="renderer.js"></script>
+  <script defer src="assets/vendor/physical-renderer.js"></script>
+<script defer src="assets/teddy-bear/teddy-model.js"></script>
+<script defer src="plush.js"></script>
+<script defer src="family.js"></script>
+<script defer src="assets/room/room-assets.js"></script>
+  <script defer src="room-art.js"></script>
+  <script defer src="room-finishes.js"></script>
+  <script defer src="room.js"></script>
+  <script defer src="scene.js"></script>
+</head><body><main>
+<h1>下载模型 · 客厅适配</h1>
+<p>Teddy bears — hectopod · CC BY 4.0。沿用原模型的网格和手臂权重，扶正头部，并用卡通光照和浅色口鼻呈现。</p>
+<div class="controls">
+<label>表面<select id="mode"><option value="color">网页卡通材质</option><option value="clay">灰模</option></select></label>
+<label>视角<select id="view"><option value="three-quarter">四分之三侧面</option><option value="front">正面</option><option value="side">侧面</option></select></label>
+<label>手臂姿势<select id="pose"><option value="0">地图收起</option><option value="0.18">半展开</option><option value="0.32">完全展开</option></select></label>
+</div><canvas id="study" aria-label="客厅熊连续模型预览"></canvas>
+</main><script>
+window.addEventListener('DOMContentLoaded',()=>{
+ const canvas=document.querySelector('#study'), renderer=makeRenderer(canvas);
+ const scene=makeScene(renderer), plush=scene.plush;
+ const mode=document.querySelector('#mode'), view=document.querySelector('#view'), pose=document.querySelector('#pose');
+ function draw(){
+  const width=canvas.clientWidth,height=canvas.clientHeight;
+  scene.render(Number(pose.value),width,height,false,{parents:0,child:0,selected:null,zoom:0});
+  const eyes={'three-quarter':[-3.8,2.65,4.3],front:[0,2.0,5.4],side:[-5.5,2.2,.25]};
+  const eye=eyes[view.value];
+  renderer.frame({x:eye[0],y:eye[1],z:eye[2],targetX:0,targetY:1.8,targetZ:.18,tan:.29,aspect:width/height});
+  renderer.draw(object('quad',0x9b8b78,'shadow',[0,.70,.18],[2.6,1.7,1],[-Math.PI/2]));
+  plush.render(transform(0,0,0),plush.lastGrips,mode.value==='clay',mode.value!=='clay');
+  renderer.finish();
+  document.body.dataset.ready='true';
+ }
+ for(const input of [mode,view,pose])input.addEventListener('change',draw);
+ window.addEventListener('resize',draw);
+ window.study={renderer,scene,plush,draw};
+ draw();
+ plush.ready.then(draw);
+});
+</script></body></html>
