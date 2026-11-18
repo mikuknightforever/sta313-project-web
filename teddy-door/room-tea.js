@@ -27,8 +27,10 @@ function addTeaThings(renderer, part, x, surfaceY, z) {
     }
   }
   renderer.mesh("fieldMug", mug);
-  const cupPosition = [x - .39, surfaceY, z - .035];
-  part("fieldMug", 0xe7b78c, cupPosition, [1, 1, 1], [0, .30], { windowLight: true });
+  // The cup sits at the sofa edge of the table with its handle turned toward
+  // the reader. Leave room in front of the notebook for its loose bookmark.
+  const cupPosition = [x + .36, surfaceY, z - .14];
+  part("fieldMug", 0xe7b78c, cupPosition, [1, 1, 1], [0, -3.02], { windowLight: true });
 
   const tea = [];
   for (let i = 0; i < sides; i++) {
@@ -91,7 +93,7 @@ function addTeaThings(renderer, part, x, surfaceY, z) {
     if (i === sections.length-1) pageQuad([x1,foot,halfDepth],[x1,foot,-halfDepth],c,b,false);
   }
   renderer.mesh("fieldNotes", pages);
-  const bookPosition = [x + .254, surfaceY, z + .042], turn = [0,-.23];
+  const bookPosition = [x - .185, surfaceY, z + .012], turn = [0,-.12];
   part("box",0x738f82,[bookPosition[0],surfaceY+.007,bookPosition[2]],
     [.635,.014,.410],turn,{windowLight:true});
   part("fieldNotes",0xffffff,bookPosition,[1,1,1],turn,{texture:renderer.texture(pageArt),windowLight:true});

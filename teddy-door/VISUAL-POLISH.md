@@ -9,19 +9,21 @@
 ## 场景和渲染
 
 - `renderer.js` 保留共用矩阵、几何与绘制接口，入口委托给 `physical-renderer-source.js`。文件名延续原接口，目前实现是 **toon renderer**。Three.js GLTFLoader 载入家具，转换为 `MeshToonMaterial`，采用四档光照梯度。沙发、方边桌和台灯保留较淡的结构线。熊采用两档明暗和随手臂动作移动的暖色轮廓线，眼睛保留高光。
-- `room.js` 组织客厅摆放；`assets/room/room-assets.js` 注册九个 GLB。房间材质在运行时统一配色，没有下载的颜色、法线或粗糙度图片。真实投影与柔和的接触阴影帮助表现坐姿。窗光沿主光方向穿过窗框，在家具、地板及后墙形成亮面，主熊朝窗一侧带有轮廓光。
+- `room.js` 组织客厅摆放；`assets/room/room-assets.js` 注册十个 GLB。房间材质在运行时统一配色，没有下载的颜色、法线或粗糙度图片。真实投影与柔和的接触阴影帮助表现坐姿。窗光沿主光方向穿过窗框，在家具、地板及后墙形成亮面，主熊朝窗一侧带有轮廓光。
 - `season-window-art.js` 绘制黄昏山谷、四季树枝与冬季雪熊。窗格转场使用 `season-marks.js` 中的四个图形。夏季梧桐叶为原创，樱花瓣、枫叶与雪花改编自采用 CC BY 4.0 的 Twemoji 图形。[转场图形来源与许可](assets/seasons/CREDITS.md)
-- `room-finishes.js` 绘制木地板、墙裙、毯面和接触阴影。扶手毯使用 56 个三角面，靠垫使用 120 个。
+- `room-finishes.js` 绘制木地板、墙裙、毯面和接触阴影。扶手毯沿沙发扶手垂下。
 - 前景茶几采用 Kenney 的 `tableRound`，运行时缩放至宽约 1.65、深 0.90、高 0.48。桌上陶杯和摊开的植物手记由 `room-tea.js` 绘制，收拢的窗帘和窗帘杆由 `room-curtain.js` 绘制。
 - 沙发左侧的条纹腰枕复用亚麻靠垫网格，细条纹在加载时绘制。
+- 开场从高处看整间客厅，点击「走进客厅」后，镜头落到接近熊坐姿的高度，在展开地图前停留。沙发左侧的低柜托住台灯，开放格内横放相册。前景茶几靠近沙发，杯把朝向熊。
 - `npm run build:teddy-renderer` 从源码生成 `assets/vendor/physical-renderer.js` 自包含 bundle；Three.js 的 MIT 声明保留在 `assets/vendor/THREE-LICENSE.txt`。
 
-## 九个房间模型
+## 十个房间模型
 
 | 页面文件 | Kenney 原模型 | 三角面 |
 | --- | --- | ---: |
 | `sofa.glb` | `loungeSofa` | 128 |
 | `table.glb` | `tableCoffeeSquare` | 124 |
+| `sideboard.glb` | `cabinetTelevision` | 154 |
 | `coffee-table.glb` | `tableRound` | 80 |
 | `lamp.glb` | `lampRoundTable` | 76 |
 | `plant.glb` | `pottedPlant` | 60 |
@@ -30,7 +32,7 @@
 | `window.glb` | `wallWindowSlide` 的两扇木框 | 80 |
 | `books.glb` | `books` | 62 |
 
-九个 GLB 合计 **854 三角面、81,644 字节、零图片纹理**。场景摆放了 **10 个实例，共 978 三角面**。统计范围为下载的家具和摆件模型。
+十个 GLB 合计 **1,008 三角面、92,168 字节、零图片纹理**。场景复用书册，摆放了 **11 个实例，原始网格共 1,070 三角面**。运行时的坐垫细分另计。
 
 沙发和方形边桌通过节点平移居中。画框、窗框从下载模型保留原木框，移除玻璃和周围墙体。画框中央开放、没有背板；内开口为 **0.2761463 × 0.565678**，按照片比例调整 X/Y 缩放。各开口的 21 × 31 网格射线检查均无木框遮挡。完整来源、固定下载提交、原始与网页文件 SHA-256、世界坐标尺寸和修改记录见 [assets/room/SOURCES.md](assets/room/SOURCES.md) 与 [source-records.json](assets/room/source-records.json)。
 
@@ -40,7 +42,7 @@
 
 网页导出省略原针织布纹法线图片，运行时采用较浅棕色、卡通光照和小眼部高光；归档 GLB 保留原材质与纹理。来源、转换方法及原始授权见 [assets/teddy-bear/SOURCE.md](assets/teddy-bear/SOURCE.md) 和 [LICENSE.txt](assets/teddy-bear/LICENSE.txt)。
 
-**九个 Kenney 房间模型均为 CC0。熊为 CC BY 4.0。** 两类许可均允许商业使用，分享熊或包含它的网页时须保留作者、来源、许可和改动说明。页面“素材署名”可展开查看，移动端长内容可独立滚动。
+**十个 Kenney 房间模型均为 CC0。熊为 CC BY 4.0。** 两类许可均允许商业使用，分享熊或包含它的网页时须保留作者、来源、许可和改动说明。页面“素材署名”可展开查看，移动端长内容可独立滚动。
 
 ## 全家福、纸面与地图
 
@@ -60,6 +62,6 @@ python3 teddy-door/build-preview.py /workspace/web-review/teddy-toon.html
 python3 teddy-door/build-preview.py --entry model-study.html /workspace/web-review/teddy-toon-model.html
 ```
 
-单文件包含使用到的脚本、样式、九个房间模型、熊的网页模型数据和页面署名；资源使用内联内容或 data URI。原始 deferred 脚本顺序保留，房间资源注册表中的本地 URL 在打包时替换。完整源码/模型分发仍应保留对应来源和许可证文件。
+单文件包含使用到的脚本、样式、十个房间模型、熊的网页模型数据和页面署名；资源使用内联内容或 data URI。原始 deferred 脚本顺序保留，房间资源注册表中的本地 URL 在打包时替换。完整源码/模型分发仍应保留对应来源和许可证文件。
 
 通过 HTTP 验收桌面与手机首屏、地图展开到完整 2D、返程、全家福两张纸的打开/返回、Tab/Escape 焦点及重启。确认纸面完整可见、休止小纸不遮挡底部提示，素材署名可展开且不产生横向溢出。单文件预览应只请求自身 HTML，不再请求外部模型或纹理。

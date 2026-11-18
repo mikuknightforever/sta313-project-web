@@ -1,24 +1,29 @@
 # Toon room assets: sources, licenses and adaptations
 
-The final room uses nine **Kenney Furniture Kit** models under **CC0 1.0 Universal**. Their native low-poly geometry and solid-color materials support the page's toon style. Room surfaces use no downloaded image textures. The dusk valley and the four seasonal tree scenes in the window are original canvas illustrations.
+The final room uses ten **Kenney Furniture Kit** models under **CC0 1.0 Universal**. Their native low-poly geometry and solid-color materials support the page's toon style. Room surfaces use no downloaded image textures. The dusk valley and the four seasonal tree scenes in the window are original canvas illustrations.
 
 The living-room bear is separately licensed: **Teddy bears by hectopod, CC BY 4.0**. Both licenses permit commercial use; the bear requires attribution, a source link, the license link and an indication of modifications. The page's “素材署名” disclosure retains that credit.
 
 ## Models used
 
-Counts describe each unique GLB once, before scene duplication. The nine GLBs contain zero texture images and total **854 triangles and 81,644 bytes**. The room places ten instances, totaling **978 triangles**. The square side table appears twice. These figures count the imported furniture meshes. The bear, room shell, original props and family characters have separate geometry.
+Counts describe each unique GLB once, before scene duplication. The ten GLBs contain zero texture images and total **1,008 triangles and 92,168 bytes**. The room places eleven instances, totaling **1,070 triangles**. The books appear twice: by the window and as a horizontal stack of family albums in the low cabinet. These figures count the imported furniture meshes. The bear, room shell, original props and family characters have separate geometry.
 
 | Page file | Kenney source model | Triangles | Bytes | Preparation |
 | --- | --- | ---: | ---: | --- |
 | `models/sofa.glb` | `loungeSofa` | 128 | 9,916 | Node translation centers the existing model; mesh unchanged. |
 | `models/table.glb` | `tableCoffeeSquare` | 124 | 8,564 | Node translation centers the existing model; mesh unchanged. |
 | `models/coffee-table.glb` | `tableRound` | 80 | 6,444 | Original GLB. Scaled at runtime to an oval foreground table, approximately 1.65 wide, 0.90 deep and 0.48 high in scene units. |
+| `models/sideboard.glb` | `cabinetTelevision` | 154 | 10,524 | Original GLB unchanged. Runtime scale gives a 1.08 wide × 0.62 deep × 0.72 high open cabinet, front facing +Z beside the sofa. |
 | `models/lamp.glb` | `lampRoundTable` | 76 | 6,604 | Original GLB unchanged. |
 | `models/plant.glb` | `pottedPlant` | 60 | 7,576 | Original GLB unchanged. |
 | `models/rug.glb` | `rugRounded` | 204 | 10,876 | Original GLB unchanged. |
 | `models/frame.glb` | `wallWindow` | 40 | 10,532 | Centers the wood frame and moves its outer corners inward to produce 0.012-wide rails around the original opening. |
 | `models/window.glb` | `wallWindowSlide` | 80 | 14,268 | Keeps the two wood sashes. Moves their inner edges outward to produce 0.012-wide rails. |
 | `models/books.glb` | `books` | 62 | 6,864 | Original GLB unchanged. |
+
+The sofa GLB contains 128 triangles. At runtime, replacing its four seat-top triangles with a shallow 480-triangle cushion adds 476 triangles, with smooth normals and vertex-color contact occlusion. Replacing its six cushion front and short side-return triangles with 36 triangles adds a subtle same-color vertex-color seam and another 30 triangles, without adding a texture or draw call. The net runtime increase is **506 triangles**, giving **634 triangles for the sofa**, **1,514 for the ten unique furniture models** and **1,576 across eleven furniture instances**. The original seat boundary, bear contact height, arms, back and feet are retained; the distributed GLB is unchanged.
+
+The left end table is replaced by the low open cabinet. Its existing lamp sits directly on the top at Y=0.726. The existing four-book model is rotated onto its side and resized to form one horizontal family-album stack in the left lower compartment, resting on the actual shelf at Y≈0.191806. The stack is approximately 0.333 wide × 0.350 deep × 0.165 high and fits within the 0.473-wide, 0.197-high opening. Runtime vertex colors darken the original inner shelf, side and back faces, keeping the open compartments legible in the wide view. Positions, normals and topology remain unchanged. The cabinet remains inside the room plinth and clear of the sofa.
 
 Runtime placement, scaling and palette changes adapt the downloaded assets to the room. The selected meshes are the original low-poly designs. Both frame assets omit the original glass and surrounding wall primitives. Their rail vertex positions were adjusted in X and Y. They retain their original topology, normals, and depth.
 

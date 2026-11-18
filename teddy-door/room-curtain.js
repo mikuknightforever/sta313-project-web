@@ -88,5 +88,5 @@ function addWindowCurtain(renderer, part) {
   ctx.fillStyle = "#b88867"; ctx.fillRect(0,48,96,8);
   ctx.fillStyle = "#dbac83"; ctx.fillRect(0,49,96,3);
   ctx.fillStyle = "rgba(166,136,108,.36)"; ctx.fillRect(0,77,96,1);
-  part("gatheredLinen",0xffffff,[0,0,0],[1,1,1],[],{texture:renderer.texture(linen),castShadow:true});
+  part("gatheredLinen",0xffffff,[0,0,0],[1,1,1],[],{texture:renderer.texture(linen),castShadow:true,backlitLinen:true});
 }

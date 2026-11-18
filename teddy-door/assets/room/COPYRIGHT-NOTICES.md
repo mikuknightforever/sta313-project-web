@@ -6,7 +6,7 @@ Brown character selected; scale and map-holding pose adapted. The existing head 
 
 **Furniture Kit** by **Kenney**, [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/). [Official collection](https://kenney.nl/assets/furniture-kit).
 
-The selected models are `loungeSofa`, `tableCoffeeSquare`, `tableRound`, `lampRoundTable`, `pottedPlant`, `rugRounded`, `wallWindow`, `wallWindowSlide`, and `books`. Models are placed, scaled and recolored for the toon scene. Node translations center the sofa and square side table. Runtime scaling gives the round foreground table its oval shape. The picture and window frames use the source wood frame primitives with slimmer rails.
+The selected models are `loungeSofa`, `tableCoffeeSquare`, `cabinetTelevision`, `tableRound`, `lampRoundTable`, `pottedPlant`, `rugRounded`, `wallWindow`, `wallWindowSlide`, and `books`. Models are placed, scaled and recolored for the toon scene. Node translations center the sofa and square side table. Runtime scaling gives the round foreground table its oval shape. The picture and window frames use the source wood frame primitives with slimmer rails.
 
 Kenney's CC0 assets permit commercial use, modification and redistribution without requiring attribution. The creator and source records remain included for provenance: [SOURCES.md](SOURCES.md), [source-records.json](source-records.json), [original Furniture Kit notice](LICENSES/Kenney-Furniture-Kit-License.txt), and [CC0 legal text](LICENSES/CC0-1.0.txt).
 

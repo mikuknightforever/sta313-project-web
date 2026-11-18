@@ -185,7 +185,22 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
     }
   }
   updateWindowDirection();
-  function addWindowLight(material) {
+  function addWindowLight(material, finish = 'room') {
+    // Warm transmission is confined to the physical linen. Keep the tied band
+    // and folded header denser than the thin fabric over the glass.
+    const finishLight = finish === 'linen' ? `
+      float fromBehind = max(0.0, -dot(normal, directionalLights[0].direction));
+      float thinFold = 0.55 + 0.45 * cos(18.84956 * vMapUv.x);
+      float tie = smoothstep(0.045, 0.075, abs(vMapUv.y - 0.355));
+      float weave = mix(0.34, 1.0, thinFold) * mix(0.35, 1.0, tie);
+      float nearGlass = smoothstep(-0.2, 0.45, opening);
+      outgoingLight += diffuseColor.rgb * vec3(0.31, 0.14, 0.055)
+        * fromBehind * weave * nearGlass;
+    ` : finish === 'reveal' ? `
+      // Only jamb and sash faces angled into the opening catch this bounce.
+      outgoingLight += diffuseColor.rgb * vec3(0.13, 0.068, 0.025)
+        * smoothstep(0.16, 0.70, surface);
+    ` : '';
     material.onBeforeCompile = shader => {
       shader.uniforms.windowSlope = windowSlope;
       shader.vertexShader = 'varying vec3 vRoomPosition;\n' + shader.vertexShader;
@@ -205,12 +220,13 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
           float sash = mix(0.48, 1.0, smoothstep(0.0414, 0.0414 + softness, abs(pane.x)));
           sash *= mix(0.52, 1.0, smoothstep(0.026, 0.026 + softness, abs(pane.y)));
           float surface = max(0.0, dot(normal, directionalLights[0].direction));
-          outgoingLight += diffuseColor.rgb * vec3(0.25, 0.16, 0.11) * opening * sash * surface;
+          outgoingLight += diffuseColor.rgb * vec3(0.32, 0.17, 0.085) * opening * sash * surface;
+          ${finishLight}
         #endif
         #include <opaque_fragment>
       `);
     };
-    material.customProgramCacheKey = () => 'room-window-light-four-panes-dusk';
+    material.customProgramCacheKey = () => 'room-window-light-four-panes-dusk-' + finish;
   }
 
   const geometries = new Map([
@@ -277,7 +293,10 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
       armShader(material, material.userData.armUniforms, true, imported && !gloss);
     }
     material.userData.windowLight = !!obj.windowLight;
-    if (obj.windowLight && material.isMeshToonMaterial && !skinned) addWindowLight(material);
+    material.userData.backlitLinen = !!obj.backlitLinen;
+    if ((obj.windowLight || obj.backlitLinen) && material.isMeshToonMaterial && !skinned) {
+      addWindowLight(material, obj.backlitLinen ? 'linen' : 'room');
+    }
     material.userData.kind = code;
     material.userData.skinned = skinned;
     material.userData.imported = imported;
@@ -335,7 +354,8 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
     slot.visible = true; slot.geometry = geometry;
     slot.name = obj.shape;
     if (slot.material.userData.kind !== obj.material || slot.material.userData.skinned !== skinned
-        || slot.material.userData.gloss !== gloss || slot.material.userData.windowLight !== !!obj.windowLight) {
+        || slot.material.userData.gloss !== gloss || slot.material.userData.windowLight !== !!obj.windowLight
+        || slot.material.userData.backlitLinen !== !!obj.backlitLinen) {
       slot.material.dispose();
       slot.material = materialFor(obj, skinned);
       if (slot.customDepthMaterial) { slot.customDepthMaterial.dispose(); slot.customDepthMaterial = undefined; }
@@ -400,7 +420,7 @@ window.makePhysicalRenderer = function makePhysicalRenderer(canvas) {
         // r176 supports FLAT_SHADED in the toon shader/program cache, but does
         // not declare the property in MeshToonMaterial's constructor options.
         material.flatShading = true;
-        if (name.startsWith('room:')) addWindowLight(material);
+        if (name.startsWith('room:')) addWindowLight(material, name === 'room:window' ? 'reveal' : 'room');
         material.name = original.name;
         material.userData = { ...original.userData, roomStyle: 'toon' };
         for (const map of [material.map, material.alphaMap, material.emissiveMap]) {

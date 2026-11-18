@@ -74,6 +74,7 @@ function makeRoomAssets(renderer) {
 
     place("rug",[0,.006,-1.28],[4.8/1.57,1,3/.92]);
     place("sofa",[0,.024,-2.28],4.15/.98);
+    stats.modelTriangles += addSofaContact(assets.models.sofa);
     part("sofaThrow",0xffffff,[0,0,0],[1,1,1],[],{texture:finishes.blanket,windowLight:true});
     part("linenPillow",0xffffff,[-1.22,1.23,-2.57],[.94,.43,.32],[-.25,.09,.12],
       {texture:finishes.ticking,windowLight:true});
@@ -81,18 +82,35 @@ function makeRoomAssets(renderer) {
     const contact = (position,size) => architecture.push(object("quad",0xffffff,"shadow",position,
       [...size,1],[-Math.PI/2],{texture:finishes.shade,castShadow:false,receiveShadow:false}));
     contact([0,.020,-1.98],[4.65,1.50]);
-    contact([0,1.003,-1.82],[.90,.63]);
     contact([.05,-.21,-1.41],[8.1,6.55]);
     const tableHeight=.87, tb=assets.models.table.bounds;
     const tableScale=[.67/tb.size[0],tableHeight/tb.size[1],.67/tb.size[2]];
-    place("table",[-2.70,.006,-2.05],tableScale);
+    // A low family cabinet uses the same Kenney kit. The open shelves face +Z
+    // so the main room camera can read them, with a gap beside the sofa arm.
+    const cabinetX=-2.72, cabinetZ=-2.18, cabinetHeight=.72, cabinetFloor=.006;
+    const cabinet=assets.models.sideboard.bounds;
+    place("sideboard",[cabinetX,cabinetFloor,cabinetZ],
+      [1.08/cabinet.size[0],cabinetHeight/cabinet.size[1],.62/cabinet.size[2]]);
+    contact([cabinetX,.012,cabinetZ],[1.13,.67]);
+    const cabinetTop=cabinetFloor+cabinetHeight;
+    const familyLamp=[cabinetX-.24,cabinetTop,cabinetZ-.06];
+    place("lamp",familyLamp,.83/assets.models.lamp.bounds.size[1]);
+    const cabinetSY=cabinetHeight/cabinet.size[1];
+    // Reorient the existing four-book asset into one horizontal family-album
+    // stack. Centre it after rotation so its lowest cover rests on the shelf.
+    const albums=assets.models.books.bounds, albumScale=[1.10,3.20,3.70];
+    const albumBase=cabinetFloor+.08*cabinetSY;
+    model("books",multiply(transform(cabinetX-.27,albumBase+albums.size[0]*albumScale[0]/2,
+      cabinetZ+.035,...albumScale,0,0,-Math.PI/2),
+      transform(-albums.center[0],-albums.center[1],-albums.center[2])));
     const windowTableZ = -3.30;
     place("table",[2.65,.006,windowTableZ],tableScale);
-    place("lamp",[-2.70,tableHeight+.006,-2.05],.83/assets.models.lamp.bounds.size[1]);
-    place("plant",[2.55,tableHeight+.006,windowTableZ-.06],.84/assets.models.plant.bounds.size[1]);
+    // The plant reads on the way to the window. Its leaves stay below the arm
+    // in the seated view so their tips don't break the sofa silhouette.
+    place("plant",[2.63,tableHeight+.006,windowTableZ-.07],.63/assets.models.plant.bounds.size[1]);
     place("books",[2.88,tableHeight+.006,windowTableZ+.17],1.55,[0,-.12]);
 
-    const teaX = -.48, teaZ = -.12, teaHeight = .48;
+    const teaX = -.48, teaZ = -.58, teaHeight = .48;
     const rugTop = .006 + assets.models.rug.bounds.size[1];
     const [width, height, depth] = assets.models.coffeeTable.bounds.size;
     place("coffeeTable", [teaX,rugTop,teaZ], [1.65/width,teaHeight/height,.90/depth]);
@@ -102,7 +120,7 @@ function makeRoomAssets(renderer) {
     picture([-1.71,2.72,-4.04],1.1968,.94656);
     renderer.setLighting({keyIntensity:1.24,hemisphereIntensity:1.30,fillIntensity:.26,
       keyColor:0xf6d0b2,hemisphereColor:0xc6cde3,groundColor:0x9a95a8,fillColor:0xb9c5dc,
-      keyPosition:[6.0,4.8,.35],keyTarget:[0,.8,-2],lampPosition:[-2.70,1.5,-2.05],
+      keyPosition:[6.0,4.8,.35],keyTarget:[0,.8,-2],lampPosition:[familyLamp[0],cabinetTop+.62,familyLamp[2]],
       lampColor:0xffd3a1,lampIntensity:.76,exposure:1});
     stats.instances=furniture.length;
     stats.architecturalParts=architecture.length;
@@ -114,12 +132,37 @@ function makeRoomAssets(renderer) {
       if(node.isLight)node.visible=false;
       if(!node.isMesh)return;
       triangles+=(node.geometry.index?.count||node.geometry.attributes.position.count)/3;
+      if(name==="sideboard") {
+        // Broad painted recess tones make the real shelf openings readable in
+        // the wide shot. Keep all original positions, normals and topology.
+        const position=node.geometry.attributes.position, normal=node.geometry.attributes.normal;
+        const recess=position.clone();
+        for(let i=0;i<position.count;i++) {
+          const x=position.getX(i), y=position.getY(i), z=position.getZ(i);
+          const nx=normal.getX(i), ny=normal.getY(i), nz=normal.getZ(i);
+          const back=nz>.5&&z<-.20;
+          const shelf=ny>.5&&y>.07&&y<.20;
+          const ceiling=ny<-.5&&y>.16;
+          const innerSide=Math.abs(nx)>.5&&x>.03&&x<.77;
+          const tone = back ? .50 : ceiling ? .58 : innerSide ? .68 : shelf ? .74 : 1;
+          recess.setXYZ(i,tone,tone,tone);
+        }
+        node.geometry.setAttribute("color",recess);
+        for(const mat of Array.isArray(node.material)?node.material:[node.material]) {
+          mat.vertexColors=true;mat.needsUpdate=true;
+        }
+      }
       for(const mat of Array.isArray(node.material)?node.material:[node.material]) {
         const color=palette[mat.name]; if(color!==undefined)mat.color.setHex(color);
         if(name==="frame"||name==="window")mat.color.setHex(0xcab7a4);
         if(name==="rug")mat.color.setHex(mat.name==="carpetDarker"?0xd5c9c0:0x9aaeb8);
         if(name==="plant"&&mat.name==="wood")mat.color.setHex(0xc68e72);
         if(name==="coffeeTable")mat.color.setHex(0xb88c69);
+        if(name==="sideboard")mat.color.setHex(0xbc9478);
+        if(name==="books") {
+          const albumColors={carpetDarker:0x9d775e,carpetWhite:0xe6dcc5,plant:0x9baa92,metal:0x75877f};
+          if(albumColors[mat.name]!==undefined)mat.color.setHex(albumColors[mat.name]);
+        }
       }
       if(["frame","window"].includes(name))node.receiveShadow=false;
     });

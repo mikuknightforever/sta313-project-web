@@ -136,7 +136,9 @@ function makeScene(renderer) {
     const aspect = width / height;
     const roomWidth = 1; // Preserve the downloaded furniture proportions; camera fits the viewport.
     const wide = smooth(.58, 1.65, aspect);
-    const approach = smooth(0, roomStop, p);
+    // Reach the seated view before the paws start to open the map, leaving a
+    // short reading beat between the descending overview and the next push.
+    const approach = smooth(0, .29, p);
     const close = smooth(.47, .77, p);
     const unfold = Math.max(smooth(.43, .73, p), .74 * smooth(0, .13, chapter));
     const face = smooth(.74, .99, p);
@@ -149,16 +151,17 @@ function makeScene(renderer) {
     const heightFit = Math.min(.89, Math.max(.46, 1 - 90 / height));
     const distance = Math.max(mapW / (2 * endTan * aspect * widthFit), mapH / (2 * endTan * heightFit));
     const endZ = mapZ + Math.cos(pitch) * distance;
-    const roomTan = Math.max(.46, .55 / aspect);
+    const overviewTan = Math.max(.46, .55 / aspect);
+    const readingTan = Math.max(.40, .61 / aspect);
     const oblique = 1 - close;
     const camera = {
       aspect,
-      x: mix(mix(-2.95, -4.55, wide), mix(-1.70, -2.23, wide), approach) * oblique,
-      tan: mix(roomTan, endTan, face),
-      y: mix(mix(mix(4.25, 4.65, wide), 1.99, approach), mapY + Math.sin(pitch) * distance, face),
-      z: mix(mix(mix(mix(4.6, 5.55, wide), 2.37, approach), endZ + .46, close), endZ, face),
-      targetX: mix(.18 - .79 * wide, .18, approach) * oblique,
-      targetY: mix(mix(1.25, 1.57, approach), mapY, face),
+      x: mix(mix(-2.95, -4.55, wide), mix(-1.62, -1.50, wide), approach) * oblique,
+      tan: mix(mix(overviewTan, readingTan, approach), endTan, face),
+      y: mix(mix(mix(4.25, 4.65, wide), 1.48, approach), mapY + Math.sin(pitch) * distance, face),
+      z: mix(mix(mix(mix(4.6, 5.55, wide), mix(1.36, 1.80, wide), approach), endZ + .46, close), endZ, face),
+      targetX: mix(.18 - .79 * wide, .16 * wide, approach) * oblique,
+      targetY: mix(mix(1.25, 1.39, approach), mapY, face),
       targetZ: mix(mix(-1.26, zBear + sofaAdvance, approach), mapZ, face),
     };
     const mapRoot = transform(0, mapY, mapZ, 1, 1, 1, mix(-.96, -.52, unfold), -.12);

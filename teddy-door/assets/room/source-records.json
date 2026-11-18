@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "scope": "Nine unique Kenney Furniture Kit models used by the final toon living room. Scene instances, original architectural geometry and the separately licensed bear are excluded from unique model totals.",
+  "scope": "Ten unique Kenney Furniture Kit models used by the toon living room. Scene instances, original architectural geometry and the separately licensed bear are excluded from unique model totals.",
   "license_texts": {
     "CC0-1.0": "LICENSES/CC0-1.0.txt"
   },
@@ -8,12 +8,12 @@
     "furniture": "LICENSES/Kenney-Furniture-Kit-License.txt"
   },
   "totals": {
-    "unique_models": 9,
-    "triangles": 854,
-    "bytes": 81644,
+    "unique_models": 10,
+    "triangles": 1008,
+    "bytes": 92168,
     "texture_images": 0,
-    "scene_model_instances": 10,
-    "scene_model_triangles": 978
+    "scene_model_instances": 11,
+    "scene_model_triangles": 1070
   },
   "assets": [
     {
@@ -27,7 +27,7 @@
       "triangles": 128,
       "texture_images": 0,
       "coordinates": "glTF Y-up; bounds include original node transforms",
-      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette. At runtime, the four flat seat-top triangles are replaced by a 480-triangle shallow cushion surface with smooth normals and vertex-color contact occlusion, adding 476 triangles. The six original cushion front and short side-return triangles are replaced by 36 triangles carrying a subtle same-color vertex-color seam, adding another 30 triangles. The net increase is 506 triangles over the original 128 (634 total). The seat boundary and bear contact height stay fixed; the arms, back, feet and remaining imported geometry are retained. No texture or draw call is added for the seam. The distributed GLB is unchanged.",
       "source_name": "loungeSofa",
       "source_url": "https://kenney.nl/assets/furniture-kit",
       "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/loungeSofa.glb",
@@ -404,7 +404,7 @@
       "triangles": 62,
       "texture_images": 0,
       "coordinates": "glTF Y-up; bounds include original node transforms",
-      "runtime_changes": "Scene placement, scaling and a shared pastel toon palette; authored triangle geometry is retained.",
+      "runtime_changes": "Shared muted warm-brown, paper-white and mist-green palette. One original upright group remains by the window; the second group is rotated -90 degrees about local Z and scaled [1.10,3.20,3.70] into four horizontal family albums, grounded on the low cabinet shelf.",
       "source_name": "books",
       "source_url": "https://kenney.nl/assets/furniture-kit",
       "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/books.glb",
@@ -432,6 +432,51 @@
         "bytes": 6864,
         "sha256": "b8dc56e5d29f6fc1f4727fccb1b9642627fee9942c48060a00034e98df02701c"
       }
+    },
+    {
+      "id": "sideboard",
+      "author": "Kenney",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "file": "models/sideboard.glb",
+      "bytes": 10524,
+      "sha256": "811719593d676ff76f7b5904d52c845ce0396af2bc9a6a2636c4818ead320b99",
+      "triangles": 154,
+      "texture_images": 0,
+      "coordinates": "glTF Y-up; original front faces +Z",
+      "runtime_changes": "Original open cabinet retained; warm wood palette, scaled to 1.08 wide by 0.62 deep by 0.72 high, front facing +Z beside the sofa. Existing lamp sits on top at Y=0.726. Runtime vertex colors darken original inner shelf, side and back faces for readable recesses; positions, normals and topology remain unchanged. Four books are reused as one horizontal family-album stack in the left lower bay; lower cover rests at shelf Y=0.191806.",
+      "source_name": "cabinetTelevision",
+      "source_url": "https://kenney.nl/assets/furniture-kit",
+      "download_url": "https://raw.githubusercontent.com/RetroDECK/RetroQUEST/dfa19a5602a31f64bd890d15279a61f43b127328/assets/kenney_furniture-kit/Models/GLTF%20format/cabinetTelevision.glb",
+      "download_commit": "dfa19a5602a31f64bd890d15279a61f43b127328",
+      "original_file": {
+        "name": "cabinetTelevision.glb",
+        "bytes": 10524,
+        "sha256": "811719593d676ff76f7b5904d52c845ce0396af2bc9a6a2636c4818ead320b99"
+      },
+      "bounds": {
+        "min": [
+          0,
+          0,
+          -0.25
+        ],
+        "max": [
+          0.8,
+          0.31,
+          0
+        ],
+        "size": [
+          0.8,
+          0.31,
+          0.25
+        ],
+        "center": [
+          0.4,
+          0.155,
+          -0.125
+        ]
+      },
+      "modifications": "None to GLB; renamed sideboard.glb."
     }
   ],
   "bear": {
