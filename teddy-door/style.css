@@ -180,3 +180,77 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
+
+.journey { height: 440vh; height: 440svh; }
+[hidden] { display: none !important; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.portrait-controls { position: fixed; inset: 0; pointer-events: none; }
+.family-target {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: 28%;
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.parents-target { z-index: 3; }
+.child-target { z-index: 4; }
+.family-target:focus-visible {
+  outline: 2px dashed #975d37;
+  outline-offset: 3px;
+  background: #fff1cd15;
+}
+.portrait-hint {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 66px;
+  text-align: center;
+  font-size: .76rem;
+  letter-spacing: .06em;
+  line-height: 1.6;
+  margin: 0;
+}
+.paper-open .topbar, .paper-open .navigation, .paper-open .vignette {
+  opacity: calc(1 - var(--paper-zoom));
+  pointer-events: none;
+}
+.paper-dialog { position: fixed; inset: 0; z-index: 8; pointer-events: none; }
+.paper-back {
+  position: absolute;
+  top: max(20px, env(safe-area-inset-top));
+  right: var(--gutter);
+  min-height: 44px;
+  padding: 0 15px;
+  border: 1px solid #bfae974d;
+  border-radius: 3px;
+  background: #fffdf8eb;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: .78rem;
+  pointer-events: auto;
+}
+.stage[data-chapter="map"] .scroll-hint { display: inline; }
+.stage[data-chapter="map"] .map-label { display: none; }
+.stage[data-chapter="portrait"] .scroll-hint,
+.stage[data-chapter="portrait"] .track { visibility: hidden; }
+.stage[data-chapter="portrait"] .vignette,
+.stage[data-chapter="portrait-approach"] .vignette {
+  background:
+    linear-gradient(to bottom, #f0e0cbcc, transparent 13%),
+    linear-gradient(to top, #edd5bfdd, transparent 14%);
+}
+@media (max-height: 420px) {
+  .portrait-hint { bottom: 40px; font-size: .66rem; }
+  .paper-back { top: 10px; min-height: 34px; }
+}

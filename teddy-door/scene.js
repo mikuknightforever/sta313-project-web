@@ -130,61 +130,6 @@ function windowArt() {
   return view;
 }
 
-function familyArt() {
-  const print = document.createElement("canvas");
-  print.width = 520;
-  print.height = 376;
-  const ctx = print.getContext("2d");
-
-  function shape(x, y, w, h, color) {
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  ctx.fillStyle = "#eed1a2";
-  ctx.fillRect(0, 0, 520, 376);
-  shape(260, 178, 206, 169, "#ddab76");
-  shape(260, 185, 181, 155, "#edbb85");
-
-  function teddy(x, y, scale, fur, inner, clothes) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
-    shape(0, 107, 63, 73, clothes);
-    shape(-46, -44, 23, 24, fur);
-    shape(46, -44, 23, 24, fur);
-    shape(-46, -44, 13, 14, inner);
-    shape(46, -44, 13, 14, inner);
-    shape(0, 1, 65, 57, fur);
-    shape(-37, 18, 11, 6, inner);
-    shape(37, 18, 11, 6, inner);
-    shape(0, 24, 30, 20, "#ffe1a9");
-    for (const side of [-1, 1]) {
-      shape(side * 24, 0, 7, 9, "#503332");
-      shape(side * 24 - 2, -3, 2.4, 2.7, "#fff4d9");
-    }
-    shape(0, 17, 10, 7, "#613e35");
-    ctx.strokeStyle = "#743e37";
-    ctx.lineWidth = 2.8;
-    ctx.lineCap = "round";
-    ctx.beginPath();
-    ctx.moveTo(0, 21);
-    ctx.lineTo(0, 28);
-    ctx.quadraticCurveTo(-6, 35, -10, 31);
-    ctx.moveTo(0, 28);
-    ctx.quadraticCurveTo(6, 35, 10, 31);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  teddy(130, 157, 1.37, "#c78952", "#eb9b83", "#829a72");
-  teddy(379, 147, 1.46, "#cc935c", "#eea088", "#aa6761");
-  teddy(257, 231, 1.04, "#e7a960", "#f7aa91", "#d0965f");
-  return print;
-}
-
 function makeScene(renderer) {
   const room = [], sofa = [], bear = [];
   function collect(list) {
@@ -273,8 +218,9 @@ function makeScene(renderer) {
   inside("box", 0x3f2a1c, "wood", [portraitX, portraitY, -3.932], [1.47, 1.146, .109]);
   inside("box", 0xab8149, "brass", [portraitX, portraitY, -3.864], [1.412, 1.09, .05]);
   inside("box", 0xc0a16c, "plain", [portraitX, portraitY, -3.832], [1.329, .999, .025]);
-  const familyPhoto = inside("quad", 0xffffff, "portrait", [portraitX, portraitY, -3.813], [1.217, .880, 1]);
-  familyPhoto.texture = renderer.texture(familyArt());
+  const family = makeFamily(renderer);
+  const familyScale = .272;
+  const familyRoot = transform(portraitX, portraitY, -3.804, familyScale, familyScale, familyScale);
 
   const calendarX = 1.72, calendarY = 2.66;
   inside("box", 0x472d1d, "wood", [calendarX, calendarY, -3.934], [1.11, 1.30, .068]);
@@ -371,10 +317,13 @@ function makeScene(renderer) {
     });
   }
 
-  function render(progress, width, height, reduced) {
-    const p = reduced ? (progress < .22 ? 0 : progress < .58 ? roomStop : progress < .89 ? .74 : 1) : progress;
+  function render(progress, width, height, reduced, interaction) {
+    const returnToRoom = smooth(.46, .67, progress);
+    const portraitMove = smooth(.68, .96, progress);
+    const storyProgress = progress <= .46 ? clamp(progress / .39) : mix(1, roomStop, returnToRoom);
+    const p = reduced ? (storyProgress < .22 ? 0 : storyProgress < .58 ? roomStop : storyProgress < .89 ? .74 : 1) : storyProgress;
     const aspect = width / height;
-    const roomWidth = mix(.58, 1, smooth(.82, 1.73, aspect));
+    const roomWidth = mix(mix(.58, 1, smooth(.82, 1.73, aspect)), 1, portraitMove);
     const wide = smooth(.58, 1.65, aspect);
     const approach = smooth(0, roomStop, p);
     const close = smooth(.47, .77, p);
@@ -402,6 +351,35 @@ function makeScene(renderer) {
       targetZ: mix(mix(-1.26, zBear + sofaAdvance, approach), mapZ, face),
     };
     const mapRoot = transform(0, mapY, mapZ, 1, 1, 1, mix(-.96, -pitch, unfold), -.12 * oblique);
+
+    const portraitPose = multiply(transform(0, 0, 0, roomWidth, 1, 1), familyRoot);
+    const portraitCenter = point(portraitPose, 0, .04, .48);
+    const portraitTan = .43;
+    const portraitFitY = Math.max(.48, Math.min(.78, 1 - 120 / height));
+    const portraitDistance = Math.max(1.47 * roomWidth / (2 * portraitTan * aspect * .88),
+      1.146 / (2 * portraitTan * portraitFitY));
+    const portraitCamera = {
+      x: portraitCenter[0], y: portraitCenter[1], z: portraitCenter[2] + portraitDistance,
+      targetX: portraitCenter[0], targetY: portraitCenter[1], targetZ: portraitCenter[2],
+      tan: portraitTan,
+    };
+    for (const key of Object.keys(portraitCamera)) camera[key] = mix(camera[key], portraitCamera[key], portraitMove);
+
+    const sheets = family.papers(interaction, roomWidth);
+    if (interaction.selected) {
+      const paper = sheets[interaction.selected];
+      const center = point(portraitPose, ...paper.center);
+      const tan = .43;
+      const sheetFitY = Math.max(.48, Math.min(.95, 1 - 90 / height));
+      const paperDistance = Math.max(
+        paper.size[0] * familyScale * roomWidth / (2 * tan * aspect * .95),
+        paper.size[1] * familyScale / (2 * tan * sheetFitY));
+      const paperCamera = {
+        x: center[0], y: center[1], z: center[2] + .011 * familyScale + paperDistance,
+        targetX: center[0], targetY: center[1], targetZ: center[2], tan,
+      };
+      for (const key of Object.keys(paperCamera)) camera[key] = mix(camera[key], paperCamera[key], interaction.zoom);
+    }
 
     renderer.resize(width, height);
     renderer.frame(camera);
@@ -438,8 +416,29 @@ function makeScene(renderer) {
       const pawPad = point(pose, side * (pageW / 2 - .064), mix(-.155, -.010, unfold), .069);
       renderer.draw(object("sphere", padColor, "fur", pawPad, [.119, .120, .055], [0, 0, side * .23]));
     }
+    family.render(portraitPose, interaction, roomWidth);
     renderer.finish();
-    return p;
+
+    const viewProjection = multiply(perspective(camera.tan, aspect), viewAt(camera));
+    const projection = multiply(viewProjection, portraitPose);
+    function screenBounds(x, y, w, h, z) {
+      const corners = [-1, 1].flatMap(sideX => [-1, 1].map(sideY => {
+        const px = x + sideX * w / 2, py = y + sideY * h / 2;
+        const depth = projection[3] * px + projection[7] * py + projection[11] * z + projection[15];
+        return [
+          (.5 + (projection[0] * px + projection[4] * py + projection[8] * z + projection[12]) / depth / 2) * width,
+          (.5 - (projection[1] * px + projection[5] * py + projection[9] * z + projection[13]) / depth / 2) * height,
+        ];
+      }));
+      const left = Math.min(...corners.map(c => c[0])), top = Math.min(...corners.map(c => c[1]));
+      return [left, top, Math.max(...corners.map(c => c[0])) - left, Math.max(...corners.map(c => c[1])) - top];
+    }
+    return {
+      mapProgress: p,
+      portraitMove,
+      parents: screenBounds(0, .61, 3.88, 2.18, .70),
+      child: screenBounds(0, -.80, 1.48, 1.82, 1.25),
+    };
   }
 
   return { loadArt, render, roomStop };
